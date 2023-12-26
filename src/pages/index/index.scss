@@ -1,28 +1,31 @@
-.nutui-react-demo {
+.home {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
 
-.index {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24rpx;
-  margin-bottom: 30px;
-}
+  &-table {
+    flex: 1;
+    margin: 0 12px;
+  }
 
-.title {
-  display: block;
-  margin: 20px 0;
-  font-weight: 600;
-}
+  &-create-button {
+    display: flex;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: $color-primary;
+    text-align: center;
+    color: $white;
 
-.btn {
-  display: block;
-  width: 200px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+    /* Elevation / 7 */
+    box-shadow: 0px 2px 16px 1px rgba(0, 0, 0, 0.12), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 4px 5px -2px rgba(0, 0, 0, 0.20);
+  }
 }

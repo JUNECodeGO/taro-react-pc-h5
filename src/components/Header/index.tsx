@@ -7,36 +7,36 @@ import {
   SideNavBarItem,
   SubSideNavBar,
 } from '@nutui/nutui-react-taro';
-import {ArrowLeft, Share, Close} from '@nutui/icons-react-taro';
+import {Category} from '@nutui/icons-react-taro';
 import {useState} from 'react';
 import {View} from '@tarojs/components';
+import './index.scss';
 
-const Header = () => {
-  const [navBarState, setNavBarState] = useState({
-    visible: false,
-  });
-  const changeNarBar = visible => {
-    setNavBarState({
-      visible,
-    });
+const Header = props => {
+  const {title} = props;
+  const [visible, setVisible] = useState(false);
+
+  const changeNarBar = () => {
+    setVisible(pre => !pre);
   };
 
   return (
     <NavBar
-      left={'youcha'}
+      className='header'
+      left='油茶'
       right={
         <View>
-          <Button>登陆</Button>
-          <Share />
+          <Button size='mini' type='default'>
+            登陆
+          </Button>
+          <Category onClick={changeNarBar} size='16' />
         </View>
       }>
       <SideNavBar
-        title='首页'
-        visible={navBarState.visible}
-        position={'right'}
-        onClose={() => {
-          changeNarBar(false);
-        }}>
+        title={title}
+        visible={visible}
+        position='right'
+        onClose={changeNarBar}>
         <SubSideNavBar title='一级标题' key='1-0' value={'1-0'}>
           <SideNavBarItem title='一级内容1' key='1-01' value={''} />
           <SideNavBarItem title='一级内容2' key='1-02' value={'1-02'} />
