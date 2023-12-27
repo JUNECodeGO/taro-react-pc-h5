@@ -31,13 +31,9 @@ const CheckItem = ({label, value}) => {
   );
 };
 const Filter = () => {
-  const [navBarState, setNavBarState] = useState({
-    visible: false,
-  });
-  const changeNarBar = visible => {
-    setNavBarState({
-      visible,
-    });
+  const [visible, setVisible] = useState(false);
+  const changeNarBar = () => {
+    setVisible(pre => !pre);
   };
   return (
     <View className='filter-wrapper'>
@@ -101,21 +97,6 @@ const Filter = () => {
 
         <Del className='delete-icon' />
       </View>
-      <SideNavBar
-        title='搜索过滤'
-        visible={navBarState.visible}
-        position='left'
-        onClose={() => {
-          changeNarBar(false);
-        }}>
-        <SubSideNavBar title='一级标题' key='1-0' value={''}>
-          <Checkbox
-            icon={<Checklist />}
-            activeIcon={<Checklist className='nut-checkbox-icon' />}>
-            自定义图标
-          </Checkbox>
-        </SubSideNavBar>
-      </SideNavBar>
     </View>
   );
 };

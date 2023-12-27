@@ -26,10 +26,10 @@ const Header = props => {
       left='油茶'
       right={
         <View>
-          <Button size='mini' type='default'>
+          <Button size='mini' className='header-login-button'>
             登陆
           </Button>
-          <Category onClick={changeNarBar} size='16' />
+          <Category onClick={changeNarBar} size='16' color='#fff' />
         </View>
       }>
       <SideNavBar

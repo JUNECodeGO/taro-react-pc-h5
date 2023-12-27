@@ -1,4 +1,10 @@
 .header {
   font-weight: 600;
-  border-bottom: 1px solid $shadow-overlay;
+  color: $white;
+
+  &-login-button {
+    border: 1px solid $white;
+    color: $white;
+    background-color: $color-primary;
+  }
 }

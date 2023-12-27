@@ -5,7 +5,7 @@ page {
   // 重置变量
   --nutui-color-primary: #0B4F4A;
   --nutui-navbar-height: 40px;
-  --nutui-navbar-background: #fff;
+  --nutui-navbar-background: #0B4F4A;
   --nutui-navbar-margin-bottom: 12px;
   --nutui-navbar-title-font-size: 14px;
   --nutui-navbar-box-shadow: 0 0.0104rem 0.0312rem rgba(84, 84, 102, .2);
@@ -13,7 +13,7 @@ page {
 
   --nutui-collapse-item-padding: 0 12px 12px 12px;
   --nutui-collapse-wrapper-content-padding: 0;
-  // // 主要内容用色，常用语常规标题内容、细文浏览、常规按钮文字以及图表引导。
+  // 主要内容用色，常用语常规标题内容、细文浏览、常规按钮文字以及图表引导。
 
   --nutui-gray-7: #212B36;
   --nutui-gray-12: #919eab29;
@@ -22,8 +22,12 @@ page {
 
   --nutui-button-border-radius: 8px;
   --nutui-button-default-border-color: #0B4F4A;
-  --nutui-button-default-background-color: #0B4F4A;
-  --nutui-button-default-color: #fff;
+  --nutui-button-default-background-color: #fff;
+  --nutui-button-default-color: #0B4F4A;
+
+  --nutui-button-primary-border-color: #0B4F4A;
+  --nutui-button-primary-background-color: #0B4F4A;
+  --nutui-button-primary-color: #fff;
   // 自定义变量
 
   background-color: #FBFCFC;

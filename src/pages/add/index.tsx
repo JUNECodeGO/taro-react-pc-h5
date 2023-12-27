@@ -30,8 +30,8 @@ const AddPage = () => {
         <Divider>基本信息</Divider>
         <Form.Item
           required
-          label='字段A'
-          name='username'
+          label='名称'
+          name='name'
           rules={[
             {max: 5, message: '字段A不能超过5个字'},
             {required: true, message: '请输入字段A'},
@@ -43,7 +43,7 @@ const AddPage = () => {
           />
         </Form.Item>
         <Form.Item
-          label='字段D'
+          label='名称'
           name='address'
           rules={[
             {max: 15, message: '字段D不能超过15个字'},
