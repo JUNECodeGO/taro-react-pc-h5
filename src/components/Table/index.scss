@@ -1,0 +1,23 @@
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  padding: 12px 0;
+  flex: 1;
+}
+
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 12px;
+
+  .pre {
+    transform: rotateZ(180deg);
+    margin-right: 20px;
+  }
+
+  .next {}
+
+}

@@ -10,8 +10,7 @@ page {
   --nutui-navbar-title-font-size: 14px;
   --nutui-navbar-box-shadow: 0 0.0104rem 0.0312rem rgba(84, 84, 102, .2);
 
-
-  --nutui-collapse-item-padding: 0 12px 12px 12px;
+  --nutui-collapse-item-padding: 12px;
   --nutui-collapse-wrapper-content-padding: 0;
   // 主要内容用色，常用语常规标题内容、细文浏览、常规按钮文字以及图表引导。
 
@@ -30,7 +29,7 @@ page {
   --nutui-button-primary-color: #fff;
   // 自定义变量
 
-  background-color: #FBFCFC;
+  --background-color: #f2f2f2;
 
   // 全局设置
   color: #212B36;
@@ -45,4 +44,14 @@ page {
 
 .taro-tabbar__container .taro_page.taro_tabbar_page {
   max-height: 100vh;
+}
+
+.nut-table-main-head {
+  background-color: #F4F6F8 !important;
+
+}
+
+.nut-table-main-head-tr-border,
+.nut-table-main-body-tr-border {
+  border-right: none !important;
 }

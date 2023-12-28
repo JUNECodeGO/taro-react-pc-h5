@@ -30,6 +30,7 @@ const CheckItem = ({label, value}) => {
     </div>
   );
 };
+
 const Filter = () => {
   const [visible, setVisible] = useState(false);
   const changeNarBar = () => {
@@ -89,13 +90,12 @@ const Filter = () => {
       <View className='result'>
         <span>12 条</span>
         <span className='text'>搜索结果</span>
-      </View>
-      <View className='checked-wrapper'>
-        <span>筛选：</span>
-        <CheckItem label='广东省' value='123' />
-        <CheckItem label='黑龙江省' value='12355' />
-
-        <Del className='delete-icon' />
+        <div className='checked-wrapper'>
+          <span>筛选：</span>
+          <CheckItem label='广东省' value='123' />
+          <CheckItem label='黑龙江省' value='12355' />
+          <Del className='delete-icon' />
+        </div>
       </View>
     </View>
   );

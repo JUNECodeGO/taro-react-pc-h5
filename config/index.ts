@@ -3,14 +3,7 @@ const path = require('path');
 const config = {
   projectName: 'youcha',
   date: '2023-12-25',
-  designWidth(input) {
-    // 配置 NutUI 375 尺寸
-    if (input?.file?.replace(/\\+/g, '/').indexOf('@nutui') > -1) {
-      return 375;
-    }
-    // 全局使用 Taro 默认的 750 尺寸
-    return 745;
-  },
+  designWidth: 375,
   deviceRatio: {
     640: 2.34 / 2,
     750: 1,
@@ -34,7 +27,9 @@ const config = {
   framework: 'react',
   compiler: {
     type: 'webpack5',
-    prebundle: {enable: false},
+    prebundle: {
+      exclude: ['@nutui/nutui-react-taro', '@nutui/icons-react-taro'],
+    },
   },
   mini: {
     postcss: {

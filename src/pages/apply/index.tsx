@@ -2,8 +2,8 @@
 
 import {View} from '@tarojs/components';
 
-const AddPage = () => {
+const ApplyPage = () => {
   return <View>123</View>;
 };
 
-export default AddPage;
+export default ApplyPage;
