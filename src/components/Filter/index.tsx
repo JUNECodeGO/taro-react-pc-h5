@@ -17,17 +17,17 @@ import {
   Del,
 } from '@nutui/icons-react-taro';
 import {useState} from 'react';
-import {View} from '@tarojs/components';
+import {Text, View} from '@tarojs/components';
 import './index.scss';
 
 const list = [];
 
 const CheckItem = ({label, value}) => {
   return (
-    <div key={value} className='check-item'>
-      {label}
+    <View key={value} className='check-item'>
+      <Text className='text'>{label}</Text>
       <MaskClose color='#6f7473' />
-    </div>
+    </View>
   );
 };
 
@@ -41,12 +41,12 @@ const Filter = () => {
       <Collapse defaultActiveName={['1']}>
         <Collapse.Item
           title={
-            <div>
-              <span>资源检索</span>
-              <span className='search-icon'>
+            <View className='filter-left'>
+              <Text>资源检索</Text>
+              <View className='search-icon'>
                 <Search size='16' color='#fff' />
-              </span>
-            </div>
+              </View>
+            </View>
           }
           extra={<FilterIcon size='16' />}
           expandIcon={<ArrowDown size='16' />}
@@ -88,14 +88,14 @@ const Filter = () => {
         </Collapse.Item>
       </Collapse>
       <View className='result'>
-        <span>12 条</span>
-        <span className='text'>搜索结果</span>
-        <div className='checked-wrapper'>
-          <span>筛选：</span>
+        <Text>12 条</Text>
+        <Text className='text'>搜索结果</Text>
+        <View className='checked-wrapper'>
+          <Text>筛选：</Text>
           <CheckItem label='广东省' value='123' />
           <CheckItem label='黑龙江省' value='12355' />
           <Del className='delete-icon' />
-        </div>
+        </View>
       </View>
     </View>
   );

@@ -1,8 +1,12 @@
 .filter-wrapper {
   width: 100%;
 
+  .filter-left {
+    display: flex;
+    flex-direction: row;
+  }
+
   .search-icon {
-    display: inline-block;
     width: 24px;
     height: 24px;
     border-radius: 5px;
@@ -51,10 +55,9 @@
   margin-right: 8px;
   color: $white;
   font-size: 12px;
-  display: inline-block;
   font-weight: normal;
 
-  span {
+  text {
     margin-left: 8px;
     vertical-align: text-bottom;
   }
