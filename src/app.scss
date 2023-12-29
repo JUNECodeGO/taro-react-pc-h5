@@ -10,7 +10,7 @@ page {
   --nutui-navbar-title-font-size: 14px;
   --nutui-navbar-box-shadow: 0 0.0104rem 0.0312rem rgba(84, 84, 102, .2);
 
-  --nutui-collapse-item-padding: 12px;
+  --nutui-collapse-item-padding: 12px 0 12px 12px;
   --nutui-collapse-wrapper-content-padding: 0;
   // 主要内容用色，常用语常规标题内容、细文浏览、常规按钮文字以及图表引导。
 
@@ -33,6 +33,7 @@ page {
 
   // 全局设置
   color: #212B36;
+
 }
 
 
@@ -54,4 +55,8 @@ page {
 .nut-table-main-head-tr-border,
 .nut-table-main-body-tr-border {
   border-right: none !important;
+}
+
+.nut-collapse-item-extra {
+  padding: 0 8px !important;
 }

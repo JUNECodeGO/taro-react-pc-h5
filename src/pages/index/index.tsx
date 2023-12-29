@@ -1,23 +1,28 @@
 /** @format */
 
 import {View} from '@tarojs/components';
-// import Header from '@/components/Header';
+import Header from '@/components/Header/index';
 import Table from '@/components/Table';
 import {Add} from '@nutui/icons-react-taro';
-
 import Filter from '@/components/Filter';
+import {Sticky} from '@nutui/nutui-react-taro';
+import Layout from '@/components/Layout';
 import './index.scss';
 
-const Home = () => {
+const Index = () => {
   return (
-    <View className='home'>
-      <View className='home-create-button'>
-        <Add size='24' />
+    <Layout>
+      <View className='home'>
+        <Header />
+        <Filter />
+        <Table />
+        <Sticky threshold={57} position='bottom'>
+          <View className='home-create-button'>
+            <Add size='24' />
+          </View>
+        </Sticky>
       </View>
-      {/* <Header /> */}
-      <Filter />
-      <Table />
-    </View>
+    </Layout>
   );
 };
-export default Home;
+export default Index;

@@ -5,7 +5,7 @@ export default defineAppConfig({
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#0B4F4A',
-    navigationBarTitleText: '油茶',
+    // navigationBarTitleText: '油茶',
     navigationBarTextStyle: 'white',
   },
   tabBar: {

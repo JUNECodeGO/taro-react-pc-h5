@@ -52,13 +52,15 @@
     "@tarojs/plugin-platform-tt": "3.6.21",
     "@tarojs/plugin-platform-weapp": "3.6.21",
     "@tarojs/react": "3.6.21",
+    "@tarojs/router": "^3.6.22",
     "@tarojs/runtime": "3.6.21",
     "@tarojs/shared": "3.6.21",
     "@tarojs/taro": "3.6.21",
     "antd": "^5.12.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-refresh": "^0.11.0"
+    "react-refresh": "^0.11.0",
+    "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

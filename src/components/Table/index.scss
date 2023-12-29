@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   background-color: $white;
+  margin-top: 5px;
   padding: 12px 0;
   flex: 1;
 }
@@ -12,6 +13,7 @@
   flex-direction: row;
   justify-content: flex-start;
   margin-top: 12px;
+  margin-left: 12px;
 
   .pre {
     transform: rotateZ(180deg);

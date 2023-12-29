@@ -1,0 +1,47 @@
+.page-container {
+  margin: 0 24PX;
+  font-size: 14PX;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-primary;
+  padding: 12PX 0;
+
+  button {
+    span {
+      color: $color-primary;
+    }
+  }
+
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+
+  color: $color-primary;
+}
+
+.divider {
+  margin: 0;
+  color: $color-primary;
+}
+
+.banner {
+  background-image: linear-gradient(to bottom, rgb(0 0 0 / 2%), rgb(0 0 0 / 73%)),
+    url('@/assets/images/home_background.jpeg');
+  height: 30rem;
+  background-position: center;
+  color: $white
+}
+
+@media (max-width: $screen-lg) {
+  .page-container {
+    margin: 0;
+  }
+
+
+}

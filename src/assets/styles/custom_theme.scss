@@ -1,0 +1,28 @@
+$screen-xs: 480Px;
+// ? Extra small screen / phone
+
+// ? Small screen / tablet
+$screen-sm: 576Px;
+// Medium screen / desktop
+$screen-md: 768Px; // Large screen / wide desktop
+$screen-lg: 992px;
+// Extra large screen / full hd
+$screen-xl: 1200Px;
+// Extra extra large screen / large desktop
+$screen-xxl: 1600Px;
+
+$color-primary: #0B4F4A;
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: $color-primary ;
+
+  &:hover,
+  &:focus {
+    color: $color-primary;
+  }
+}

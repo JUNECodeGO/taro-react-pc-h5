@@ -1,6 +1,6 @@
 /** @format */
 
-import {Button, Pagination, Table as NutiTable} from '@nutui/nutui-react-taro';
+import {Button, Table as NutiTable} from '@nutui/nutui-react-taro';
 import {useCallback, useMemo, useState} from 'react';
 import {View} from '@tarojs/components';
 import {ArrowSize6} from '@nutui/icons-react-taro';
