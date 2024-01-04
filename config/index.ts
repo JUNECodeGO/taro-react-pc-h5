@@ -60,12 +60,22 @@ const config = {
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
+    router: {
+      mode: 'multi',
+      customRoutes: {
+        // "页面路径": "自定义路由"
+        '/pages/index/index': '/',
+        '/pages/listing/index': 'listing', // 可以通过数组为页面配置多个自定义路由
+      },
+    },
     // esnextModules: ['nutui-react'],
     postcss: {
       pxtransform: {
         enable: true,
         config: {
           selectorBlackList: ['nut-'],
+          baseFontSize: 16,
+          maxRootSize: 16,
         },
       },
       autoprefixer: {

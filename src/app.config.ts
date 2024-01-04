@@ -1,7 +1,13 @@
 /** @format */
 
 export default defineAppConfig({
-  pages: ['pages/index/index', 'pages/apply/index', 'pages/add/index'],
+  entryPagePath: 'pages/index/index',
+  pages: [
+    'pages/index/index',
+    'pages/apply/index',
+    'pages/add/index',
+    'pages/listing/index',
+  ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#0B4F4A',

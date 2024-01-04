@@ -9,3 +9,22 @@ export const homeMenus = [
   {label: '图库介绍', path: '/'},
   {label: '关于我们', path: '/'},
 ];
+
+export const dataList = [
+  {
+    label: '资源数',
+    key: '1',
+  },
+  {
+    label: '涉及科',
+    key: '2',
+  },
+  {
+    label: '涉及属',
+    key: '3',
+  },
+  {
+    label: '涉及种',
+    key: '4',
+  },
+];

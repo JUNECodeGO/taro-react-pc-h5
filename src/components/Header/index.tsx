@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <View className='header'>
-      <Text>油茶</Text>
+      <Text>植物种质资源保存与共享平台</Text>
       <Category color='#fff' size={20} onClick={changeNarBar} />
       <SideNavBar visible={visible} position='right' onClose={changeNarBar}>
         <SideNavBarItem title='一级标题' key='1-0' value='1-0' />

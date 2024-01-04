@@ -1,0 +1,11 @@
+.layout-wrapper {
+  .filter-filter-mobile {
+    display: none;
+  }
+}
+
+@media (max-width:$screen-md) {
+  .filter-pc {
+    display: none;
+  }
+}
