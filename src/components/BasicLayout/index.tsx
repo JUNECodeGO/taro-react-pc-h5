@@ -1,23 +1,34 @@
-/** @format */
+import Header from "../Header";
+import Filter from "../Filter";
+import { useState } from "react";
+import { Layout, Menu } from "antd";
 
-import {Outlet} from 'react-router-dom';
-import Header from '../Header';
-import Filter from '../Filter';
+import "./index.scss";
 
-const BasicLayout = () => {
-  const pathName = location.pathname;
-  console.log(pathName, '23123123');
-  if (!pathName || pathName === '/') return <Outlet />;
-
+const BasicLayout = (props) => {
+  const [collapsed, setCollapsed] = useState();
   return (
-    <div className='layout-wrapper'>
+    <div className="layout-wrapper">
       <Header />
-      <div className='main'>
-        <div className='filter-pc'></div>
-        <div className='filter-mobile'>
+      <div className="main">
+        <div className="filter-pc"></div>
+        <div className="filter-mobile">
           <Filter />
         </div>
-        <Outlet />
+        <Layout.Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+        >
+          <div className="demo-logo-vertical" />
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={[]}
+          />
+        </Layout.Sider>
+        {props.children}
       </div>
     </div>
   );

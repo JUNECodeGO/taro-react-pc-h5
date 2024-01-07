@@ -1,10 +1,10 @@
 .layout-wrapper {
-  .filter-filter-mobile {
+  .filter-mobile {
     display: none;
   }
 }
 
-@media (max-width:$screen-md) {
+@media (max-width: 756px) {
   .filter-pc {
     display: none;
   }

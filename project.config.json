@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "youcha",
   "description": "youcha",
-  "appid": "wx9be9ba64b9ff35e4",
+  "appid": "wx102cd67fb5fdb6b0",
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -18,7 +18,7 @@
     "condition": false
   },
   "compileType": "miniprogram",
-  "libVersion": "3.2.5",
+  "libVersion": "2.31.0",
   "srcMiniprogramRoot": "dist/",
   "packOptions": {
     "ignore": [],

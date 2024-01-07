@@ -28,8 +28,6 @@
     }
   }
 
-
-
   .nav {
     height: 2.75rem;
     line-height: 2.75rem;
@@ -50,12 +48,15 @@
 
   .divider {
     margin: 0;
-
   }
 
   .banner {
-    background-image: linear-gradient(to bottom, rgb(0 0 0 / 2%), rgb(0 0 0 / 73%)),
-      url('@/assets/images/home_background.jpeg');
+    background-image: linear-gradient(
+        to bottom,
+        rgb(0 0 0 / 2%),
+        rgb(0 0 0 / 73%)
+      ),
+      url("@/assets/images/home_background.jpeg");
     height: 35vh;
     // background-position: ;
     color: $white;
@@ -87,17 +88,19 @@
 
   .home-data {
     &-item {
+      margin-bottom: 1rem;
       border-radius: 6px;
       padding: 1.5rem;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     }
-
   }
 
   .home-about {
     text-indent: 2rex;
     background-color: rgb(248, 249, 250);
     padding: 1.5rem;
+    border-radius: 6px;
   }
 }
 
@@ -105,21 +108,38 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   .title {
     font-size: 1.75rem;
     text-align: center;
     margin: 2rem 0;
   }
+  &-input {
+    width: 80%;
+  }
 }
+.home-footer {
+  margin: 1rem 0;
 
+  &-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
 
+  &-sub {
+    font-size: 12px;
+    color: #6c757d;
+    padding: 0.2rem 0;
+  }
+}
 
 @media (max-width: 756px) {
   .home-container {
     .banner {
       padding: 1rem;
-
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
       &-title {
         font-size: 2rem;
       }
@@ -133,29 +153,40 @@
     }
   }
 
-
-
   .home-content {
-    margin-top: 1rem;
-
-
+    margin-top: 0;
 
     .home-data {
-      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-
+      padding: 1rem 0.8rem 0 0.8rem;
+      box-shadow: rgba(0, 0, 0, 0.15) 0 1.95px 3.6px;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
       &-item {
         border-radius: 0;
         padding: 0;
-        box-shadow: none
+        box-shadow: none;
       }
-
     }
 
     .home-about {
-      margin-top: 1rem;
-      background-color: transparent
+      margin-top: 0;
+      background-color: transparent;
     }
   }
 
+  .home-search {
+    &-input {
+      width: 100%;
+    }
+  }
 
+  .home-footer {
+    text-align: center;
+    &-title {
+      margin-top: 0.5rem;
+    }
+    a {
+      display: block;
+    }
+  }
 }

@@ -66,6 +66,7 @@ const config = {
         // "页面路径": "自定义路由"
         '/pages/index/index': '/',
         '/pages/listing/index': 'listing', // 可以通过数组为页面配置多个自定义路由
+        '/pages/add/index': 'add', // 可以通过数组为页面配置多个自定义路由
       },
     },
     // esnextModules: ['nutui-react'],

@@ -1,6 +1,15 @@
-$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-  'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-  'Noto Color Emoji';
+$font-family: -apple-system,
+BlinkMacSystemFont,
+'Segoe UI',
+Roboto,
+'Helvetica Neue',
+Arial,
+'Noto Sans',
+sans-serif,
+'Apple Color Emoji',
+'Segoe UI Emoji',
+'Segoe UI Symbol',
+'Noto Color Emoji';
 
 :root,
 page {
@@ -17,6 +26,7 @@ page {
 
   --nutui-collapse-item-padding: 12px 0 12px 12px;
   --nutui-collapse-wrapper-content-padding: 0;
+  --nutui-sidenavbar-sub-item-padding: 10px 8px 10px 20px;
   // 主要内容用色，常用语常规标题内容、细文浏览、常规按钮文字以及图表引导。
 
   --nutui-gray-7: #212B36;
@@ -27,11 +37,16 @@ page {
   --nutui-button-border-radius: 8px;
   --nutui-button-default-border-color: #0B4F4A;
   --nutui-button-default-background-color: #fff;
+  --nutui-color-primary-stop-1: #0B4F4A;
+  --nutui-color-primary-stop-2: #0B4F4A;
   --nutui-button-default-color: #0B4F4A;
 
   --nutui-button-primary-border-color: #0B4F4A;
-  --nutui-button-primary-background-color: #0B4F4A;
+  --nutui-button-primary-background: #0B4F4A;
   --nutui-button-primary-color: #fff;
+
+  --nutui-radiogroup-radio-margin: 0 0 0.8rem 0;
+  --nutui-radiogroup-radio-label-margin: 0 10px;
   // 自定义变量
 
   --background-color: #f2f2f2;
@@ -48,8 +63,9 @@ page {
   display: none;
 }
 
-.taro-tabbar__container .taro_page.taro_tabbar_page {
-  max-height: 100vh;
+.taro-tabbar__container,
+.taro_page.taro_tabbar_page {
+  height: auto !important;
 }
 
 .nut-table-main-head {
@@ -65,3 +81,13 @@ page {
 .nut-collapse-item-extra {
   padding: 0 8px !important;
 }
+
+.ant-input:focus,
+.ant-input:hover,
+.ant-btn-default:hover,
+.ant-btn-default:focus {
+  border-color: #0B4F4A !important;
+  box-shadow: none !important;
+  color: #0B4F4A !important;
+}
+
