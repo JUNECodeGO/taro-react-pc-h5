@@ -40,6 +40,8 @@ const config = {
         enable: true,
         config: {
           selectorBlackList: ['nut-'],
+          baseFontSize: 16,
+          maxRootSize: 16,
         },
       },
       url: {
@@ -65,8 +67,12 @@ const config = {
       customRoutes: {
         // "页面路径": "自定义路由"
         '/pages/index/index': '/',
-        '/pages/listing/index': 'listing', // 可以通过数组为页面配置多个自定义路由
-        '/pages/add/index': 'add', // 可以通过数组为页面配置多个自定义路由
+        '/pages/listing/index': 'listing',
+        '/pages/add/index': 'add',
+        '/pages/login/index': 'login',
+        '/pages/signIn/index': 'signin',
+        '/pages/detail/index': 'detail',
+        '/pages/dataCenter/index': 'datacenter',
       },
     },
     // esnextModules: ['nutui-react'],

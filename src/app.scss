@@ -1,15 +1,15 @@
 $font-family: -apple-system,
-BlinkMacSystemFont,
-'Segoe UI',
-Roboto,
-'Helvetica Neue',
-Arial,
-'Noto Sans',
-sans-serif,
-'Apple Color Emoji',
-'Segoe UI Emoji',
-'Segoe UI Symbol',
-'Noto Color Emoji';
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  'Noto Sans',
+  sans-serif,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol',
+  'Noto Color Emoji';
 
 :root,
 page {
@@ -45,11 +45,12 @@ page {
   --nutui-button-primary-background: #0B4F4A;
   --nutui-button-primary-color: #fff;
 
+  --nutui-form-item-label-width: 100px;
   --nutui-radiogroup-radio-margin: 0 0 0.8rem 0;
   --nutui-radiogroup-radio-label-margin: 0 10px;
   // 自定义变量
 
-  --background-color: #f2f2f2;
+  --background-color: #fff;
 
   // 全局设置
   color: #212B36;
@@ -90,4 +91,3 @@ page {
   box-shadow: none !important;
   color: #0B4F4A !important;
 }
-

@@ -1,28 +1,29 @@
-import { Category } from "@nutui/icons-react-taro";
-import { SideNavBar, SideNavBarItem } from "@nutui/nutui-react-taro";
-import { View, Text } from "@tarojs/components";
-import { useState } from "react";
+/** @format */
 
-import "./index.scss";
-import { MenuList } from "./constants";
+import {Category} from '@nutui/icons-react-taro';
+import {SideNavBar, SideNavBarItem} from '@nutui/nutui-react-taro';
+import {View, Text} from '@tarojs/components';
+import {useState} from 'react';
+
+import './index.scss';
+import {MenuList} from './constants';
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
   const changeNarBar = () => {
-    setVisible((pre) => !pre);
+    setVisible(pre => !pre);
   };
 
   return (
-    <View className="header">
+    <View className='header'>
       <Text>植物种质资源保存与共享平台</Text>
-      <Category color="#fff" size={20} onClick={changeNarBar} />
+      <Category color='#fff' size={20} onClick={changeNarBar} />
       <SideNavBar
-        title="目录"
+        title='目录'
         visible={visible}
-        position="right"
-        onClose={changeNarBar}
-      >
-        {MenuList.map((menu) => (
+        position='right'
+        onClose={changeNarBar}>
+        {MenuList.map(menu => (
           <SideNavBarItem title={menu.key} key={menu.key} value={menu.key} />
         ))}
       </SideNavBar>

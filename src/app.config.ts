@@ -1,16 +1,20 @@
 /** @format */
 
 export default defineAppConfig({
-  entryPagePath: 'pages/index/index',
   pages: [
     'pages/index/index',
     'pages/apply/index',
     'pages/add/index',
     'pages/listing/index',
+    'pages/login/index',
+    'pages/account/index',
+    'pages/signIn/index',
+    'pages/dataCenter/index',
+    'pages/detail/index',
   ],
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#0B4F4A',
+    navigationBarBackgroundColor: '#fff',
     // navigationBarTitleText: '油茶',
     navigationBarTextStyle: 'white',
   },

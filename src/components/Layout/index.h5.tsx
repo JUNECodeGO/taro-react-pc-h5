@@ -15,6 +15,7 @@ export const globalContext = createContext<IGlobalContext>({
 });
 
 function Layout() {
+  console.log(23123);
   const [isLogin, setLogin] = useState<boolean>(() => {
     const storeValue = localStorage.getItem('isLogin');
     return storeValue ? JSON.parse(storeValue) : false;

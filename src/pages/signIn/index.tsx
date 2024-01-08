@@ -5,22 +5,18 @@ import {View, Text} from '@tarojs/components';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import './index.scss';
 
-export default function Login() {
+export default function SignIn() {
   return (
     <LoginSignInWrapper>
-      <View className='login-component'>
-        <Text className='title'>欢迎登录</Text>
-        <View>
-          <Text className='normal'>新用户？</Text>
-          <Text className='normal primary'>快速注册</Text>
-        </View>
+      <View className='signIn-component'>
+        <Text className='title'>用户注册</Text>
         <Form
           labelPosition='top'
           divider
           footer={
             <>
-              <Button block type='primary' className='login-button'>
-                登录
+              <Button block type='primary' className='signIn-button'>
+                注册
               </Button>
             </>
           }>
@@ -31,15 +27,23 @@ export default function Login() {
               type='text'
             />
           </Form.Item>
-          <Form.Item required label='密码' name='username'>
+          <Form.Item required label='登录密码' name='username'>
             <Input
               className='nut-input-text'
               placeholder='请输入密码'
               type='password'
             />
           </Form.Item>
-          <View className='forget'>
-            <Text className='normal underline'>忘记密码</Text>
+          <Form.Item required label='确认密码' name='username'>
+            <Input
+              className='nut-input-text'
+              placeholder='请输入密码'
+              type='password'
+            />
+          </Form.Item>
+          <View className='verification'>
+            <Input placeholder='请输入验证码' />
+            <Button>获取验证码</Button>
           </View>
         </Form>
       </View>

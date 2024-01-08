@@ -1,23 +1,7 @@
 .header {
-  background-color: $color-primary;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px 1rem;
-  box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.05);
-  color: $white;
 
-  &-title {
-    font-size: 1rem;
-    font-weight: 600;
-    flex:1;
-    flex-wrap: nowrap;
-    flex-shrink: 0;
-    white-space: nowrap
-  }
-
-}
-
-.menu {
-  background-color: transparent;
-  color: $white;
 }

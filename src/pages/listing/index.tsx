@@ -1,12 +1,21 @@
 /** @format */
-import Header from "@/components/Header";
-import { View } from "@tarojs/components";
+import Filter from '@/components/Filter';
+import Header from '@/components/Header';
+import Table from '@/components/Table';
+import {Button} from 'antd';
 
 const Listing = () => {
   return (
-    <View>
+    <div>
       <Header></Header>
-    </View>
+      <div>资源列表</div>
+      <Filter>
+        <div>
+          <Button>创建</Button>
+        </div>
+        <Table />
+      </Filter>
+    </div>
   );
 };
 

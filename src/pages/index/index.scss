@@ -4,6 +4,13 @@
   flex-direction: column;
   background-color: var(--background-color);
 
+  &-title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+  }
+
 
   &-create-button {
     display: flex;

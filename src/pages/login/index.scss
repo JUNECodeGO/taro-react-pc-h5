@@ -1,12 +1,42 @@
-.login-container {
-  display: flex;
-  flex-direction: row;
+.login-component {
+  background-color: $white;
+  border-radius: 1rem;
+  padding: 4rem 1rem 1rem 1rem;
+  margin-top: 6rem;
 
-}
-
-@media (max-width: $screen-md) {
-  .login-container {
-    background-color: $linear-background;
+  .login-button {
+    height: 48px;
   }
 
+  .nut-cell {
+    padding: 0.8rem 0;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+  }
+
+  .normal {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+  }
+
+  .primary {
+    color: $color-primary;
+    font-weight: 600;
+  }
+
+  .underline {
+
+    text-decoration-line: underline;
+  }
+
+  .forget {
+    text-align: right;
+    margin-top: 1rem;
+  }
 }

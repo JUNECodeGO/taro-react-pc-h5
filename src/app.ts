@@ -1,11 +1,12 @@
 /** @format */
 
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {useDidShow, useDidHide} from '@tarojs/taro';
 // 全局样式
 import './app.scss';
 
 function App(props) {
+  console.log('LOGIN');
   // 可以使用所有的 React Hooks
   useEffect(() => {});
 
