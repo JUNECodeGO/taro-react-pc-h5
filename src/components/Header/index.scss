@@ -3,5 +3,9 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background-color: $color-primary;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 0rem 1.2rem 0px rgba(0, 0, 0, 0.05);
+  color: $white;
 
 }

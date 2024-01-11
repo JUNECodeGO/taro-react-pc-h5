@@ -1,12 +1,21 @@
 .table-wrapper {
   display: flex;
   flex-direction: column;
-  margin-top: 5px;
   flex: 1;
-}
+  border-radius: 1rem;
+  background: #fff;
+
+  /* shadow/card */
+  box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+    0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+
+  margin-top: 1rem;
+  overflow: hidden;
+
 .home-table {
   background-color: $white;
-  padding: 12px 0;
+  // padding: 12px 0;
+}
 }
 
 .pagination {
