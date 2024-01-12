@@ -8,4 +8,59 @@
   box-shadow: 0 0rem 1.2rem 0px rgba(0, 0, 0, 0.05);
   color: $white;
 
+  .title {
+    white-space: nowrap;
+  }
+
+  &-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 1;
+  }
+
+  .menu {
+    background-color: transparent;
+    color: $white;
+
+  }
+
+  .popover {
+    display: none;
+  }
+
+  .login-button {
+    margin-left: 1rem;
+  }
+
+
+
+}
+
+@media (min-width: 756px) {
+  .header {
+    .menu {
+      visibility: visible;
+      position: relative;
+      transform: scale(1);
+
+    }
+  }
+}
+
+@media (max-width: 756px) {
+  .header {
+
+    .popover {
+      display: block;
+    }
+
+    .menu {
+      visibility: hidden;
+      transform: scale(0.1);
+
+      position: absolute;
+
+    }
+  }
 }

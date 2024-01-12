@@ -13,11 +13,10 @@ export const globalContext = createContext<IGlobalContext>({
 });
 
 function Layout(props) {
-  const [isLogin, setLogin] = useState<boolean>(false);
+  // const [isLogin, setLogin] = useState<boolean>(false);
 
   return (
     <globalContext.Provider value={{isLogin, setLogin}}>
-      <Suspense fallback={<div>loading...</div>}></Suspense>
       {props.children}
     </globalContext.Provider>
   );

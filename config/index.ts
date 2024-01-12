@@ -31,7 +31,11 @@ const config = {
   compiler: {
     type: 'webpack5',
     prebundle: {
-      exclude: ['@nutui/nutui-react-taro', '@nutui/icons-react-taro'],
+      exclude: [
+        '@nutui/nutui-react-taro',
+        '@nutui/icons-react-taro',
+        '@visactor/taro-vchart',
+      ],
     },
   },
   mini: {
@@ -66,13 +70,14 @@ const config = {
       mode: 'multi',
       customRoutes: {
         // "页面路径": "自定义路由"
-        '/pages/index/index': '/',
+        '/pages/home/index': '/',
         '/pages/listing/index': 'listing',
         '/pages/add/index': 'add',
         '/pages/login/index': 'login',
         '/pages/signIn/index': 'signin',
         '/pages/detail/index': 'detail',
         '/pages/dataCenter/index': 'datacenter',
+        '/pages/account/index': 'account',
       },
     },
     // esnextModules: ['nutui-react'],

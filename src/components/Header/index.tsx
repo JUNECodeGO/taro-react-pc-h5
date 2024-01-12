@@ -1,32 +1,48 @@
 /** @format */
 
-import {Category} from '@nutui/icons-react-taro';
-import {SideNavBar, SideNavBarItem} from '@nutui/nutui-react-taro';
+import {More} from '@nutui/icons-react-taro';
+import {Button, Popover} from '@nutui/nutui-react-taro';
 import {View, Text} from '@tarojs/components';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
+import {MenuList} from './constants';
+import {isH5} from '@/common/utils';
+// import Menu from './Menu';
 
 import './index.scss';
-import {MenuList} from './constants';
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
-  const changeNarBar = () => {
+  const changeNarBar = useCallback(e => {
     setVisible(pre => !pre);
-  };
+    e?.stopPropagation();
+  }, []);
 
   return (
     <View className='header'>
-      <Text>植物种质资源保存与共享平台</Text>
-      <Category color='#fff' size={20} onClick={changeNarBar} />
-      <SideNavBar
-        title='目录'
-        visible={visible}
-        position='right'
-        onClose={changeNarBar}>
-        {MenuList.map(menu => (
-          <SideNavBarItem title={menu.key} key={menu.key} value={menu.key} />
-        ))}
-      </SideNavBar>
+      <Text className='title'>植物种质资源保存与共享平台</Text>
+      <View className='header-right'>
+        {/* {isH5 ? <Menu list={MenuList} className='menu' /> : <></>} */}
+        <Popover
+          visible={visible}
+          list={MenuList}
+          className={isH5 ? 'popover' : ''}
+          location='bottom'
+          onClick={changeNarBar}>
+          <More
+            color='#fff'
+            size={20}
+            onClick={changeNarBar}
+            className={isH5 ? 'popover' : ''}
+          />
+        </Popover>
+        {isH5 ? (
+          <Button size='small' className='login-button'>
+            登陆
+          </Button>
+        ) : (
+          <></>
+        )}
+      </View>
     </View>
   );
 };

@@ -1,7 +1,7 @@
 /** @format */
 
 import Header from '@/components/Header';
-import {Uploader, TextArea, Button, Form, Input} from '@nutui/nutui-react-taro';
+import {Button, Form, Input} from '@nutui/nutui-react-taro';
 import {View, Text} from '@tarojs/components';
 
 const ApplyPage = () => {

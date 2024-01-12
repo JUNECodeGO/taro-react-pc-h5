@@ -29,13 +29,7 @@
         filter: url(#Rectangle_62);
       }
     </style>
-    <filter id="Rectangle_62" x="0" y="0" width="230" height="230" filterUnits="userSpaceOnUse">
-      <feOffset dy="4" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="5" result="blur"/>
-      <feFlood flood-opacity="0.102"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
+
   </defs>
   <g id="Group_60" data-name="Group 60" transform="translate(-151 -758)">
     <g class="cls-7" transform="matrix(1, 0, 0, 1, 151, 758)">

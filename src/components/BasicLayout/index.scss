@@ -1,11 +1,18 @@
 .layout-wrapper {
-  .filter-mobile {
-    display: none;
-  }
-}
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
 
-@media (max-width: 756px) {
-  .filter-pc {
-    display: none;
+  &-content {
+    padding: 0.8rem 1rem;
   }
+
+  &-title {
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+  }
+
 }

@@ -1,0 +1,57 @@
+.account {
+  &-card {
+    border-radius: 1rem;
+    background: $white;
+    background: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+    overflow: hidden;
+
+    &-top {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 15rem;
+
+      .avatar {
+        margin-bottom: 2rem;
+
+      }
+
+      .name {
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.375rem;
+        opacity: 0.48;
+      }
+    }
+
+    &-tab {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      background-color: $white;
+      height: 3rem;
+
+
+      &-item {
+        flex: 1;
+        text-align: center;
+      }
+
+      // height: 15rem;
+      .title {
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.375rem;
+
+      }
+    }
+  }
+
+
+}

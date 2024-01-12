@@ -1,37 +1,20 @@
 /** @format */
 
 import Header from '../Header';
-import Filter from '../Filter';
-import {useState} from 'react';
-import {Layout, Menu} from 'antd';
+import {View, Text} from '@tarojs/components';
 
 import './index.scss';
 
 const BasicLayout = props => {
-  const [collapsed, setCollapsed] = useState();
+  const {title, className = ''} = props;
   return (
-    <div className='layout-wrapper'>
+    <View className={`layout-wrapper ${className}`}>
       <Header />
-      <div className='main'>
-        <div className='filter-pc'></div>
-        <div className='filter-mobile'>
-          <Filter />
-        </div>
-        <Layout.Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={value => setCollapsed(value)}>
-          <div className='demo-logo-vertical' />
-          <Menu
-            theme='dark'
-            defaultSelectedKeys={['1']}
-            mode='inline'
-            items={[]}
-          />
-        </Layout.Sider>
+      <View className='layout-wrapper-content'>
+        {title && <Text className='layout-wrapper-title'>{title}</Text>}
         {props.children}
-      </div>
-    </div>
+      </View>
+    </View>
   );
 };
 

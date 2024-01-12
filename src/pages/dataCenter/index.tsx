@@ -1,21 +1,44 @@
 /** @format */
-import {useMemo, useState} from 'react';
-import Header from '@/components/Header';
-import {ScrollView, View} from '@tarojs/components';
+import {useState} from 'react';
+import {View, Text} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import VChart from '@visactor/taro-vchart';
-import {Tabs} from '@nutui/nutui-react-taro';
-import {Image} from 'antd';
+import {Image, Tabs} from '@nutui/nutui-react-taro';
+import BasicLayout from '@/components/BasicLayout';
+
+import './index.scss';
 
 const tabList = ['种质圃TOP10', '地域分析', '种类分析', '类型分析', '趋势分析'];
 const topList = [
   {
     title: '保持信息',
     value: '449993份',
-    icon: '@/assets/images/svg/Group_36.svg',
+    icon: require('../../assets/images/svg/Group_57.svg'),
+  },
+  {
+    title: '保持信息',
+    value: '449993份',
+    icon: require('../../assets/images/svg/Group_36.svg'),
+  },
+  {
+    title: '保持信息',
+    value: '449993份',
+    icon: require('../../assets/images/svg/Group_47.svg'),
+  },
+  {
+    title: '保持信息',
+    value: '449993份',
+    icon: require('../../assets/images/svg/Group_53.svg'),
+  },
+  {
+    title: '保持信息',
+    value: '449993份',
+    icon: require('../../assets/images/svg/Group_60.svg'),
   },
 ];
+
 const DataCenterPage = () => {
+  const env = Taro.getEnv();
   const [spec, setSpec] = useState({
     data: [
       {
@@ -54,17 +77,25 @@ const DataCenterPage = () => {
     },
   });
 
-  const [tab1value, setTab1value] = useState('0');
-  const test = topList[0];
+  const [tab1value, setTab1value] = useState(0);
+  console.log(env, '===');
   return (
-    <View>
-      <Header />
-      <ScrollView scrollX scrollY={false}>
-        <View>
-          <Image src={test.icon} />
+    <BasicLayout className='data-center' title='数据中心'>
+      <View className='top-wrapper'>
+        <View className='top-view'>
+          {topList.map(item => (
+            <View className='top-view-item' key={item.title}>
+              <Image src={item.icon} className='top-view-icon' />
+              <View className='top-view-item-right'>
+                <Text className='top-view-title'>{item.title}</Text>
+                <Text className='top-view-value'>{item.value}</Text>
+              </View>
+            </View>
+          ))}
         </View>
-      </ScrollView>
-      <View>
+      </View>
+
+      <View className='chart'>
         <Tabs
           value={tab1value}
           onChange={value => {
@@ -72,62 +103,27 @@ const DataCenterPage = () => {
           }}>
           <Tabs.TabPane title={tabList[0]}>
             <VChart
-              type={Taro.getEnv()}
-              canvasId='chartId'
+              type={env}
+              canvasId='chartId1'
               spec={spec}
-              style={{height: '100%', width: '100%'}}
-              onChartInit={chart => {}}
-              onChartReady={chart => {}}
-              onChartUpdate={chart => {}}
+              style={{height: '60vh'}}
             />
           </Tabs.TabPane>
-          <Tabs.TabPane title={tabList[1]}>
-            <VChart
-              type={Taro.getEnv()}
-              canvasId='chartId'
-              spec={spec}
-              style={{height: '100%', width: '100%'}}
-              onChartInit={chart => {}}
-              onChartReady={chart => {}}
-              onChartUpdate={chart => {}}
-            />
+          {/* <Tabs.TabPane title={tabList[1]}>
+            <VChart type={Taro.getEnv()} canvasId='chartId2' spec={spec} />
           </Tabs.TabPane>
           <Tabs.TabPane title={tabList[2]}>
-            <VChart
-              type={Taro.getEnv()}
-              canvasId='chartId'
-              spec={spec}
-              style={{height: '100%', width: '100%'}}
-              onChartInit={chart => {}}
-              onChartReady={chart => {}}
-              onChartUpdate={chart => {}}
-            />
+            <VChart type={Taro.getEnv()} canvasId='chartId3' spec={spec} />
           </Tabs.TabPane>
           <Tabs.TabPane title={tabList[3]}>
-            <VChart
-              type={Taro.getEnv()}
-              canvasId='chartId'
-              spec={spec}
-              style={{height: '100%', width: '100%'}}
-              onChartInit={chart => {}}
-              onChartReady={chart => {}}
-              onChartUpdate={chart => {}}
-            />
+            <VChart type={Taro.getEnv()} canvasId='chartId4' spec={spec} />
           </Tabs.TabPane>
           <Tabs.TabPane title={tabList[4]}>
-            <VChart
-              type={Taro.getEnv()}
-              canvasId='chartId'
-              spec={spec}
-              style={{height: '100%', width: '100%'}}
-              onChartInit={chart => {}}
-              onChartReady={chart => {}}
-              onChartUpdate={chart => {}}
-            />
-          </Tabs.TabPane>
+            <VChart type={Taro.getEnv()} canvasId='chartId5' spec={spec} />
+          </Tabs.TabPane> */}
         </Tabs>
       </View>
-    </View>
+    </BasicLayout>
   );
 };
 

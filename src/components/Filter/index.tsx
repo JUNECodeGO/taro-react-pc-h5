@@ -15,12 +15,15 @@ import {
   Close,
   ArrowUp,
   ArrowUp2,
+  More,
+  Add,
 } from '@nutui/icons-react-taro';
 import {useCallback, useRef, useState} from 'react';
 import {Text, View} from '@tarojs/components';
 import {FilterCategory} from './constants';
 
 import './index.scss';
+import Taro from '@tarojs/taro';
 
 const CheckItem = ({label, value}) => {
   return (
@@ -45,74 +48,80 @@ const Filter = () => {
     e?.stopPropagation();
   }, []);
 
+  const handleAdd = useCallback(() => {
+    Taro.navigateTo({
+      url: '/add',
+    });
+  }, []);
   return (
-    <View className='filter-wrapper'>
-      <Collapse defaultActiveName={['1']}>
-        <Collapse.Item
-          // title="资源检索"
-          extra={
-            <View className='filter-left'>
-              <Button size='mini' onClick={changePopupVisible}>
-                更多检索
-              </Button>
-              <View className='search-icon' onClick={handleSearch}>
-                <Search size='16' color='#fff' />
-              </View>
-            </View>
-          }
-          expandIcon={<ArrowUp size='16' />}
-          name='1'>
-          <Form divider labelPosition='left'>
-            <Form.Item label='名称' name='username'>
-              <Input
-                className='nut-input-text'
-                placeholder='请输入字段A'
-                type='text'
-                clearable
-              />
-            </Form.Item>
-            <Form.Item label='特性' name='username'>
-              <Input
-                className='nut-input-text'
-                placeholder='请输入字段A'
-                type='text'
-                clearable
-              />
-            </Form.Item>
-            <Form.Item label='用途' name='username'>
-              <Input
-                className='nut-input-text'
-                placeholder='请输入字段A'
-                type='text'
-                clearable
-              />
-            </Form.Item>
-            <Form.Item label='描述' name='username'>
-              <Input
-                className='nut-input-text'
-                placeholder='请输入字段A'
-                type='text'
-                clearable
-              />
-            </Form.Item>
-          </Form>
-        </Collapse.Item>
-      </Collapse>
-      <View className='result'>
-        <Text className='result-total'>12条</Text>
-        <Text className='result-text'>搜索结果</Text>
-        {selection.length ? (
-          <View className='checked-wrapper'>
-            <View className='checked-wrapper-inner'>
-              <Text>筛选：</Text>
-              <CheckItem label='广东省' value='123' />
-              <CheckItem label='黑龙江省' value='12355' />
-            </View>
-
-            <Del className='delete-icon' />
-          </View>
-        ) : null}
+    <View className='filter-wrapper result'>
+      <View className='result-wrapper'>
+        <View>
+          <Text className='result-total'>12 条</Text>
+          <Text className='result-text'>搜索结果</Text>
+        </View>
+        <View>
+          <Button
+            type='primary'
+            icon={<Search color='#fff' />}
+            onClick={handleSearch}
+          />
+          <Button icon={<Add />} style={{marginLeft: 8}} onClick={handleAdd}>
+            新增资源
+          </Button>
+        </View>
       </View>
+
+      {selection.length ? (
+        <View className='checked-wrapper'>
+          <View className='checked-wrapper-inner'>
+            <Text>筛选：</Text>
+            <CheckItem label='广东省' value='123' />
+            <CheckItem label='黑龙江省' value='12355' />
+          </View>
+
+          <Del className='delete-icon' />
+        </View>
+      ) : null}
+
+      <Form labelPosition='left' className='form'>
+        <Form.Item label='名称' name='username'>
+          <Input
+            className='nut-input-text'
+            placeholder='请输入字段A'
+            type='text'
+            clearable
+          />
+        </Form.Item>
+        <Form.Item label='特性' name='username'>
+          <Input
+            className='nut-input-text'
+            placeholder='请输入字段A'
+            type='text'
+            clearable
+          />
+        </Form.Item>
+        <Form.Item label='用途' name='username'>
+          <Input
+            className='nut-input-text'
+            placeholder='请输入字段A'
+            type='text'
+            clearable
+          />
+        </Form.Item>
+        <View className='last-form'>
+          <Form.Item label='描述' name='username'>
+            <Input
+              className='nut-input-text'
+              placeholder='请输入字段A'
+              type='text'
+              clearable
+            />
+          </Form.Item>
+          <More size={24} className='more' onClick={changePopupVisible} />
+        </View>
+      </Form>
+
       <Popup
         visible={visible}
         className='popup-filter'

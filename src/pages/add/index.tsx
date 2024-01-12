@@ -1,18 +1,29 @@
 /** @format */
 
-import Header from '@/components/Header';
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Input, TextArea, Uploader} from '@nutui/nutui-react-taro';
+import BasicLayout from '@/components/BasicLayout';
 
 import './index.scss';
+import Breadcrumb from '@/components/Bread';
+import {useMemo} from 'react';
 
 const AddPage = () => {
+  const breadList = useMemo(
+    () => [
+      {
+        path: '/',
+        breadcrumbName: '首页',
+      },
+      {
+        breadcrumbName: '收集填报',
+      },
+    ],
+    []
+  );
   return (
-    <View>
-      <Header />
-      <View>
-        <Text>信息填报</Text>
-      </View>
+    <BasicLayout title='信息填报'>
+      <Breadcrumb items={breadList} />
       <Form
         labelPosition='left'
         footer={
@@ -439,7 +450,7 @@ const AddPage = () => {
           </View>
         </View>
       </Form>
-    </View>
+    </BasicLayout>
   );
 };
 

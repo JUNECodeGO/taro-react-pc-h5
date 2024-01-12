@@ -4,13 +4,18 @@ import {Button, Form, Input} from '@nutui/nutui-react-taro';
 import {View, Text} from '@tarojs/components';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import './index.scss';
+import {useCallback} from 'react';
+import Navigator from '@/Navigator';
 
 export default function Login() {
+  const handleJumpSign = useCallback(() => {
+    Navigator.redirectTo('/signin');
+  }, []);
   return (
     <LoginSignInWrapper>
       <View className='login-component'>
         <Text className='title'>欢迎登录</Text>
-        <View>
+        <View onClick={handleJumpSign}>
           <Text className='normal'>新用户？</Text>
           <Text className='normal primary'>快速注册</Text>
         </View>

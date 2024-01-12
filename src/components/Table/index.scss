@@ -12,22 +12,27 @@
   margin-top: 1rem;
   overflow: hidden;
 
-.home-table {
-  background-color: $white;
-  // padding: 12px 0;
-}
+  .home-table {
+    background-color: $white;
+    // padding: 12px 0;
+  }
 }
 
 .pagination {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  margin-top: 12px;
-  margin-left: 12px;
+  justify-content: flex-end;
+  padding: 0.62rem 0.7rem;
+
+  .button {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
 
   .pre {
     transform: rotateZ(180deg);
     margin-right: 20px;
+
   }
 
   .next {}
