@@ -70,13 +70,14 @@ const config = {
       mode: 'multi',
       customRoutes: {
         // "页面路径": "自定义路由"
-        '/pages/home/index': '/',
-        '/pages/listing/index': 'listing',
-        '/pages/add/index': 'add',
+        '/pages/home/index': 'home',
+        '/pages/index/index': 'search',
+        '/pages/add/index': '/manage/add',
         '/pages/login/index': 'login',
         '/pages/signIn/index': 'signin',
-        '/pages/detail/index': 'detail',
+        '/pages/detail/index': 'search/detail',
         '/pages/dataCenter/index': 'datacenter',
+        '/pages/apply/index': 'search/apply',
         '/pages/account/index': 'account',
       },
     },

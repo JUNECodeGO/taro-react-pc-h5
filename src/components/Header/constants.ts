@@ -8,13 +8,14 @@ const MenuListPC = [
     name: '资源检索',
   },
   {
-    key: '数据中心',
-    name: '数据中心',
-  },
-  {
     key: '资源管理',
     name: '资源管理',
   },
+  {
+    key: '数据中心',
+    name: '数据中心',
+  },
+ 
   {
     key: '科研项目汇交',
     name: '科研项目汇交',
@@ -40,7 +41,4 @@ const MenuListMini = [
   },
 ];
 
-export const MenuList = (isH5 ? MenuListPC : MenuListMini).map(item => {
-  item.label = item.name;
-  return item;
-});
+export const MenuList = isH5 ? MenuListPC : MenuListMini;

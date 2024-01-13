@@ -2,9 +2,15 @@
   &-card {
     border-radius: 1rem;
     background: $white;
-    background: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
-    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+    background: radial-gradient(
+      circle at 10% 20%,
+      rgba(216, 241, 230, 0.46) 0.1%,
+      rgba(233, 226, 226, 0.28) 90.1%
+    );
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+      0px 0px 2px 0px rgba(145, 158, 171, 0.2);
     overflow: hidden;
+    margin-bottom: 1.5rem;
 
     &-top {
       display: flex;
@@ -15,7 +21,6 @@
 
       .avatar {
         margin-bottom: 2rem;
-
       }
 
       .name {
@@ -31,27 +36,76 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       flex: 1;
       background-color: $white;
       height: 3rem;
 
-
       &-item {
-        flex: 1;
+        box-sizing: border-box;
+        margin: 0 1.5rem;
+        height: 3rem;
+        line-height: 3rem;
+        width: 6rem;
         text-align: center;
       }
 
-      // height: 15rem;
       .title {
+        color: #637381;
+
         font-size: 0.875rem;
         font-style: normal;
         font-weight: 600;
         line-height: 1.375rem;
+      }
 
+      &-item.active {
+        border-bottom: 2px solid #212b36;
+
+        .title {
+          color: #212b36;
+        }
       }
     }
   }
+  .card{
+    padding: 0.8rem 1rem;
+    border-radius: 1rem;
+    background: $white;
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+    0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+    .nut-form-item {
+      border-radius: 0.5rem;
+      border: 1px solid rgba(145, 158, 171, 0.2);
+      margin-bottom: 1rem;
+    }
 
+    .nut-form-item-label {
+      padding-left: 0;
+      color: #637381;
+      width: 3.2rem;
+    }
+  }
+}
 
+@media (max-width: 756px) {
+  .account {
+    &-card {
+      &-tab {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        background-color: $white;
+        height: 3rem;
+
+        &-item {
+          flex: 1;
+          text-align: center;
+          width: auto;
+        }
+      }
+    }
+  }
 }

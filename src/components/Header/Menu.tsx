@@ -1,7 +1,15 @@
 /** @format */
-import {Menu as AntdMenu} from 'antd';
-const Menu = ({list, className}) => {
-  return <AntdMenu mode='horizontal' items={list} className={className} />;
+import { Tabs } from "@nutui/nutui-react-taro";
+import React from "react";
+
+const Menu = ({ list, className }) => {
+  return (
+    <Tabs defaultValue={0} className={className}>
+      {list.map((item) => (
+        <Tabs.TabPane title={item.name} key={item.name} />
+      ))}
+    </Tabs>
+  );
 };
 
-export default Menu;
+export default React.memo(Menu);
