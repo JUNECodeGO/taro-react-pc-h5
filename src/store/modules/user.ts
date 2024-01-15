@@ -4,13 +4,14 @@ import {makeAutoObservable} from 'mobx';
 import Taro from '@tarojs/taro';
 
 export default class UseUserInfoStore {
-  userInfo = {};
+  userInfo = null;
 
   roles = [] as string[];
 
   permissions = [] as string[];
 
   token = '' as string;
+
   isLoading = false; // 控制全局loading效果
 
   logout = true; // 退出弹窗控制
@@ -29,7 +30,7 @@ export default class UseUserInfoStore {
   };
 
   removeUserInfo = () => {
-    this.userInfo = {};
+    this.userInfo = null;
     this.roles = [];
     this.permissions = [];
   };

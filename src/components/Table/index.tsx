@@ -5,157 +5,17 @@ import {useCallback, useMemo, useState} from 'react';
 import {View} from '@tarojs/components';
 import {ArrowSize6} from '@nutui/icons-react-taro';
 import './index.scss';
-import Taro from '@tarojs/taro';
+import React from 'react';
+import Navigator from '@/common/utils/navigator';
 
-const Table = () => {
+const Table = ({data, setData}) => {
+  const [pagination, setPagaination] = useState({
+    current: 1,
+    pageSize: 10,
+  });
   const handleJump = useCallback(() => {
-    Taro.navigateTo({
-      url: 'apply',
-    });
+    Navigator.navigateTo('main/apply');
   }, []);
-
-  const [data6, setData6] = useState([
-    {
-      name: 'Tom',
-      sex: '男',
-      record: '小学',
-      birthday: '2010-01-01',
-      age: 10,
-    },
-    {
-      name: 'Lucy',
-      sex: '女',
-      record: '本科',
-      birthday: '2000-01-01',
-      age: 30,
-    },
-    {
-      name: 'Jack',
-      sex: '男',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 4,
-    },
-    {
-      name: 'Sara',
-      sex: '女',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 6,
-    },
-    {
-      name: 'Frank',
-      sex: '男',
-      record: '幼儿园',
-      birthday: '2020-01-01',
-      age: 3,
-    },
-    {
-      name: 'Tom',
-      sex: '男',
-      record: '小学',
-      birthday: '2010-01-01',
-      age: 10,
-    },
-    {
-      name: 'Lucy',
-      sex: '女',
-      record: '本科',
-      birthday: '2000-01-01',
-      age: 30,
-    },
-    {
-      name: 'Jack',
-      sex: '男',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 4,
-    },
-    {
-      name: 'Sara',
-      sex: '女',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 6,
-    },
-    {
-      name: 'Frank',
-      sex: '男',
-      record: '幼儿园',
-      birthday: '2020-01-01',
-      age: 3,
-    },
-    {
-      name: 'Tom',
-      sex: '男',
-      record: '小学',
-      birthday: '2010-01-01',
-      age: 10,
-    },
-    {
-      name: 'Lucy',
-      sex: '女',
-      record: '本科',
-      birthday: '2000-01-01',
-      age: 30,
-    },
-    {
-      name: 'Jack',
-      sex: '男',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 4,
-    },
-    {
-      name: 'Sara',
-      sex: '女',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 6,
-    },
-    {
-      name: 'Frank',
-      sex: '男',
-      record: '幼儿园',
-      birthday: '2020-01-01',
-      age: 3,
-    },
-    {
-      name: 'Tom',
-      sex: '男',
-      record: '小学',
-      birthday: '2010-01-01',
-      age: 10,
-    },
-    {
-      name: 'Lucy',
-      sex: '女',
-      record: '本科',
-      birthday: '2000-01-01',
-      age: 30,
-    },
-    {
-      name: 'Jack',
-      sex: '男',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 4,
-    },
-    {
-      name: 'Sara',
-      sex: '女',
-      record: '高中',
-      birthday: '2020-01-01',
-      age: 6,
-    },
-    {
-      name: 'Frank',
-      sex: '男',
-      record: '幼儿园',
-      birthday: '2020-01-01',
-      age: 3,
-    },
-  ]);
 
   const columnsStickRight = useMemo(
     () => [
@@ -209,7 +69,7 @@ const Table = () => {
       <View className='home-table'>
         <NutiTable
           columns={columnsStickRight}
-          data={data6}
+          data={data}
           style={{height: 350}}
         />
         <View className='pagination'>
@@ -221,4 +81,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default React.memo(Table);

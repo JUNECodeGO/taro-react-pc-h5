@@ -1,5 +1,5 @@
 /** @format */
-
+import React from 'react';
 import {Button, Form, Input, Popup} from '@nutui/nutui-react-taro';
 import {
   Search,
@@ -25,9 +25,9 @@ const CheckItem = ({label, value}) => {
   );
 };
 
-const Filter = () => {
+const Filter = ({filters = [], setFilters, data = []}) => {
   const [visible, setVisible] = useState(false);
-  const [selection, setSelection] = useState([]);
+  const [selection, handleSelection] = useState(filters);
 
   const changePopupVisible = useCallback(e => {
     setVisible(pre => !pre);
@@ -41,11 +41,16 @@ const Filter = () => {
   const handleAdd = useCallback(() => {
     Navigator.redirectTo('main/add');
   }, []);
+
+  const handelSave = useCallback(() => {
+    setFilters(selection);
+  }, []);
+
   return (
     <View className='filter-wrapper '>
       <View className='result-wrapper'>
         <View>
-          <Text className='result-total'>12 条</Text>
+          <Text className='result-total'>{`${data.length} 条`}</Text>
           <Text className='result-text'>搜索结果</Text>
         </View>
         <View>
@@ -60,7 +65,7 @@ const Filter = () => {
         </View>
       </View>
 
-      {selection.length ? (
+      {filters.length ? (
         <View className='checked-wrapper'>
           <View className='checked-wrapper-inner'>
             <Text>筛选：</Text>
@@ -117,16 +122,20 @@ const Filter = () => {
         onClose={changePopupVisible}>
         <View className='popup-filter-content'>
           <View className='popup-filter-title'>
-            <Close />
+            <Close onClick={changePopupVisible} />
             <Text>搜索过滤</Text>
-            <Button type='primary' size='small'>
+            <Button type='primary' size='small' onClick={handelSave}>
               保存
             </Button>
           </View>
-          <SideFilter className='popup-filter' />
+          <SideFilter
+            className='popup-filter'
+            filters={selection}
+            setFilters={handleSelection}
+          />
         </View>
       </Popup>
     </View>
   );
 };
-export default Filter;
+export default React.memo(Filter);
