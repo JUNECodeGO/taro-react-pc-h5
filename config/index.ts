@@ -44,8 +44,8 @@ const config = {
         enable: true,
         config: {
           selectorBlackList: ['nut-'],
-          baseFontSize: 16,
-          maxRootSize: 16,
+          baseFontSize: 14,
+          maxRootSize: 14,
         },
       },
       url: {
@@ -62,33 +62,25 @@ const config = {
         },
       },
     },
+    optimizeMainPackage: {
+      enable: true,
+    },
   },
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
     router: {
-      mode: 'multi',
-      customRoutes: {
-        // "页面路径": "自定义路由"
-        '/pages/home/index': 'home',
-        '/pages/index/index': 'search',
-        '/pages/add/index': '/manage/add',
-        '/pages/login/index': 'login',
-        '/pages/signIn/index': 'signin',
-        '/pages/detail/index': 'search/detail',
-        '/pages/dataCenter/index': 'datacenter',
-        '/pages/apply/index': 'search/apply',
-        '/pages/account/index': 'account',
-      },
+      mode: 'browser',
     },
+
     // esnextModules: ['nutui-react'],
     postcss: {
       pxtransform: {
         enable: true,
         config: {
           selectorBlackList: ['nut-'],
-          baseFontSize: 16,
-          maxRootSize: 16,
+          baseFontSize: 14,
+          maxRootSize: 14,
         },
       },
       autoprefixer: {

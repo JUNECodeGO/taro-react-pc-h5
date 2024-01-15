@@ -2,7 +2,7 @@
 
 import {View, Text} from '@tarojs/components';
 import {useCallback, useMemo} from 'react';
-import Navigator from '@/Navigator';
+import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
 const Breadcrumb = props => {

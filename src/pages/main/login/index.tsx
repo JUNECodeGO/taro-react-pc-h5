@@ -5,7 +5,7 @@ import {View, Text} from '@tarojs/components';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import './index.scss';
 import {useCallback} from 'react';
-import Navigator from '@/Navigator';
+import Navigator from '@/common/utils/navigator';
 
 export default function Login() {
   const handleJumpSign = useCallback(() => {

@@ -5,8 +5,39 @@ module.exports = {
     NODE_ENV: '"development"',
   },
   defineConstants: {},
-  mini: {},
+  mini: {
+    // webpackChain(chain, webpack) {
+    //   chain
+    //     .plugin('analyzer')
+    //     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, []);
+    // },
+  },
   h5: {
+    // webpackChain(chain, webpack) {
+    // chain
+    //   .plugin('analyzer')
+    //   .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, []);
+    // chain.merge({
+    //   optimization: {
+    //     splitChunks: {
+    //       chunks: 'all',
+    //       minSize: 30000,
+    //       minChunks: 3,
+    //       automaticNameDelimiter: '.',
+    //       cacheGroups: {
+    //         vendor: {
+    //           test: /[\/]node_modules[\/]/,
+    //           name: 'vendors',
+    //           minSize: 30000,
+    //           minChunks: 1,
+    //           chunks: 'initial',
+    //           priority: 1, // 该配置项是设置处理的优先级，数值越大越优先处理
+    //         },
+    //       },
+    //     },
+    //   },
+    // });
+    // },
     devServer: {
       proxy: {
         // // 这里代表这凡是以 /api 开头的接口都将在这里被代理

@@ -1,5 +1,5 @@
 /** @format */
-import {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {
   Flex,
   Button,
@@ -11,8 +11,8 @@ import {
   Select,
   Input,
 } from 'antd';
-import {Link} from 'react-router-dom';
 import {homeMenus, dataList} from './constant';
+import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
 
@@ -30,12 +30,19 @@ const options = [
 export default function Home() {
   const navLink = useMemo(() => {
     return homeMenus.map(route => (
-      <Col>
-        <Link to={route.path} key={route.label}>
-          {route.label}
-        </Link>
+      <Col
+        className='link'
+        key={route.label}
+        onClick={() => {
+          if (route.path) Navigator.navigateTo(route.path);
+        }}>
+        {route.label}
       </Col>
     ));
+  }, []);
+
+  const handleJumpLogin = useCallback(() => {
+    Navigator.navigateTo('main/login');
   }, []);
 
   return (
@@ -46,7 +53,11 @@ export default function Home() {
             <div>欢迎</div>
             <div className='title'>植物种质资源保存与共享平台</div>
             <Flex align='flex-start' gap='small'>
-              <Button type='default' size='small' className='header-button'>
+              <Button
+                type='default'
+                size='small'
+                className='header-button'
+                onClick={handleJumpLogin}>
                 登陆
               </Button>
             </Flex>

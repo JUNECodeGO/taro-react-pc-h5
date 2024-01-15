@@ -3,10 +3,10 @@
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Input, TextArea, Uploader} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
-
-import './index.scss';
 import Breadcrumb from '@/components/Bread';
 import {useMemo} from 'react';
+
+import './index.scss';
 
 const AddPage = () => {
   const breadList = useMemo(

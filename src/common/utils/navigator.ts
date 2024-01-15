@@ -1,6 +1,5 @@
 /** @format */
 
-import {isH5} from '@/common/utils';
 import {
   navigateTo as _navigateTo,
   redirectTo as _redirectTo,
@@ -24,7 +23,10 @@ function reLaunch(url: string, param?: {}) {
   });
 }
 function createUrl(url: string, param?: {}): string {
-  if (isH5) return url;
+  if (url === '/') {
+    if (process.env.TARO_ENV === 'h5') return 'pages/main/home/index';
+    return 'pages/listing/index';
+  }
   const newUrl = `pages/${url}/index`;
   if (param) {
     return `${newUrl}?routerQuery=${encodeURIComponent(JSON.stringify(param))}`;
@@ -55,7 +57,7 @@ function serialize(data: any) {
   return data;
 }
 
-export default {
+const Navigator = {
   navigateTo,
   redirectTo,
   serialize,
@@ -65,3 +67,5 @@ export default {
   getCurrentPages,
   useRouter,
 };
+
+export default Navigator;

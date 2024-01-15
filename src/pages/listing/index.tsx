@@ -1,22 +1,17 @@
 /** @format */
-import Filter from '@/components/Filter';
-import Header from '@/components/Header';
 import Table from '@/components/Table';
-import {Button} from 'antd';
+import Filter from '@/components/Filter';
+import BasicLayout from '@/components/BasicLayout';
+import './index.scss';
+import SideFilter from '@/components/SideFilter/index.h5';
+import {isH5} from '@/common/utils';
 
-const Listing = () => {
+const Index = () => {
   return (
-    <div>
-      <Header></Header>
-      <div>资源列表</div>
-      <Filter>
-        <div>
-          <Button>创建</Button>
-        </div>
-        <Table />
-      </Filter>
-    </div>
+    <BasicLayout title='资源列表' leftSlot={isH5 ? <SideFilter /> : null}>
+      <Filter />
+      <Table />
+    </BasicLayout>
   );
 };
-
-export default Listing;
+export default Index;
