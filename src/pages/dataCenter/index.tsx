@@ -1,13 +1,15 @@
 /** @format */
 import {useState} from 'react';
 import {View, Text} from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import VChart from '@visactor/taro-vchart';
 import {Image, Tabs} from '@nutui/nutui-react-taro';
+import VChart from '@visactor/taro-vchart';
 import BasicLayout from '@/components/BasicLayout';
+import Empty from '@/components/Empty';
+import Taro from '@tarojs/taro';
 
 import './index.scss';
 
+const NotYet = true;
 const tabList = ['种质圃TOP10', '地域分析', '种类分析', '类型分析', '趋势分析'];
 const topList = [
   {
@@ -78,7 +80,15 @@ const DataCenterPage = () => {
   });
 
   const [tab1value, setTab1value] = useState(0);
-  console.log(env, '===');
+
+  if (NotYet) {
+    return (
+      <BasicLayout className='data-center' title='数据中心'>
+        <Empty />
+      </BasicLayout>
+    );
+  }
+
   return (
     <BasicLayout className='data-center' title='数据中心'>
       <View className='top-wrapper'>
@@ -109,18 +119,6 @@ const DataCenterPage = () => {
               style={{height: '60vh'}}
             />
           </Tabs.TabPane>
-          {/* <Tabs.TabPane title={tabList[1]}>
-            <VChart type={Taro.getEnv()} canvasId='chartId2' spec={spec} />
-          </Tabs.TabPane>
-          <Tabs.TabPane title={tabList[2]}>
-            <VChart type={Taro.getEnv()} canvasId='chartId3' spec={spec} />
-          </Tabs.TabPane>
-          <Tabs.TabPane title={tabList[3]}>
-            <VChart type={Taro.getEnv()} canvasId='chartId4' spec={spec} />
-          </Tabs.TabPane>
-          <Tabs.TabPane title={tabList[4]}>
-            <VChart type={Taro.getEnv()} canvasId='chartId5' spec={spec} />
-          </Tabs.TabPane> */}
         </Tabs>
       </View>
     </BasicLayout>

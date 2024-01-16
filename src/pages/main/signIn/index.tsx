@@ -1,7 +1,6 @@
 /** @format */
-
-import {Button, Form, Input} from '@nutui/nutui-react-taro';
 import {View, Text} from '@tarojs/components';
+import {Button, Form, Input} from '@nutui/nutui-react-taro';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import './index.scss';
 

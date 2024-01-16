@@ -4,9 +4,10 @@
   flex-direction: row;
   justify-content: center;
   background: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
-box-sizing: border-box;
+  box-sizing: border-box;
 
   .pic {
+
     background-image: linear-gradient(to bottom,
         rgb(0 0 0 / 2%),
         rgb(0 0 0 / 73%)),
@@ -15,9 +16,8 @@ box-sizing: border-box;
     color: $white;
     border-radius: 6px;
     width: 65%;
-    
+
     margin: 1rem;
-    
   }
 
   .content {

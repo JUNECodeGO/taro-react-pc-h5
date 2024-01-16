@@ -1,5 +1,6 @@
 /** @format */
-import React from 'react';
+import React, {useCallback, useState} from 'react';
+import {Text, View} from '@tarojs/components';
 import {Button, Form, Input, Popup} from '@nutui/nutui-react-taro';
 import {
   Search,
@@ -9,8 +10,6 @@ import {
   More,
   Add,
 } from '@nutui/icons-react-taro';
-import {useCallback, useState} from 'react';
-import {Text, View} from '@tarojs/components';
 import SideFilter from '../SideFilter/index.h5';
 import Navigator from '@/common/utils/navigator';
 

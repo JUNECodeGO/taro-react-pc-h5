@@ -1,11 +1,11 @@
 /** @format */
-import { Tabs } from "@nutui/nutui-react-taro";
-import React from "react";
+import React from 'react';
+import {Tabs} from '@nutui/nutui-react-taro';
 
-const Menu = ({ list, className }) => {
+const Menu = ({list, className}) => {
   return (
     <Tabs defaultValue={0} className={className}>
-      {list.map((item) => (
+      {list.map(item => (
         <Tabs.TabPane title={item.name} key={item.name} />
       ))}
     </Tabs>

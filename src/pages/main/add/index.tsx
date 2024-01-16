@@ -1,10 +1,9 @@
 /** @format */
-
+import {useMemo} from 'react';
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Input, TextArea, Uploader} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import Breadcrumb from '@/components/Bread';
-import {useMemo} from 'react';
 
 import './index.scss';
 
@@ -12,8 +11,8 @@ const AddPage = () => {
   const breadList = useMemo(
     () => [
       {
-        path: '/',
-        breadcrumbName: '首页',
+        path: 'listing',
+        breadcrumbName: '列表',
       },
       {
         breadcrumbName: '收集填报',

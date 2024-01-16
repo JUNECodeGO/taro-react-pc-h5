@@ -1,13 +1,13 @@
 /** @format */
-
-import {More} from '@nutui/icons-react-taro';
-import {Button, Popover} from '@nutui/nutui-react-taro';
-import {View, Text} from '@tarojs/components';
 import {useCallback, useState} from 'react';
-import {MenuList} from './constants';
-import {isH5} from '@/common/utils';
+import {View, Text} from '@tarojs/components';
+import {Button, Popover} from '@nutui/nutui-react-taro';
+import {More} from '@nutui/icons-react-taro';
 import Menu from './Menu';
+import {MenuList} from './constants';
 import Navigator from '@/common/utils/navigator';
+import {isH5} from '@/common/utils';
+
 import './index.scss';
 
 const Header = () => {

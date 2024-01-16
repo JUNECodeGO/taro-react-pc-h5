@@ -1,10 +1,10 @@
 /** @format */
-
+import React, {useCallback, useMemo} from 'react';
 import {View, Text} from '@tarojs/components';
-import {useCallback, useMemo} from 'react';
 import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
+
 const Breadcrumb = props => {
   const {items = []} = props;
   const len = useMemo(() => items.length, [items]);
@@ -30,4 +30,4 @@ const Breadcrumb = props => {
   );
 };
 
-export default Breadcrumb;
+export default React.memo(Breadcrumb);

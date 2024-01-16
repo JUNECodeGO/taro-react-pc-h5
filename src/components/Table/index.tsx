@@ -1,12 +1,12 @@
 /** @format */
 
-import {Button, Table as NutiTable} from '@nutui/nutui-react-taro';
-import {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {View} from '@tarojs/components';
+import {Button, Table as NutiTable} from '@nutui/nutui-react-taro';
 import {ArrowSize6} from '@nutui/icons-react-taro';
-import './index.scss';
-import React from 'react';
 import Navigator from '@/common/utils/navigator';
+
+import './index.scss';
 
 const Table = ({data, setData}) => {
   const [pagination, setPagaination] = useState({

@@ -1,4 +1,5 @@
 /** @format */
+import {useState} from 'react';
 import Table from '@/components/Table';
 import Filter from '@/components/Filter';
 import BasicLayout from '@/components/BasicLayout';
@@ -6,7 +7,6 @@ import SideFilter from '@/components/SideFilter/index.h5';
 import {isH5} from '@/common/utils';
 
 import './index.scss';
-import {useState} from 'react';
 
 const Listing = () => {
   const [filters, setFilters] = useState([]);

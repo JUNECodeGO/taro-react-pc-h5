@@ -24,10 +24,11 @@ function reLaunch(url: string, param?: {}) {
 }
 function createUrl(url: string, param?: {}): string {
   if (url === '/') {
-    if (process.env.TARO_ENV === 'h5') return 'pages/main/home/index';
-    return 'pages/listing/index';
+    if (process.env.TARO_ENV === 'h5') return '/pages/main/home/index';
+    return '/pages/listing/index';
   }
-  const newUrl = `pages/${url}/index`;
+  const newUrl = `/pages/${url}/index`;
+  console.log(newUrl, '=====');
   if (param) {
     return `${newUrl}?routerQuery=${encodeURIComponent(JSON.stringify(param))}`;
   }

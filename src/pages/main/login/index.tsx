@@ -1,11 +1,11 @@
 /** @format */
-
-import {Button, Form, Input} from '@nutui/nutui-react-taro';
-import {View, Text} from '@tarojs/components';
-import LoginSignInWrapper from '@/components/LoginSignInWrapper';
-import './index.scss';
 import {useCallback} from 'react';
+import {View, Text} from '@tarojs/components';
+import {Button, Form, Input} from '@nutui/nutui-react-taro';
+import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
+
+import './index.scss';
 
 export default function Login() {
   const handleJumpSign = useCallback(() => {

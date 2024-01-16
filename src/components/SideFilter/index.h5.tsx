@@ -1,10 +1,9 @@
 /** @format */
-import React from 'react';
-import {useCallback} from 'react';
-import {ArrowUp2} from '@nutui/icons-react-taro';
-import {Collapse, Radio} from '@nutui/nutui-react-taro';
-import {FilterCategory} from './constants';
+import React, {useCallback} from 'react';
 import {View} from '@tarojs/components';
+import {Collapse, Radio} from '@nutui/nutui-react-taro';
+import {ArrowUp2} from '@nutui/icons-react-taro';
+import {FilterCategory} from './constants';
 
 import './index.scss';
 

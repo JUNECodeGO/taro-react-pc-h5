@@ -1,8 +1,8 @@
 /** @format */
-
-import Navigator from '@/common/utils/navigator';
-import {Menu} from 'antd';
 import {useCallback} from 'react';
+import {Menu} from 'antd';
+import Navigator from '@/common/utils/navigator';
+
 const items = [
   {
     label: '基本资料',
@@ -17,6 +17,7 @@ const items = [
     key: '消息管理',
   },
 ];
+
 const SideLayout = () => {
   const handleClick = useCallback(e => {
     Navigator.navigateTo('account');
