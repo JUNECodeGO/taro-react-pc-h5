@@ -12,7 +12,7 @@ import './index.scss';
 enum TabType {
   account = 'account',
   password = 'password',
-  notice = 'notice',
+  share = 'share',
 }
 
 const tabList = [
@@ -25,8 +25,8 @@ const tabList = [
     name: TabType.password,
   },
   {
-    label: '消息列表',
-    name: TabType.notice,
+    label: '我的共享',
+    name: TabType.share,
   },
 ];
 
@@ -123,6 +123,8 @@ const Account = () => {
             </Form>
           </View>
         );
+      case TabType.share:
+        return <></>;
       default:
         break;
     }

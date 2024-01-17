@@ -7,8 +7,49 @@ import {ArrowSize6} from '@nutui/icons-react-taro';
 import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
+import {TableTabType} from '@/common/type';
 
-const Table = ({data, setData}) => {
+const columns = {
+  [TableTabType.ALL]: [
+    {
+      title: '种质编号',
+      key: 'name',
+      align: 'center',
+      width: 80,
+    },
+    {
+      title: '作（植）物名称',
+      key: 'sex',
+      width: 110,
+    },
+    {
+      title: '种质名称',
+      key: 'record',
+      width: 80,
+    },
+    {
+      title: '科名',
+      key: 'birthday',
+      width: 80,
+    },
+    {
+      title: '属名或亚属名',
+      key: 'birthday',
+      width: 100,
+    },
+  ],
+  [TableTabType.MINE]: [
+    {
+      title: '种质编号',
+      key: 'name',
+      align: 'center',
+      width: 80,
+    },
+  ],
+};
+const Table = props => {
+  const {data, setData, tab} = props;
+
   const [pagination, setPagaination] = useState({
     current: 1,
     pageSize: 10,
@@ -19,32 +60,7 @@ const Table = ({data, setData}) => {
 
   const columnsStickRight = useMemo(
     () => [
-      {
-        title: '种质编号',
-        key: 'name',
-        align: 'center',
-        width: 80,
-      },
-      {
-        title: '作（植）物名称',
-        key: 'sex',
-        width: 110,
-      },
-      {
-        title: '种质名称',
-        key: 'record',
-        width: 80,
-      },
-      {
-        title: '科名',
-        key: 'birthday',
-        width: 80,
-      },
-      {
-        title: '属名或亚属名',
-        key: 'birthday',
-        width: 100,
-      },
+      ...columns[tab],
       {
         title: '操作',
         key: 'age',
@@ -59,7 +75,7 @@ const Table = ({data, setData}) => {
         },
       },
     ],
-    []
+    [tab]
   );
 
   const handleTableChange = useCallback(() => {}, []);

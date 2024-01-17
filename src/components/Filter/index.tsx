@@ -24,16 +24,17 @@ const CheckItem = ({label, value}) => {
   );
 };
 
-const Filter = ({filters = [], setFilters, data = []}) => {
+const Filter = ({handleSearch, total, tab}) => {
   const [visible, setVisible] = useState(false);
-  const [selection, handleSelection] = useState(filters);
+  const [filters, setFilters] = useState<string[]>([]);
 
   const changePopupVisible = useCallback(e => {
     setVisible(pre => !pre);
     e?.stopPropagation();
   }, []);
 
-  const handleSearch = useCallback(e => {
+  const handleSubmit = useCallback(e => {
+    handleSearch();
     e?.stopPropagation();
   }, []);
 
@@ -45,11 +46,16 @@ const Filter = ({filters = [], setFilters, data = []}) => {
     setFilters(selection);
   }, []);
 
+  const handleChangeFilter = useCallback(val => {
+    handleSearch(val);
+    setFilters([val]);
+  }, []);
+
   return (
     <View className='filter-wrapper '>
       <View className='result-wrapper'>
         <View>
-          <Text className='result-total'>{`${data.length} 条`}</Text>
+          <Text className='result-total'>{`${total} 条`}</Text>
           <Text className='result-text'>搜索结果</Text>
         </View>
         <View>
@@ -129,8 +135,8 @@ const Filter = ({filters = [], setFilters, data = []}) => {
           </View>
           <SideFilter
             className='popup-filter'
-            filters={selection}
-            setFilters={handleSelection}
+            handleSearch={handleChangeFilter}
+            tab={tab}
           />
         </View>
       </Popup>

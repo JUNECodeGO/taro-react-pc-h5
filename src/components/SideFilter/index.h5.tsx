@@ -1,22 +1,32 @@
 /** @format */
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View} from '@tarojs/components';
 import {Collapse, Radio} from '@nutui/nutui-react-taro';
 import {ArrowUp2} from '@nutui/icons-react-taro';
 import {FilterCategory} from './constants';
+import {TableTabType} from '@/common/type';
 
 import './index.scss';
 
-const SideFilter = props => {
-  const {className = '', filters, setFilters} = props;
+interface SideFilterProps {
+  className?: string;
+  handleSearch: (val: string) => void;
+  tab: TableTabType;
+}
+
+const SideFilter = React.memo((props: SideFilterProps) => {
+  const {className = '', handleSearch, tab} = props;
+  const [filters, setFilters] = useState<string[]>([]);
 
   const handleChange = useCallback(val => {
     setFilters([val]);
+    handleSearch(val);
   }, []);
+
   return (
     <View className={`side-filter ${className}`}>
       <Collapse defaultActiveName={['category']}>
-        {FilterCategory.map(selection => (
+        {FilterCategory[tab].map(selection => (
           <Collapse.Item
             key={selection.name}
             title={selection.title}
@@ -37,6 +47,6 @@ const SideFilter = props => {
       </Collapse>
     </View>
   );
-};
+});
 
-export default React.memo(SideFilter);
+export default SideFilter;
