@@ -3,6 +3,13 @@
   border-radius: 1rem;
   padding: 4rem 1rem 1rem 1rem;
   margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+
+  &.wx {
+    align-items: center;
+    padding-bottom: 6rem;
+  }
 
   .login-button {
     height: 48px;
@@ -25,18 +32,23 @@
     line-height: 22px;
   }
 
-  .primary {
-    color: $color-primary;
-    font-weight: 600;
-  }
 
   .underline {
-
     text-decoration-line: underline;
   }
 
+  .wx-button {
+    margin: 2rem 0 0 0;
+    padding: 1.7rem 0;
+    width: 100%;
+
+  }
+
   .forget {
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
     margin-top: 1rem;
+    color: #637381;
+
   }
 }

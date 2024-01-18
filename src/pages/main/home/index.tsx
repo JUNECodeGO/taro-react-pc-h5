@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import {homeMenus, dataList} from './constant';
 import Navigator from '@/common/utils/navigator';
+import Footer from '@/components/Footer';
 
 import './index.scss';
 
@@ -26,6 +27,9 @@ const options = [
     label: 'Jiangsu',
   },
 ];
+
+const categories = ['产胶作物', '热带牧草', '热带水果', '热带粮食作物'];
+const sources = ['产胶作物', '热带牧草', '热带水果', '热带粮食作物'];
 
 export default function Home() {
   const navLink = useMemo(() => {
@@ -121,9 +125,36 @@ export default function Home() {
             />
           </Space.Compact>
         </div>
-        <div>资源目录</div>
-        <div>专题资源</div>
+        <div className='home-sub-title'>资源目录</div>
+        <Row
+          gutter={{
+            md: 16,
+            lg: 16,
+            xl: 16,
+          }}
+          className='home-card'>
+          {categories.map((item, index) => (
+            <Col key={String(index)} xl={12} lg={12} md={12} xs={24}>
+              <div className='home-card-content'>{item}</div>
+            </Col>
+          ))}
+        </Row>
+        <div className='home-sub-title'>专题资源</div>
+        <Row
+          gutter={{
+            md: 16,
+            lg: 16,
+            xl: 16,
+          }}
+          className='home-card'>
+          {sources.map((item, index) => (
+            <Col key={String(index)} xl={12} lg={12} md={12} xs={24}>
+              <div className='home-card-content'>{item}</div>
+            </Col>
+          ))}
+        </Row>
         <Divider className='divider' />
+        <Footer />
       </Col>
     </Row>
   );

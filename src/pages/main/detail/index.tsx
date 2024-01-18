@@ -4,7 +4,6 @@ import {View, Text} from '@tarojs/components';
 import {Button} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import Breadcrumb from '@/components/Bread';
-import Footer from '@/components/Footer';
 
 import './index.scss';
 
@@ -34,7 +33,7 @@ const DetailPage = () => {
   const breadList = useMemo(
     () => [
       {
-        path: '/search',
+        path: 'listing',
         breadcrumbName: '列表',
       },
       {

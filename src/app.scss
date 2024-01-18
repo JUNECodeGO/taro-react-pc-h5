@@ -48,8 +48,15 @@ page {
   --nutui-form-item-label-width: 100px;
   --nutui-radiogroup-radio-margin: 0 0 0.8rem 0;
   --nutui-radiogroup-radio-label-margin: 0 10px;
-  // 自定义变量
 
+  --nutui-tabs-titles-background-color: #fff; // 自定义变量
+  --nutui-tabs-titles-item-color: #637381;
+  --nutui-tabs-titles-item-active-color: #212B36;
+  --nutui-tabs-titles-item-active-font-weight: 600;
+  --nutui-tabs-titles-font-size: 14px;
+  --nutui-tabs-titles-item-active-font-size: 14px;
+  --nutui-tabs-titles-padding: 0;
+  --nutui-tabs-tab-line-width: 0;
   --background-color: #fff;
 
   // 全局设置

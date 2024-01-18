@@ -15,6 +15,8 @@ if (process.env.TARO_ENV === 'h5') {
       'pages/main/signIn/index',
       'pages/main/detail/index',
       'pages/main/apply/index',
+      'pages/main/search/index',
+      'pages/main/password/index',
     ],
   };
 } else {
@@ -28,13 +30,7 @@ if (process.env.TARO_ENV === 'h5') {
     subPackages: [
       {
         root: 'pages/main',
-        pages: [
-          'add/index',
-          'login/index',
-          'signIn/index',
-          'detail/index',
-          'apply/index',
-        ],
+        pages: ['add/index', 'login/index', 'detail/index', 'apply/index'],
       },
     ],
     tabBar: {

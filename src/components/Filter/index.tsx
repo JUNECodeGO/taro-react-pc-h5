@@ -12,6 +12,7 @@ import {
 } from '@nutui/icons-react-taro';
 import SideFilter from '../SideFilter/index.h5';
 import Navigator from '@/common/utils/navigator';
+import {TableTabType} from '@/common/type';
 
 import './index.scss';
 
@@ -24,7 +25,7 @@ const CheckItem = ({label, value}) => {
   );
 };
 
-const Filter = ({handleSearch, total, tab}) => {
+const Filter = ({handleSearch, total, tab, className = ''}) => {
   const [visible, setVisible] = useState(false);
   const [filters, setFilters] = useState<string[]>([]);
 
@@ -43,7 +44,7 @@ const Filter = ({handleSearch, total, tab}) => {
   }, []);
 
   const handelSave = useCallback(() => {
-    setFilters(selection);
+    handleSearch(filters);
   }, []);
 
   const handleChangeFilter = useCallback(val => {
@@ -52,21 +53,26 @@ const Filter = ({handleSearch, total, tab}) => {
   }, []);
 
   return (
-    <View className='filter-wrapper '>
+    <View className={`filter-wrapper ${className}`}>
       <View className='result-wrapper'>
-        <View>
-          <Text className='result-total'>{`${total} 条`}</Text>
-          <Text className='result-text'>搜索结果</Text>
-        </View>
+        {tab !== TableTabType.SUB && (
+          <View>
+            <Text className='result-total'>{`${total} 条`}</Text>
+            <Text className='result-text'>搜索结果</Text>
+          </View>
+        )}
+
         <View>
           <Button
             type='primary'
             icon={<Search color='#fff' />}
             onClick={handleSearch}
           />
-          <Button icon={<Add />} style={{marginLeft: 8}} onClick={handleAdd}>
-            新增资源
-          </Button>
+          {tab === TableTabType.MINE && (
+            <Button icon={<Add />} style={{marginLeft: 8}} onClick={handleAdd}>
+              新增资源
+            </Button>
+          )}
         </View>
       </View>
 
@@ -116,30 +122,33 @@ const Filter = ({handleSearch, total, tab}) => {
               clearable
             />
           </Form.Item>
-          <More size={24} className='more' onClick={changePopupVisible} />
+          {tab !== TableTabType.SUB && (
+            <More size={24} className='more' onClick={changePopupVisible} />
+          )}
         </View>
       </Form>
-
-      <Popup
-        visible={visible}
-        className='popup-filter'
-        position='bottom'
-        onClose={changePopupVisible}>
-        <View className='popup-filter-content'>
-          <View className='popup-filter-title'>
-            <Close onClick={changePopupVisible} />
-            <Text>搜索过滤</Text>
-            <Button type='primary' size='small' onClick={handelSave}>
-              保存
-            </Button>
+      {tab !== TableTabType.SUB && (
+        <Popup
+          visible={visible}
+          className='popup-filter'
+          position='bottom'
+          onClose={changePopupVisible}>
+          <View className='popup-filter-content'>
+            <View className='popup-filter-title'>
+              <Close onClick={changePopupVisible} />
+              <Text>搜索过滤</Text>
+              <Button type='primary' size='small' onClick={handelSave}>
+                保存
+              </Button>
+            </View>
+            <SideFilter
+              className='popup-filter'
+              handleSearch={handleChangeFilter}
+              tab={tab}
+            />
           </View>
-          <SideFilter
-            className='popup-filter'
-            handleSearch={handleChangeFilter}
-            tab={tab}
-          />
-        </View>
-      </Popup>
+        </Popup>
+      )}
     </View>
   );
 };

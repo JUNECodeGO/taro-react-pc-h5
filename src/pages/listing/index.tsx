@@ -13,156 +13,14 @@ import BasicLayout from '@/components/BasicLayout';
 import SideFilter from '@/components/SideFilter/index.h5';
 import {isH5} from '@/common/utils';
 import useStore from '@/store';
+import {TableTabType} from '@/common/type';
 
 import './index.scss';
-import {TableTabType} from '@/common/type';
 
 const TabPane = React.memo(
   React.forwardRef((props: {tab: TableTabType}, ref) => {
     const {tab} = props;
-
-    const [data, setData] = useState([
-      {
-        name: 'Tom',
-        sex: '男',
-        record: '小学',
-        birthday: '2010-01-01',
-        age: 10,
-      },
-      {
-        name: 'Lucy',
-        sex: '女',
-        record: '本科',
-        birthday: '2000-01-01',
-        age: 30,
-      },
-      {
-        name: 'Jack',
-        sex: '男',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 4,
-      },
-      {
-        name: 'Sara',
-        sex: '女',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 6,
-      },
-      {
-        name: 'Frank',
-        sex: '男',
-        record: '幼儿园',
-        birthday: '2020-01-01',
-        age: 3,
-      },
-      {
-        name: 'Tom',
-        sex: '男',
-        record: '小学',
-        birthday: '2010-01-01',
-        age: 10,
-      },
-      {
-        name: 'Lucy',
-        sex: '女',
-        record: '本科',
-        birthday: '2000-01-01',
-        age: 30,
-      },
-      {
-        name: 'Jack',
-        sex: '男',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 4,
-      },
-      {
-        name: 'Sara',
-        sex: '女',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 6,
-      },
-      {
-        name: 'Frank',
-        sex: '男',
-        record: '幼儿园',
-        birthday: '2020-01-01',
-        age: 3,
-      },
-      {
-        name: 'Tom',
-        sex: '男',
-        record: '小学',
-        birthday: '2010-01-01',
-        age: 10,
-      },
-      {
-        name: 'Lucy',
-        sex: '女',
-        record: '本科',
-        birthday: '2000-01-01',
-        age: 30,
-      },
-      {
-        name: 'Jack',
-        sex: '男',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 4,
-      },
-      {
-        name: 'Sara',
-        sex: '女',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 6,
-      },
-      {
-        name: 'Frank',
-        sex: '男',
-        record: '幼儿园',
-        birthday: '2020-01-01',
-        age: 3,
-      },
-      {
-        name: 'Tom',
-        sex: '男',
-        record: '小学',
-        birthday: '2010-01-01',
-        age: 10,
-      },
-      {
-        name: 'Lucy',
-        sex: '女',
-        record: '本科',
-        birthday: '2000-01-01',
-        age: 30,
-      },
-      {
-        name: 'Jack',
-        sex: '男',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 4,
-      },
-      {
-        name: 'Sara',
-        sex: '女',
-        record: '高中',
-        birthday: '2020-01-01',
-        age: 6,
-      },
-      {
-        name: 'Frank',
-        sex: '男',
-        record: '幼儿园',
-        birthday: '2020-01-01',
-        age: 3,
-      },
-    ]);
+    const [data, setData] = useState([]);
 
     const handleSearch = useCallback(filter => {}, []);
 
@@ -178,6 +36,7 @@ const TabPane = React.memo(
     );
   })
 );
+
 const Listing = () => {
   const {
     useUserStore: {userInfo},
@@ -189,6 +48,7 @@ const Listing = () => {
     [TableTabType.ALL]: React.createRef(),
     [TableTabType.MINE]: React.createRef(),
   });
+
   const tabList = useMemo(() => {
     const tabs = [
       {
@@ -196,7 +56,7 @@ const Listing = () => {
         title: '所有',
       },
     ];
-    if (userInfo) {
+    if (!userInfo) {
       tabs.push({
         key: TableTabType.MINE,
         title: '我的',
@@ -225,7 +85,7 @@ const Listing = () => {
           <SideFilter handleSearch={handleSearch} tab={currentTab} />
         ) : null
       }>
-      <Tabs onChange={handleChangeTab} value={currentTab}>
+      <Tabs onChange={handleChangeTab} value={currentTab} align='left'>
         {tabList.map(item => (
           <Tabs.TabPane title={item.title} key={item.key}>
             <TabPane tab={item.key} ref={tabPaneRefs[item.key]} />

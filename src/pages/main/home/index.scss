@@ -104,6 +104,55 @@
     padding: 1.5rem;
     border-radius: 6px;
   }
+
+
+}
+
+.home-card {
+  padding-top: 1rem;
+
+  &-content {
+    font-size: 3.5rem;
+
+    color: $white;
+    background-image: linear-gradient(to bottom,
+        rgb(0 0 0 / 2%),
+        rgb(0 0 0 / 73%)),
+      url("@/assets/images/home_background.jpeg");
+    border-radius: 1rem;
+    padding: 0 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  div:nth-child(n) {
+    div {
+      background-position: top;
+    }
+  }
+
+  div:nth-child(n+1) {
+    div {
+      background-position: left;
+    }
+  }
+
+  div:nth-child(n+2) {
+    div {
+      background-position: right;
+    }
+  }
+
+  div:nth-child(n+3) {
+    div {
+      background-position: bottom;
+    }
+
+  }
+}
+
+.home-sub-title {
+  font-size: 1.25rem;
+  margin-top: 1rem;
 }
 
 .home-search {
@@ -158,12 +207,16 @@
         padding: 0;
         box-shadow: none;
       }
+
+
     }
 
     .home-about {
       margin-top: 0;
-      background-color: transparent;
+      // background-color: transparent;
     }
+
+
   }
 
   .home-search {

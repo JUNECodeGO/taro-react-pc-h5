@@ -8,6 +8,7 @@ import Navigator from '@/common/utils/navigator';
 import useStore from '@/store';
 
 import './index.scss';
+import PasswordForm from '@/components/PasswardForm';
 
 enum TabType {
   account = 'account',
@@ -50,39 +51,7 @@ const Account = () => {
       case TabType.password:
         return (
           <View className='card'>
-            <Form
-              labelPosition='left'
-              divider
-              footer={
-                <>
-                  <Button block type='primary' className='login-button'>
-                    确认修改
-                  </Button>
-                </>
-              }>
-              <Form.Item label='当前密码' name='username'>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入用户名'
-                  type='text'
-                />
-              </Form.Item>
-
-              <Form.Item label='新设密码' name='username'>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入密码'
-                  type='password'
-                />
-              </Form.Item>
-              <Form.Item label='重新输入' name='username'>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入密码'
-                  type='password'
-                />
-              </Form.Item>
-            </Form>
+            <PasswordForm />
           </View>
         );
       case TabType.account:

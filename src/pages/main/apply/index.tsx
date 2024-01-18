@@ -11,7 +11,7 @@ const ApplyPage = () => {
   const breadList = useMemo(
     () => [
       {
-        path: '/search',
+        path: 'listing',
         breadcrumbName: '列表',
       },
       {
