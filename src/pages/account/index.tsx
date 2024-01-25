@@ -3,12 +3,13 @@
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Image, Input} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import Navigator from '@/common/utils/navigator';
 import useStore from '@/store';
+import PasswordForm from '@/components/PasswardForm';
+import {isH5} from '@/common/utils';
 
 import './index.scss';
-import PasswordForm from '@/components/PasswardForm';
 
 enum TabType {
   account = 'account',
@@ -21,10 +22,15 @@ const tabList = [
     label: '个人资料',
     name: TabType.account,
   },
-  {
-    label: '修改密码',
-    name: TabType.password,
-  },
+  ...(isH5
+    ? [
+        {
+          label: '修改密码',
+          name: TabType.password,
+        },
+      ]
+    : []),
+
   {
     label: '我的共享',
     name: TabType.share,

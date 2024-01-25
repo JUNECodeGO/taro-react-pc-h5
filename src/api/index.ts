@@ -6,7 +6,7 @@ import Taro from '@tarojs/taro';
 import Navigator from '@/common/utils/navigator';
 
 const instance = axios.create({
-  baseURL: process.env.BASE_ENV,
+  baseURL: '/api',
   timeout: 10000,
 });
 
@@ -27,18 +27,18 @@ instance.interceptors.request.use(
   error => Promise.reject(error)
 );
 
-// 响应拦截器
-instance.interceptors.response.use(
-  response => {
-    httpMessageHandle(response.data);
-    return response;
-  },
-  error => {
-    const {data} = error.response;
-    httpMessageHandle(data, true);
-    return Promise.reject(error);
-  }
-);
+// // 响应拦截器
+// instance.interceptors.response.use(
+//   response => {
+//     httpMessageHandle(response.data);
+//     return response;
+//   },
+//   error => {
+//     const {data} = error.response;
+//     httpMessageHandle(data, true);
+//     return Promise.reject(error);
+//   }
+// );
 
 const httpMessageHandle = (
   data: {code: any; message: any},

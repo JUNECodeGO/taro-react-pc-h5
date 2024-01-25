@@ -1,16 +1,9 @@
 /** @format */
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {Text, View} from '@tarojs/components';
-import {Button, Form, Input, Popup} from '@nutui/nutui-react-taro';
-import {
-  Search,
-  MaskClose,
-  Del,
-  Close,
-  More,
-  Add,
-} from '@nutui/icons-react-taro';
-import SideFilter from '../SideFilter/index.h5';
+import {Button, Form, Input} from '@nutui/nutui-react-taro';
+import {Search, MaskClose, Del, More, Add} from '@nutui/icons-react-taro';
+
 import Navigator from '@/common/utils/navigator';
 import {TableTabType} from '@/common/type';
 
@@ -25,31 +18,16 @@ const CheckItem = ({label, value}) => {
   );
 };
 
-const Filter = ({handleSearch, total, tab, className = ''}) => {
-  const [visible, setVisible] = useState(false);
-  const [filters, setFilters] = useState<string[]>([]);
-
-  const changePopupVisible = useCallback(e => {
-    setVisible(pre => !pre);
-    e?.stopPropagation();
-  }, []);
-
-  const handleSubmit = useCallback(e => {
-    handleSearch();
-    e?.stopPropagation();
-  }, []);
-
+const Filter = ({
+  handleSearch,
+  total,
+  tab,
+  className = '',
+  changePopupVisible,
+  filters,
+}) => {
   const handleAdd = useCallback(() => {
     Navigator.redirectTo('main/add');
-  }, []);
-
-  const handelSave = useCallback(() => {
-    handleSearch(filters);
-  }, []);
-
-  const handleChangeFilter = useCallback(val => {
-    handleSearch(val);
-    setFilters([val]);
   }, []);
 
   return (
@@ -127,28 +105,6 @@ const Filter = ({handleSearch, total, tab, className = ''}) => {
           )}
         </View>
       </Form>
-      {tab !== TableTabType.SUB && (
-        <Popup
-          visible={visible}
-          className='popup-filter'
-          position='bottom'
-          onClose={changePopupVisible}>
-          <View className='popup-filter-content'>
-            <View className='popup-filter-title'>
-              <Close onClick={changePopupVisible} />
-              <Text>搜索过滤</Text>
-              <Button type='primary' size='small' onClick={handelSave}>
-                保存
-              </Button>
-            </View>
-            <SideFilter
-              className='popup-filter'
-              handleSearch={handleChangeFilter}
-              tab={tab}
-            />
-          </View>
-        </Popup>
-      )}
     </View>
   );
 };

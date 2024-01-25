@@ -1,6 +1,7 @@
 /** @format */
 import React, {
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -16,12 +17,14 @@ import useStore from '@/store';
 import {TableTabType} from '@/common/type';
 
 import './index.scss';
+import FilterPopup from '@/components/FilterPopup';
+import {searchList} from '@/api/search';
 
 const TabPane = React.memo(
   React.forwardRef((props: {tab: TableTabType}, ref) => {
-    const {tab} = props;
+    const {tab, changePopupVisible} = props;
     const [data, setData] = useState([]);
-
+    const [filter, setFilter] = useState([]);
     const handleSearch = useCallback(filter => {}, []);
 
     useImperativeHandle(ref, () => ({
@@ -30,7 +33,13 @@ const TabPane = React.memo(
 
     return (
       <>
-        <Filter handleSearch={handleSearch} total={data.length} tab={tab} />
+        <Filter
+          handleSearch={handleSearch}
+          total={data.length}
+          tab={tab}
+          filters={filter}
+          changePopupVisible={changePopupVisible}
+        />
         <Table data={data} setData={setData} tab={tab} />
       </>
     );
@@ -41,7 +50,7 @@ const Listing = () => {
   const {
     useUserStore: {userInfo},
   } = useStore();
-
+  const popRef = useRef();
   const [currentTab, setCurrentTab] = useState(TableTabType.ALL);
 
   const tabPaneRefs = useRef({
@@ -76,6 +85,23 @@ const Listing = () => {
     // }
   }, []);
 
+  const handlePopupVisible = useCallback(() => {
+    if (popRef.current && popRef.current.handleClose)
+      popRef.current.handleClose();
+  }, []);
+
+  useEffect(() => {
+    async function a() {
+      try {
+        const result = await searchList();
+        console.log(result, '+++');
+      } catch (error) {
+        console.log(error, '===');
+      }
+    }
+    a();
+  }, []);
+
   return (
     <BasicLayout
       title='资源列表'
@@ -88,10 +114,15 @@ const Listing = () => {
       <Tabs onChange={handleChangeTab} value={currentTab} align='left'>
         {tabList.map(item => (
           <Tabs.TabPane title={item.title} key={item.key}>
-            <TabPane tab={item.key} ref={tabPaneRefs[item.key]} />
+            <TabPane
+              tab={item.key}
+              ref={tabPaneRefs[item.key]}
+              changePopupVisible={handlePopupVisible}
+            />
           </Tabs.TabPane>
         ))}
       </Tabs>
+      <FilterPopup ref={popRef} tab={currentTab} handelSave={handleSearch} />
     </BasicLayout>
   );
 };

@@ -135,35 +135,7 @@
   }
 }
 
-.popup-filter {
-  height: 25rem;
-  overflow: hidden;
 
-  &-content {
-    height: 100%;
-    position: relative;
-    overflow-y: scroll;
-  }
-
-  &-title {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1;
-    background-color: #fff;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    box-sizing: border-box;
-  }
-
-  .radio-wrapper {
-    padding: 0 1rem;
-  }
-}
 
 @media (min-width: 756px) {
   .filter-wrapper {
