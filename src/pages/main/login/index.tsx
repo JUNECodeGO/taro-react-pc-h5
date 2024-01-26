@@ -1,16 +1,58 @@
 /** @format */
-import {View, Text, Button} from '@tarojs/components';
-import {Radio} from '@nutui/nutui-react-taro';
+import {useCallback, useState} from 'react';
+import {View, Text} from '@tarojs/components';
+import {Radio, Button} from '@nutui/nutui-react-taro';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Taro from '@tarojs/taro';
-
-import {useCallback, useState} from 'react';
+import {getUserAPI, loginAPI} from '@/api/user';
+import {useStore} from '@/store';
+import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
-import {loginAPI} from '@/api/user';
 
 export default function Login() {
-  const [checked, setChecked] = useState(false);
+  const {
+    useUserStore: {setToken, setUserInfo},
+  } = useStore();
+  const [checked, setChecked] = useState(true);
+
+  const handleLogin = useCallback(async () => {
+    try {
+      const loginInfo = await Taro.login();
+      const profile = (await Taro.getUserInfo()) || {};
+
+      const res =
+        (await loginAPI({
+          code: loginInfo?.code,
+          encrypted_data: profile.encryptedData,
+          iv: profile.iv,
+        })) || {};
+      if (res && res?.code === 0) {
+        const {data} = res || {};
+        setToken(data.token);
+        return true;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      return null;
+    }
+  }, []);
+
+  const handleSuccess = useCallback(async () => {
+    try {
+      Taro.showLoading;
+      const res = await getUserAPI();
+      if (res?.data) {
+        console.log(res.data, ')))))');
+        setUserInfo(res.data);
+      }
+    } catch (error) {
+      Taro.showToast({title: '刷新失败'});
+    } finally {
+      Taro.hideKeyboard();
+    }
+  }, []);
 
   const handleGetUserInfo = useCallback(async () => {
     if (!checked) {
@@ -21,34 +63,23 @@ export default function Login() {
       });
       return false;
     }
-
-    try {
-      Taro.showLoading({title: '授权中'});
-      const loginInfo = await Taro.login();
-      const profile = (await Taro.getUserInfo()) || {};
-      const res =
-        (await loginAPI({
-          code: loginInfo?.code,
-          encrypted_data: profile.encryptedData,
-          iv: profile.iv,
-        })) || {};
-      console.log(res);
-      if (res?.code === 0) {
-        //   storage.setUserToken(data.token);
-        //   this.options.success({code: 0});
-      } else {
-        // this.options.success({code: 1001});
-      }
-      return;
-    } catch (e) {
+    Taro.showLoading({title: '授权中'});
+    const result = await handleLogin();
+    Taro.hideLoading();
+    if (result) {
       Taro.showToast({
-        title: '授权失败',
+        title: '登录成功',
+      });
+
+      Navigator.navigateBack({
+        success: handleSuccess,
+      });
+    } else {
+      Taro.showToast({
+        title: '授权失败, 请稍后再试',
         icon: 'none',
         duration: 1000,
       });
-      // this.options.success({code: 1002});
-    } finally {
-      Taro.hideLoading();
     }
   }, []);
 
@@ -64,7 +95,7 @@ export default function Login() {
           className='wx-button'
           type='primary'
           openType='getUserInfo'
-          onGetUserInfo={handleGetUserInfo}>
+          onClick={handleGetUserInfo}>
           微信一键登录
         </Button>
         <View className='forget '>

@@ -1,12 +1,13 @@
 /** @format */
 
 import axios, {type Method} from 'taro-axios';
-import useStore from '@/store';
+import {useStore} from '@/store';
 import Taro from '@tarojs/taro';
 import Navigator from '@/common/utils/navigator';
+import {isH5} from '@/common/utils';
 
 const instance = axios.create({
-  baseURL: '/api',
+  baseURL: isH5 ? '/api' : 'https://ctcgris.cn/ctbigdata/home/api',
   timeout: 10000,
 });
 
@@ -16,7 +17,6 @@ instance.interceptors.request.use(
     const {
       useUserStore: {token},
     } = useStore();
-
     // token配置请求头
     if (!response.headers?.authorization && token) {
       response.headers.Authorization = `Bearer ${token}`;
@@ -27,18 +27,21 @@ instance.interceptors.request.use(
   error => Promise.reject(error)
 );
 
-// // 响应拦截器
-// instance.interceptors.response.use(
-//   response => {
-//     httpMessageHandle(response.data);
-//     return response;
-//   },
-//   error => {
-//     const {data} = error.response;
-//     httpMessageHandle(data, true);
-//     return Promise.reject(error);
-//   }
-// );
+// 响应拦截器
+instance.interceptors.response.use(
+  response => {
+    httpMessageHandle(response?.data);
+    if (response?.data) {
+      return response.data;
+    }
+    return null;
+  },
+  error => {
+    const {data} = error.response || {};
+    httpMessageHandle(data, true);
+    return Promise.reject(error);
+  }
+);
 
 const httpMessageHandle = (
   data: {code: any; message: any},
@@ -46,7 +49,7 @@ const httpMessageHandle = (
 ) => {
   // userStore
   const {
-    useUserStore: {removeLocalToken, logout, changeLogout},
+    useUserStore: {removeLocalToken, logout, changeLogout, removeUserInfo},
   } = useStore();
   /** 错误集中提示
    * 400 => 表示前端传参可能出现错误
@@ -61,7 +64,7 @@ const httpMessageHandle = (
         icon: 'error',
       });
       break;
-    case '401':
+    case '4003':
       if (logout) {
         Taro.showModal({
           title: '系统提示',
@@ -72,6 +75,7 @@ const httpMessageHandle = (
             if (res.confirm) {
               changeLogout(true);
               removeLocalToken('');
+              removeUserInfo();
               Navigator.redirectTo('main/login');
             } else if (res.cancel) {
               changeLogout(false);
@@ -107,6 +111,7 @@ const httpMessageHandle = (
 export interface ResponseData<T> {
   status: number;
   data: T;
+  code: number;
 }
 
 /**

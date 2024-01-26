@@ -2,13 +2,12 @@
 
 import {makeAutoObservable} from 'mobx';
 import Taro from '@tarojs/taro';
+import {UserInfo} from '@/api/user/dto';
 
 export default class UseUserInfoStore {
-  userInfo = null;
+  userInfo: UserInfo | null = null;
 
-  roles = [] as string[];
-
-  permissions = [] as string[];
+  role = null;
 
   token = '' as string;
 
@@ -24,19 +23,14 @@ export default class UseUserInfoStore {
   }
 
   setUserInfo = data => {
-    this.userInfo = data.userInfo;
-    this.roles = data.roles;
-    this.permissions = data.permissions;
+    const {role, ...rest} = data || {};
+    this.userInfo = rest;
+    this.role = role;
   };
 
   removeUserInfo = () => {
     this.userInfo = null;
-    this.roles = [];
-    this.permissions = [];
-  };
-
-  setProfile = data => {
-    this.userInfo = data;
+    this.role = null;
   };
 
   setToken = (token: string) => {

@@ -1,15 +1,16 @@
 /** @format */
 
 import {http} from '@/api';
-
+import {UserInfo} from './dto';
 // 登录
-export const loginAPI = code => http('POST', '/wx_signin', {code});
+export const loginAPI = data =>
+  http<{token: string}>('POST', '/wx_signin', data);
 
 // 获取用户信息(包含权限)
-export const getUserAPI = () => http('GET', '/get_userinfo');
+export const getUserAPI = () => http<UserInfo>('GET', '/get_userinfo');
 
 // 修改个人基本信息
-export const updateUserInfoAPI = data => http('PUT', '/change_userinfo', data);
+export const updateUserInfoAPI = data => http('POST', '/change_userinfo', data);
 
 // 验证图片
 export const captchaImageAPI = () => http('GET', '/user/captchaImage');

@@ -71,48 +71,49 @@
     }
   }
 
-  .form {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0rem 1.25rem;
+}
 
-    .nut-cell-group-wrap {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+.form {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0rem 1.25rem;
+
+  .nut-cell-group-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .nut-form-item {
+    border-radius: 0.5rem;
+    border: 1px solid rgba(145, 158, 171, 0.2);
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .nut-form-item-label {
+    padding-left: 0;
+    color: #637381;
+    width: 3.2rem;
+  }
+
+  .last-form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 
     .nut-form-item {
-      border-radius: 0.5rem;
-      border: 1px solid rgba(145, 158, 171, 0.2);
-      margin-bottom: 1rem;
-      width: 100%;
-    }
-
-    .nut-form-item-label {
-      padding-left: 0;
-      color: #637381;
-      width: 3.2rem;
-    }
-
-    .last-form {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-
-      .nut-form-item {
-        width: auto;
-        flex-grow: 1;
-
-      }
-    }
-
-    .more {
-      display: block;
-      transform: rotateZ(90deg);
-      margin: 0.7rem 1rem 0 1rem;
+      width: auto;
+      flex-grow: 1;
 
     }
+  }
+
+  .more {
+    display: block;
+    transform: rotateZ(90deg);
+    margin: 0.7rem 1rem 0 1rem;
+
   }
 }
 
@@ -138,32 +139,29 @@
 
 
 @media (min-width: 756px) {
-  .filter-wrapper {
-    .form {
 
-      .nut-cell-group-wrap {
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-between;
+  .form {
+    .nut-cell-group-wrap {
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
 
-      }
+    }
 
+    .nut-form-item {
+      width: 30%;
+    }
+
+    .last-form {
       .nut-form-item {
-        width: 30%;
-      }
-
-      .last-form {
-        .nut-form-item {
-          width: 100%;
-        }
-      }
-
-      .more {
-        display: none;
-
-
+        width: 100%;
       }
     }
+
+    .more {
+      display: none;
+    }
   }
+
 
 }

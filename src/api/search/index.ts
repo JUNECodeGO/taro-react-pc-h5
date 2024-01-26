@@ -1,10 +1,18 @@
 /** @format */
 
 import {http} from '@/api';
+import {Cate} from './dto';
 
-// 登录
-export const searchList = code =>
-  http('GET', '/get_categories', {
-    page_size: 5,
-    page_num: 1,
-  });
+export const searchListAll = data =>
+  http<{
+    list: Cate[];
+    total: number;
+    hasMode: boolean;
+  }>('GET', '/get_categories', data);
+
+export const searchListMine = data =>
+  http<{
+    list: Cate[];
+    total: number;
+    hasMode: boolean;
+  }>('GET', '/get_categories', data);

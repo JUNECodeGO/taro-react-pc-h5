@@ -13,28 +13,28 @@ const columns = {
   [TableTabType.ALL]: [
     {
       title: '种质编号',
-      key: 'name',
+      key: 'cate_id',
       align: 'center',
       width: 80,
     },
     {
       title: '作（植）物名称',
-      key: 'sex',
+      key: 'cate_name',
       width: 110,
     },
     {
       title: '种质名称',
-      key: 'record',
+      key: 'cate_name_cn',
       width: 80,
     },
     {
       title: '科名',
-      key: 'birthday',
+      key: 'latin_name',
       width: 80,
     },
     {
       title: '属名或亚属名',
-      key: 'birthday',
+      key: 'species',
       width: 100,
     },
   ],
@@ -42,7 +42,7 @@ const columns = {
     {
       title: '种质编号',
       key: 'name',
-      align: 'center',
+      align: 'cate_id',
       width: 80,
     },
   ],

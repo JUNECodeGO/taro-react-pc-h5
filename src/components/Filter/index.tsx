@@ -1,7 +1,7 @@
 /** @format */
 import React, {useCallback} from 'react';
 import {Text, View} from '@tarojs/components';
-import {Button, Form, Input} from '@nutui/nutui-react-taro';
+import {Form, Button, Input} from '@nutui/nutui-react-taro';
 import {Search, MaskClose, Del, More, Add} from '@nutui/icons-react-taro';
 
 import Navigator from '@/common/utils/navigator';
@@ -18,14 +18,52 @@ const CheckItem = ({label, value}) => {
   );
 };
 
-const Filter = ({
-  handleSearch,
-  total,
-  tab,
-  className = '',
-  changePopupVisible,
-  filters,
-}) => {
+export const FilterForm = React.memo(props => {
+  const {form, tab, handleSearch, changePopupVisible} = props;
+  return (
+    <Form
+      labelPosition='left'
+      className='form'
+      form={form}
+      onFinish={handleSearch}>
+      <Form.Item label='名称' name='name'>
+        <Input
+          className='nut-input-text'
+          placeholder='请输入名称'
+          type='text'
+        />
+      </Form.Item>
+      <Form.Item label='特性' name='feature'>
+        <Input
+          className='nut-input-text'
+          placeholder='请输入特性'
+          type='text'
+        />
+      </Form.Item>
+      <Form.Item label='用途' name='usage'>
+        <Input
+          className='nut-input-text'
+          placeholder='请输入用途'
+          type='text'
+        />
+      </Form.Item>
+      <View className='last-form'>
+        <Form.Item label='描述' name='keywords'>
+          <Input
+            className='nut-input-text'
+            placeholder='请输入描述'
+            type='text'
+          />
+        </Form.Item>
+        {tab !== TableTabType.SUB && (
+          <More size={24} className='more' onClick={changePopupVisible} />
+        )}
+      </View>
+    </Form>
+  );
+});
+
+const Filter = ({total, tab, className = '', filters, handleSubmit}) => {
   const handleAdd = useCallback(() => {
     Navigator.redirectTo('main/add');
   }, []);
@@ -44,7 +82,7 @@ const Filter = ({
           <Button
             type='primary'
             icon={<Search color='#fff' />}
-            onClick={handleSearch}
+            onClick={handleSubmit}
           />
           {tab === TableTabType.MINE && (
             <Button icon={<Add />} style={{marginLeft: 8}} onClick={handleAdd}>
@@ -65,46 +103,6 @@ const Filter = ({
           <Del className='delete-icon' />
         </View>
       ) : null}
-
-      <Form labelPosition='left' className='form'>
-        <Form.Item label='名称' name='username'>
-          <Input
-            className='nut-input-text'
-            placeholder='请输入字段A'
-            type='text'
-            clearable
-          />
-        </Form.Item>
-        <Form.Item label='特性' name='username'>
-          <Input
-            className='nut-input-text'
-            placeholder='请输入字段A'
-            type='text'
-            clearable
-          />
-        </Form.Item>
-        <Form.Item label='用途' name='username'>
-          <Input
-            className='nut-input-text'
-            placeholder='请输入字段A'
-            type='text'
-            clearable
-          />
-        </Form.Item>
-        <View className='last-form'>
-          <Form.Item label='描述' name='username'>
-            <Input
-              className='nut-input-text'
-              placeholder='请输入字段A'
-              type='text'
-              clearable
-            />
-          </Form.Item>
-          {tab !== TableTabType.SUB && (
-            <More size={24} className='more' onClick={changePopupVisible} />
-          )}
-        </View>
-      </Form>
     </View>
   );
 };

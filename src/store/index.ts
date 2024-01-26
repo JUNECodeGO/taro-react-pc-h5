@@ -1,6 +1,8 @@
 /** @format */
 
+import React from 'react';
 import UseUserStore from './modules/user';
+import {observer} from 'mobx-react';
 
 class RootStore {
   useUserStore: UseUserStore;
@@ -14,6 +16,7 @@ class RootStore {
 
 // 实例化操作
 const rootStore = new RootStore();
-const useStore = () => rootStore;
 
-export default useStore;
+export const storesContext = React.createContext(rootStore);
+const useStore = () => React.useContext(storesContext);
+export {observer, useStore};

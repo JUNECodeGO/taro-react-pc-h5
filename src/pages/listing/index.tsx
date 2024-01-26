@@ -7,43 +7,89 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {Tabs} from '@nutui/nutui-react-taro';
+import {Tabs, Form} from '@nutui/nutui-react-taro';
 import Table from '@/components/Table';
-import Filter from '@/components/Filter';
+import Filter, {FilterForm} from '@/components/Filter';
 import BasicLayout from '@/components/BasicLayout';
 import SideFilter from '@/components/SideFilter/index.h5';
 import {isH5} from '@/common/utils';
-import useStore from '@/store';
+import {useStore} from '@/store';
 import {TableTabType} from '@/common/type';
+import FilterPopup from '@/components/FilterPopup';
+import {searchListAll, searchListMine} from '@/api/search';
+import Taro from '@tarojs/taro';
 
 import './index.scss';
-import FilterPopup from '@/components/FilterPopup';
-import {searchList} from '@/api/search';
 
 const TabPane = React.memo(
-  React.forwardRef((props: {tab: TableTabType}, ref) => {
-    const {tab, changePopupVisible} = props;
-    const [data, setData] = useState([]);
-    const [filter, setFilter] = useState([]);
-    const handleSearch = useCallback(filter => {}, []);
+  React.forwardRef(
+    (props: {tab: TableTabType; changePopupVisible: () => void}, ref) => {
+      const {tab, changePopupVisible} = props;
+      const [data, setData] = useState([]);
+      const [filter, setFilter] = useState([]);
+      const [form] = Form.useForm();
+      const handleSearch = useCallback(values => {
+        console.log(values, '+++');
+        fetchList(values);
+      }, []);
 
-    useImperativeHandle(ref, () => ({
-      handleSearch: handleSearch,
-    }));
+      const [pageParams, setPageParams] = useState({
+        current: 1,
+        pageSize: 5,
+        total: 0,
+      });
 
-    return (
-      <>
-        <Filter
-          handleSearch={handleSearch}
-          total={data.length}
-          tab={tab}
-          filters={filter}
-          changePopupVisible={changePopupVisible}
-        />
-        <Table data={data} setData={setData} tab={tab} />
-      </>
-    );
-  })
+      const fetchList = useCallback(async (params = {}) => {
+        try {
+          Taro.showLoading();
+          const {pageSize} = pageParams;
+          const fn = tab === TableTabType.ALL ? searchListAll : searchListMine;
+          const res = await fn({
+            page_num: 1,
+            page_size: pageSize,
+            ...params,
+          });
+
+          if (res && !res.code) {
+            const {List = [], total} = res.data || {};
+            setData(List);
+            setPageParams(pre => ({...pre, total}));
+          }
+        } catch (error) {
+        } finally {
+          Taro.hideLoading();
+        }
+      }, []);
+
+      useEffect(() => {
+        fetchList();
+      }, []);
+
+      useImperativeHandle(ref, () => ({
+        handleSearch: handleSearch,
+      }));
+
+      return (
+        <>
+          <Filter
+            handleSubmit={() => {
+              form.submit();
+            }}
+            total={pageParams.total}
+            tab={tab}
+            filters={filter}
+          />
+          <FilterForm
+            tab={tab}
+            changePopupVisible={changePopupVisible}
+            form={form}
+            handleSearch={handleSearch}
+          />
+          <Table data={data} setData={setData} tab={tab} />
+        </>
+      );
+    }
+  )
 );
 
 const Listing = () => {
@@ -65,7 +111,7 @@ const Listing = () => {
         title: '所有',
       },
     ];
-    if (!userInfo) {
+    if (userInfo) {
       tabs.push({
         key: TableTabType.MINE,
         title: '我的',
@@ -88,18 +134,6 @@ const Listing = () => {
   const handlePopupVisible = useCallback(() => {
     if (popRef.current && popRef.current.handleClose)
       popRef.current.handleClose();
-  }, []);
-
-  useEffect(() => {
-    async function a() {
-      try {
-        const result = await searchList();
-        console.log(result, '+++');
-      } catch (error) {
-        console.log(error, '===');
-      }
-    }
-    a();
   }, []);
 
   return (
@@ -126,4 +160,5 @@ const Listing = () => {
     </BasicLayout>
   );
 };
+
 export default Listing;

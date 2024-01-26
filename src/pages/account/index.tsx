@@ -3,13 +3,15 @@
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Image, Input} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import Navigator from '@/common/utils/navigator';
-import useStore from '@/store';
+import useStore, {observer} from '@/store';
 import PasswordForm from '@/components/PasswardForm';
 import {isH5} from '@/common/utils';
 
 import './index.scss';
+import Taro, {useDidShow} from '@tarojs/taro';
+import {updateUserInfoAPI} from '@/api/user';
 
 enum TabType {
   account = 'account',
@@ -44,6 +46,7 @@ const Account = () => {
   const [tab, setTab] = useState(TabType.account);
 
   const handleJumpLogin = useCallback(() => {
+    if (userInfo) return;
     Navigator.navigateTo('main/login');
   }, []);
 
@@ -51,6 +54,16 @@ const Account = () => {
     setTab(tab);
   }, []);
 
+  const handleChangeUserInfo = useCallback(async values => {
+    try {
+      Taro.showLoading();
+      await updateUserInfoAPI(values);
+    } catch (error) {
+    } finally {
+      Taro.hideLoading();
+    }
+  }, []);
+  console.log(userInfo, '++++');
   const renderAccountContent = useMemo(() => {
     if (!userInfo) return null;
     switch (tab) {
@@ -66,32 +79,31 @@ const Account = () => {
             <Form
               labelPosition='left'
               divider
+              initialValues={userInfo}
+              onFinish={handleChangeUserInfo}
               footer={
                 <>
-                  <Button block type='primary' className='login-button'>
+                  <Button
+                    block
+                    type='primary'
+                    className='login-button'
+                    formType='submit'>
                     确认修改
                   </Button>
                 </>
               }>
-              <Form.Item label='显示昵称' name='username'>
+              <Form.Item label='显示昵称' name='nickName'>
                 <Input
                   className='nut-input-text'
-                  placeholder='请输入用户名'
+                  placeholder='请输入昵称'
                   type='text'
                 />
               </Form.Item>
 
-              <Form.Item label='绑定邮箱' name='username'>
+              <Form.Item label='绑定邮箱' name='email'>
                 <Input
                   className='nut-input-text'
-                  placeholder='请输入密码'
-                  type='password'
-                />
-              </Form.Item>
-              <Form.Item label='手机号码' name='username'>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入密码'
+                  placeholder='请输入邮箱'
                   type='password'
                 />
               </Form.Item>
@@ -103,7 +115,7 @@ const Account = () => {
       default:
         break;
     }
-  }, []);
+  }, [userInfo]);
 
   return (
     <BasicLayout className='account'>
@@ -117,7 +129,9 @@ const Account = () => {
             radius='50%'
             className='avatar'
           />
-          {userInfo ? null : <Text className='name'>快速登录/注册</Text>}
+          <Text className='name'>
+            {userInfo ? userInfo.nickName : '快速登录/注册'}
+          </Text>
         </View>
         <View className='account-card-tab'>
           {tabList.map(item => (
@@ -137,4 +151,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default observer(Account);
