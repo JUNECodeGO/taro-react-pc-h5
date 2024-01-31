@@ -23,7 +23,7 @@ export const FilterForm = React.memo(props => {
   return (
     <Form
       labelPosition='left'
-      className='form'
+      className='filter-form'
       form={form}
       onFinish={handleSearch}>
       <Form.Item label='名称' name='name'>

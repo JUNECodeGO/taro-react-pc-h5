@@ -1,7 +1,7 @@
 /** @format */
 
 import axios, {type Method} from 'taro-axios';
-import {useStore} from '@/store';
+import {rootStore} from '@/store';
 import Taro from '@tarojs/taro';
 import Navigator from '@/common/utils/navigator';
 import {isH5} from '@/common/utils';
@@ -14,9 +14,7 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
   (response: any) => {
-    const {
-      useUserStore: {token},
-    } = useStore();
+    const {token} = rootStore.useUserStore || {};
     // token配置请求头
     if (!response.headers?.authorization && token) {
       response.headers.Authorization = `Bearer ${token}`;
@@ -50,7 +48,7 @@ const httpMessageHandle = (
   // userStore
   const {
     useUserStore: {removeLocalToken, logout, changeLogout, removeUserInfo},
-  } = useStore();
+  } = rootStore;
   /** 错误集中提示
    * 400 => 表示前端传参可能出现错误
    * 401 => 权限过期
@@ -64,7 +62,7 @@ const httpMessageHandle = (
         icon: 'error',
       });
       break;
-    case '4003':
+    case 4003:
       if (logout) {
         Taro.showModal({
           title: '系统提示',

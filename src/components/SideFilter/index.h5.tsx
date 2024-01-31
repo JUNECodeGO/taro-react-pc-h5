@@ -7,6 +7,7 @@ import {FilterCategory} from './constants';
 import {TableTabType} from '@/common/type';
 
 import './index.scss';
+import {getCategories} from '@/api/search';
 
 interface SideFilterProps {
   className?: string;
@@ -17,12 +18,25 @@ interface SideFilterProps {
 const SideFilter = React.memo((props: SideFilterProps) => {
   const {className = '', handleSearch, tab} = props;
   const [filters, setFilters] = useState<string[]>([]);
+  const [cates, setCates] = useState([]);
 
   const handleChange = useCallback(val => {
     setFilters([val]);
     handleSearch(val);
   }, []);
 
+  const initList = useCallback(async () => {
+    try {
+      const {List = []} = await getCategories();
+      console.log(results);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    initList();
+  }, []);
   return (
     <View className={`side-filter ${className}`}>
       <Collapse defaultActiveName={['category']}>

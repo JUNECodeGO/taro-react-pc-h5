@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <View className='header'>
-      <Text className='title'>植物种质资源保存与共享平台</Text>
+      <Text className='title'>热带作物种质资源引进中转平台</Text>
       <View className='header-right'>
         {isH5 ? <Menu list={MenuList} className='menu' /> : <></>}
         <Popover

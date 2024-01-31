@@ -1,11 +1,14 @@
 /** @format */
-import {useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {View, Text} from '@tarojs/components';
 import {Button} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import Breadcrumb from '@/components/Bread';
 
 import './index.scss';
+import Taro, {useRouter} from '@tarojs/taro';
+import Navigator from '@/common/utils/navigator';
+import {getCateDetail} from '@/api/search';
 
 const InfoList = [
   {name: '种质编号'},
@@ -30,6 +33,9 @@ const Info = ({label}) => {
 };
 
 const DetailPage = () => {
+  const router = useRouter();
+  const {id} = Navigator.serialize(router.params) || {};
+  const [data, setData] = useState();
   const breadList = useMemo(
     () => [
       {
@@ -42,6 +48,23 @@ const DetailPage = () => {
     ],
     []
   );
+
+  const fetchCateDetail = useCallback(async id => {
+    try {
+      Taro.showLoading();
+      const data = await getCateDetail({id});
+      console.log(data, '+++');
+    } catch (error) {
+    } finally {
+      Taro.hideLoading();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (id && !data) {
+      fetchCateDetail(id);
+    }
+  }, [id]);
 
   return (
     <BasicLayout className='detail-container'>

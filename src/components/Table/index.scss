@@ -3,10 +3,7 @@
   flex-direction: column;
   flex: 1;
   flex-grow: 0;
-
   background: #fff;
-
-  margin-top: 1rem;
   overflow: hidden;
 
   &.single {
@@ -18,7 +15,7 @@
 
   .home-table {
     background-color: $white;
-    // padding: 12px 0;
+
   }
 }
 
@@ -37,8 +34,15 @@
     transform: rotateZ(180deg);
     margin-right: 20px;
 
+    &.grey {
+      opacity: 0.5;
+    }
   }
+}
 
-  .next {}
+.next {
+  &.grey {
+    opacity: 0.5;
+  }
 
 }

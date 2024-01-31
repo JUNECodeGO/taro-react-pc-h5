@@ -1,9 +1,8 @@
 /** @format */
 
 import {View} from '@tarojs/components';
-
-import './index.scss';
 import {isH5} from '@/common/utils';
+import './index.scss';
 
 const LoginSignInWrapper = props => {
   return (

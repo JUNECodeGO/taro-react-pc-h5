@@ -14,3 +14,18 @@ export interface Cate {
   sort_order: string;
   species: string;
 }
+
+export interface Collection {
+  base_id: string;
+  cate1: string;
+  cate_name_cn: string;
+  collect_id: string;
+  collecting_date: string;
+  collecting_person: string;
+  enumber: string;
+  family: string;
+  genus: string;
+  germ_name: string;
+  scientific_name: string;
+  user_id: string;
+}

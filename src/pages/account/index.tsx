@@ -5,13 +5,15 @@ import {Button, Form, Image, Input} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import {useCallback, useMemo, useState} from 'react';
 import Navigator from '@/common/utils/navigator';
-import useStore, {observer} from '@/store';
+import {observer, useStore} from '@/store';
 import PasswordForm from '@/components/PasswardForm';
 import {isH5} from '@/common/utils';
 
 import './index.scss';
 import Taro, {useDidShow} from '@tarojs/taro';
 import {updateUserInfoAPI} from '@/api/user';
+
+const SideLayout = isH5 ? require('@/components/SideLayout/index.h5') : null;
 
 enum TabType {
   account = 'account',
@@ -55,15 +57,30 @@ const Account = () => {
   }, []);
 
   const handleChangeUserInfo = useCallback(async values => {
+    const {email, nickName} = values || {};
     try {
       Taro.showLoading();
-      await updateUserInfoAPI(values);
+      const data = await updateUserInfoAPI({email, nickName});
+      if (data && data.code === 0) {
+        Taro.showToast({
+          title: '修改成功',
+        });
+      } else {
+        throw Error();
+      }
     } catch (error) {
+      Taro.showToast({
+        title: '修改失败，请稍后再试',
+      });
     } finally {
       Taro.hideLoading();
     }
   }, []);
-  console.log(userInfo, '++++');
+
+  const submitFailed = useCallback(error => {
+    Taro.showToast({title: JSON.stringify(error), icon: 'error'});
+  }, []);
+
   const renderAccountContent = useMemo(() => {
     if (!userInfo) return null;
     switch (tab) {
@@ -81,6 +98,7 @@ const Account = () => {
               divider
               initialValues={userInfo}
               onFinish={handleChangeUserInfo}
+              onFinishFailed={(values, errors) => submitFailed(errors)}
               footer={
                 <>
                   <Button
@@ -100,12 +118,20 @@ const Account = () => {
                 />
               </Form.Item>
 
-              <Form.Item label='绑定邮箱' name='email'>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入邮箱'
-                  type='password'
-                />
+              <Form.Item
+                label='绑定邮箱'
+                name='email'
+                rules={[
+                  {
+                    validator: (rule, value: string) => {
+                      return /^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/.test(
+                        value
+                      );
+                    },
+                    message: '请输入正确邮箱',
+                  },
+                ]}>
+                <Input className='nut-input-text' placeholder='请输入邮箱' />
               </Form.Item>
             </Form>
           </View>
@@ -118,7 +144,7 @@ const Account = () => {
   }, [userInfo]);
 
   return (
-    <BasicLayout className='account'>
+    <BasicLayout className='account' leftSlot={SideLayout}>
       <View className='account-card'>
         <View className='account-card-top' onClick={handleJumpLogin}>
           <Image
@@ -130,7 +156,9 @@ const Account = () => {
             className='avatar'
           />
           <Text className='name'>
-            {userInfo ? userInfo.nickName : '快速登录/注册'}
+            {userInfo
+              ? userInfo.nickName || userInfo.username
+              : '快速登录/注册'}
           </Text>
         </View>
         <View className='account-card-tab'>

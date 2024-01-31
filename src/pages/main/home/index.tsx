@@ -55,7 +55,7 @@ export default function Home() {
         <div className='home-container'>
           <header>
             <div>欢迎</div>
-            <div className='title'>植物种质资源保存与共享平台</div>
+            <div className='title'>热带作物种质资源引进中转平台</div>
             <Flex align='flex-start' gap='small'>
               <Button
                 type='default'
@@ -81,7 +81,7 @@ export default function Home() {
               资源保存与共享平台
             </div>
             <div className='banner-lead'>
-              植物种质资源保存与共享平台是一个资源共享服务平台，依托中国热带农业科学院热带作物品种资源研究所。它主要负责收集、保存、鉴定和利用热带植物种质资源，为科研、教学和产业发展提供服务。
+              热带作物种质资源引进中转平台是一个资源共享服务平台，依托中国热带农业科学院热带作物品种资源研究所。它主要负责收集、保存、鉴定和利用热带植物种质资源，为科研、教学和产业发展提供服务。
             </div>
           </div>
           <div></div>

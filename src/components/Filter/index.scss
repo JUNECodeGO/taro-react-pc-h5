@@ -73,15 +73,19 @@
 
 }
 
-.form {
+.filter-form {
   width: 100%;
-  box-sizing: border-box;
-  padding: 0rem 1.25rem;
+  padding: 0;
+  margin: 0;
+
 
   .nut-cell-group-wrap {
     display: flex;
     flex-direction: column;
     flex: 1;
+    padding: 0 1.25rem;
+    margin-bottom: 0;
+    margin-top: 1rem;
   }
 
   .nut-form-item {
