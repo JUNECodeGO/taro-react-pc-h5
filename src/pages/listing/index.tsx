@@ -1,30 +1,35 @@
 /** @format */
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Tabs} from '@nutui/nutui-react-taro';
-
 import BasicLayout from '@/components/BasicLayout';
-import SideFilter from '@/components/SideFilter/index.h5';
+import SideFilter from '@/components/SideFilter';
 import {isH5} from '@/common/utils';
 import {useStore} from '@/store';
 import {TableTabType} from '@/common/type';
 import FilterPopup from '@/components/FilterPopup';
+import TabPane from './components/tabpane';
+import {getCategories} from '@/api/search';
 
 import './index.scss';
-import TabPane from './components/tabpane';
-import {getCategories, getSummarize} from '@/api/search';
+import {CommonOption} from '@/api/search/dto';
 
 const Listing = () => {
   const {
     useUserStore: {userInfo},
   } = useStore();
-  const popRef = useRef();
-  const [currentTab, setCurrentTab] = useState(TableTabType.ALL);
 
+  // pane
   const tabPaneRefs = useRef({
     [TableTabType.ALL]: React.createRef(),
     [TableTabType.MINE]: React.createRef(),
   });
-
+  const filterRef = useRef<any>();
+  const [currentTab, setCurrentTab] = useState(TableTabType.ALL);
+  const [cates, setCates] = useState<CommonOption[]>([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<CommonOption | null>(
+    null
+  );
   const tabList = useMemo(() => {
     const tabs = [
       {
@@ -45,16 +50,49 @@ const Listing = () => {
     setCurrentTab(val);
   }, []);
 
-  const handleSearch = useCallback(selection => {
-    const tab = tabPaneRefs.current?.[currentTab];
-    // if (tab.current && tab.current) {
-    //   tab.current?.handleSearch(selection);
-    // }
+  const handleSearch = useCallback(
+    val => {
+      if (!val) {
+        setSelectedOption(null);
+      } else {
+        const target = cates.find(target => target.value === val);
+        console.log(target, cates, val, '+++');
+        setSelectedOption(target || null);
+      }
+      const tab = tabPaneRefs.current?.[currentTab];
+      if (tab.current) {
+        tab.current?.handleSearch({
+          type_id: val,
+        });
+      }
+    },
+    [currentTab, cates]
+  );
+
+  const changePopupVisible = useCallback(e => {
+    setVisible(pre => !pre);
+    e?.stopPropagation();
   }, []);
 
-  const handlePopupVisible = useCallback(() => {
-    if (popRef.current && popRef.current.handleClose)
-      popRef.current.handleClose();
+  const handleClean = useCallback(() => {
+    setSelectedOption(null);
+    filterRef.current?.handleClean();
+  }, []);
+
+  const initList = useCallback(async () => {
+    try {
+      const {data} = await getCategories();
+      const {list = []} = data || {};
+      setCates(
+        list.map(item => ({value: item.cate_id, label: item.cate_name}))
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    initList();
   }, []);
 
   return (
@@ -63,7 +101,12 @@ const Listing = () => {
       className='listing-container'
       leftSlot={
         isH5 ? (
-          <SideFilter handleSearch={handleSearch} tab={currentTab} />
+          <SideFilter
+            handleSearch={handleSearch}
+            tab={currentTab}
+            cates={cates}
+            selectedOption={selectedOption}
+          />
         ) : null
       }>
       <Tabs
@@ -75,13 +118,23 @@ const Listing = () => {
           <Tabs.TabPane title={item.title} key={item.key}>
             <TabPane
               tab={item.key}
-              ref={tabPaneRefs[item.key]}
-              changePopupVisible={handlePopupVisible}
+              ref={tabPaneRefs.current[item.key]}
+              changePopupVisible={changePopupVisible}
+              selectedOption={selectedOption}
+              handleClean={handleClean}
             />
           </Tabs.TabPane>
         ))}
       </Tabs>
-      <FilterPopup ref={popRef} tab={currentTab} handelSave={handleSearch} />
+      <FilterPopup
+        filterRef={filterRef}
+        tab={currentTab}
+        handleSearch={handleSearch}
+        cates={cates}
+        visible={visible}
+        changePopupVisible={changePopupVisible}
+        selectedOption={selectedOption}
+      />
     </BasicLayout>
   );
 };

@@ -1,7 +1,13 @@
 .side-filter {
   display: none;
-  width: 16rem;
+  width: 20rem;
   border-right: 1px solid rgba(5, 5, 5, 0.06);
+
+  &.show {
+    display: block;
+    border-right: none;
+    width: 100%;
+  }
 
   .nut-collapse-item-content {
     padding: 1rem 1rem 2.5rem 1rem;
@@ -10,11 +16,6 @@
   .nut-collapse-item-header {
     align-items: center;
   }
-}
-
-.popup-filter {
-  border-right: none;
-  width: 100%;
 }
 
 @media (min-width: 756px) {

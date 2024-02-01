@@ -63,24 +63,24 @@ const httpMessageHandle = (
       });
       break;
     case 4003:
-      if (logout) {
-        Taro.showModal({
-          title: '系统提示',
-          content: '登录状态已过期，您可以继续留在该页面，或者重新登录',
-          cancelText: '取消',
-          confirmText: '重新登录',
-          success: function (res) {
-            if (res.confirm) {
-              changeLogout(true);
-              removeLocalToken('');
-              removeUserInfo();
-              Navigator.redirectTo('main/login');
-            } else if (res.cancel) {
-              changeLogout(false);
-            }
-          },
-        });
-      }
+      // if (logout) {
+      //   Taro.showModal({
+      //     title: '系统提示',
+      //     content: '登录状态已过期，您可以继续留在该页面，或者重新登录',
+      //     cancelText: '取消',
+      //     confirmText: '重新登录',
+      //     success: function (res) {
+      //       if (res.confirm) {
+      //         changeLogout(true);
+      //         removeLocalToken('');
+      //         removeUserInfo();
+      //         Navigator.redirectTo('main/login');
+      //       } else if (res.cancel) {
+      //         changeLogout(false);
+      //       }
+      //     },
+      //   });
+      // }
       break;
     case '403':
       Taro.showToast({

@@ -31,4 +31,6 @@ export const getCateDetail = data => http<Cate>('GET', '/get_detail', data);
 
 export const applyShare = data => http<{}>('POST', '/apply_share', data);
 
-export const createCate = data => http<{}>('POST', '/create', data);
+export const createItem = data => http<{}>('POST', '/create', data);
+
+export const updateItem = data => http<{}>('POST', '/update', data);

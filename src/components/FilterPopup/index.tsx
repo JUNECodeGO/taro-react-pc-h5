@@ -1,54 +1,52 @@
 /** @format */
-import React, {useRef, useState, useCallback, useImperativeHandle} from 'react';
-
+import {useRef, useCallback} from 'react';
 import {View, Text} from '@tarojs/components';
-import SideFilter from '../SideFilter/index.h5';
 import {Button, Popup} from '@nutui/nutui-react-taro';
 import {Close} from '@nutui/icons-react-taro';
+import SideFilter from '../SideFilter';
 
 import './index.scss';
+import {TableTabType} from '@/common/type';
+import {CommonOption} from '@/api/search/dto';
 
-const FilterPopup = React.forwardRef((props, ref) => {
-  const {handelSave, tab} = props;
-  const [visible, setVisible] = useState(false);
-  const latestSelection = useRef();
-  const changePopupVisible = useCallback(e => {
-    setVisible(pre => !pre);
-    e?.stopPropagation();
-  }, []);
+interface FilterPopupProps {
+  handleSearch: (values: any) => void;
+  changePopupVisible: (
+    e?: React.MouseEvent<HTMLButtonElement | Element, MouseEvent>
+  ) => void;
+  visible: boolean;
+  tab: TableTabType;
+  cates: CommonOption[];
+  selectedOption: CommonOption | null;
+  filterRef: any;
+}
 
-  useImperativeHandle(ref, () => {
-    return {
-      handleClose: changePopupVisible,
-    };
-  });
+const FilterPopup = (props: FilterPopupProps) => {
+  const {handleSearch, filterRef, changePopupVisible, visible, ...rest} = props;
 
-  const handleSearch = selection => {
-    latestSelection.current = selection;
-  };
+  const handleSave = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      const selected = filterRef.current?.handleSave();
+      handleSearch(selected);
+      changePopupVisible(e);
+    },
+    [handleSearch]
+  );
+
   return (
-    <Popup
-      ref={ref}
-      visible={visible}
-      className='popup-filter'
-      position='bottom'
-      onClose={changePopupVisible}>
+    <Popup visible={visible} className='popup-filter' position='bottom'>
       <View className='popup-filter-content'>
         <View className='popup-filter-title'>
           <Close onClick={changePopupVisible} />
           <Text>搜索过滤</Text>
-          <Button type='primary' size='small' onClick={handelSave}>
+          <Button type='primary' size='small' onClick={handleSave}>
             保存
           </Button>
         </View>
-        <SideFilter
-          className='popup-filter'
-          handleSearch={handleSearch}
-          tab={tab}
-        />
+        <SideFilter ref={filterRef} className='show' {...rest} />
       </View>
     </Popup>
   );
-});
+};
 
 export default FilterPopup;

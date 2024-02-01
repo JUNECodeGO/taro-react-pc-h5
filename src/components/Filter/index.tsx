@@ -3,9 +3,10 @@ import React, {useCallback} from 'react';
 import {Text, View} from '@tarojs/components';
 import {Form, Button, Input} from '@nutui/nutui-react-taro';
 import {Search, MaskClose, Del, More, Add} from '@nutui/icons-react-taro';
-
 import Navigator from '@/common/utils/navigator';
 import {TableTabType} from '@/common/type';
+import {FormInstance} from '@nutui/nutui-react-taro/dist/types/packages/form/types';
+import {CommonOption} from '@/api/search/dto';
 
 import './index.scss';
 
@@ -18,8 +19,16 @@ const CheckItem = ({label, value}) => {
   );
 };
 
-export const FilterForm = React.memo(props => {
+interface FilterFormProps {
+  form: FormInstance<any>;
+  tab: TableTabType;
+  handleSearch: (values: any) => void;
+  changePopupVisible: (e: any) => void;
+}
+
+export const FilterForm = React.memo((props: FilterFormProps) => {
   const {form, tab, handleSearch, changePopupVisible} = props;
+
   return (
     <Form
       labelPosition='left'
@@ -31,6 +40,7 @@ export const FilterForm = React.memo(props => {
           className='nut-input-text'
           placeholder='请输入名称'
           type='text'
+          clearable
         />
       </Form.Item>
       <Form.Item label='特性' name='feature'>
@@ -38,6 +48,7 @@ export const FilterForm = React.memo(props => {
           className='nut-input-text'
           placeholder='请输入特性'
           type='text'
+          clearable
         />
       </Form.Item>
       <Form.Item label='用途' name='usage'>
@@ -45,6 +56,7 @@ export const FilterForm = React.memo(props => {
           className='nut-input-text'
           placeholder='请输入用途'
           type='text'
+          clearable
         />
       </Form.Item>
       <View className='last-form'>
@@ -53,6 +65,7 @@ export const FilterForm = React.memo(props => {
             className='nut-input-text'
             placeholder='请输入描述'
             type='text'
+            clearable
           />
         </Form.Item>
         {tab !== TableTabType.SUB && (
@@ -63,7 +76,25 @@ export const FilterForm = React.memo(props => {
   );
 });
 
-const Filter = ({total, tab, className = '', filters, handleSubmit}) => {
+interface FilterProps {
+  total: number;
+  tab: TableTabType;
+  className?: string;
+  handleSubmit: () => void;
+  selectedOption: CommonOption | null;
+  handleClean?: () => void;
+}
+
+const Filter = (props: FilterProps) => {
+  const {
+    total,
+    tab,
+    className = '',
+    handleSubmit,
+    selectedOption,
+    handleClean,
+  } = props;
+
   const handleAdd = useCallback(() => {
     Navigator.redirectTo('main/add');
   }, []);
@@ -92,15 +123,17 @@ const Filter = ({total, tab, className = '', filters, handleSubmit}) => {
         </View>
       </View>
 
-      {filters.length ? (
+      {selectedOption ? (
         <View className='checked-wrapper'>
           <View className='checked-wrapper-inner'>
             <Text>筛选：</Text>
-            <CheckItem label='广东省' value='123' />
-            <CheckItem label='黑龙江省' value='12355' />
+            <CheckItem
+              label={selectedOption.label}
+              value={selectedOption.value}
+            />
           </View>
 
-          <Del className='delete-icon' />
+          <Del className='delete-icon' onClick={handleClean} />
         </View>
       ) : null}
     </View>

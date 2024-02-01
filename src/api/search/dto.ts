@@ -29,3 +29,8 @@ export interface Collection {
   scientific_name: string;
   user_id: string;
 }
+
+export interface CommonOption {
+  value: string;
+  label: string;
+}

@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
@@ -13,31 +14,34 @@ import Table from '@/components/Table';
 import Filter, {FilterForm} from '@/components/Filter';
 import {Form} from '@nutui/nutui-react-taro';
 import {TableTabType} from '@/common/type';
+import {CommonOption} from '@/api/search/dto';
 
+interface TabPaneProps {
+  tab: TableTabType;
+  changePopupVisible: (e: any) => void;
+  selectedOption: CommonOption | null;
+  handleClean?: () => void;
+}
 const TabPane = React.memo(
-  React.forwardRef(
-    (props: {tab: TableTabType; changePopupVisible: () => void}, ref) => {
-      const {tab, changePopupVisible} = props;
-      const [data, setData] = useState([]);
-      const [filter, setFilter] = useState([]);
-      const [form] = Form.useForm();
+  React.forwardRef((props: TabPaneProps, ref) => {
+    const {tab, changePopupVisible, selectedOption, handleClean} = props;
+    const [data, setData] = useState([]);
+    const [form] = Form.useForm();
+    const currentFilterParams = useRef({});
 
-      const [pageParams, setPageParams] = useState({
-        current: 1,
-        pageSize: 5,
-        total: 0,
-      });
+    const [pageParams, setPageParams] = useState({
+      current: 1,
+      pageSize: 5,
+      total: 0,
+    });
 
-      const disabledNext = useMemo(() => {
-        const {current, pageSize, total} = pageParams;
-        return current * pageSize < total;
-      }, [pageParams]);
+    const disabledNext = useMemo(() => {
+      const {current, pageSize, total} = pageParams;
+      return current * pageSize < total;
+    }, [pageParams]);
 
-      const handleSearch = useCallback(values => {
-        fetchList(values);
-      }, []);
-
-      const fetchList = useCallback(async (params?: any) => {
+    const fetchList = useCallback(
+      async (params?: any) => {
         try {
           Taro.showLoading();
           const {current = 1, ...rest} = params || {};
@@ -59,61 +63,77 @@ const TabPane = React.memo(
         } finally {
           Taro.hideLoading();
         }
-      }, []);
+      },
+      [tab, pageParams]
+    );
 
-      const handleTableChange = useCallback(
-        type => {
-          try {
-            let current = pageParams.current;
-            switch (type) {
-              case 'next':
-                current++;
-                break;
-              default:
-                current--;
-            }
-            fetchList({current});
-          } catch (error) {}
-        },
-        [pageParams]
-      );
+    const handleSearch = useCallback(
+      values => {
+        const allValues = {...currentFilterParams.current, ...values};
+        fetchList(allValues);
+        currentFilterParams.current = values;
+      },
+      [fetchList]
+    );
 
-      useEffect(() => {
-        fetchList();
-      }, []);
+    const handleRemoveSelection = useCallback(() => {
+      handleClean?.();
+      fetchList({type_id: undefined, ...currentFilterParams.current});
+    }, [handleClean, fetchList]);
 
-      useImperativeHandle(ref, () => ({
-        handleSearch: handleSearch,
-      }));
+    const handleTableChange = useCallback(
+      type => {
+        try {
+          let current = pageParams.current;
+          switch (type) {
+            case 'next':
+              current++;
+              break;
+            default:
+              current--;
+          }
+          fetchList({current, ...currentFilterParams.current});
+        } catch (error) {}
+      },
+      [pageParams, fetchList]
+    );
 
-      return (
-        <>
-          <Filter
-            handleSubmit={() => {
-              form.submit();
-            }}
-            total={pageParams.total}
-            tab={tab}
-            filters={filter}
-          />
-          <FilterForm
-            tab={tab}
-            changePopupVisible={changePopupVisible}
-            form={form}
-            handleSearch={handleSearch}
-          />
-          <Table
-            data={data}
-            setData={setData}
-            tab={tab}
-            handleTableChange={handleTableChange}
-            disabledPre={pageParams.current === 1}
-            disabledNext={!disabledNext}
-          />
-        </>
-      );
-    }
-  )
+    useEffect(() => {
+      fetchList();
+    }, []);
+
+    useImperativeHandle(ref, () => ({
+      handleSearch: handleSearch,
+    }));
+
+    return (
+      <>
+        <Filter
+          handleSubmit={() => {
+            form.submit();
+          }}
+          total={pageParams.total}
+          tab={tab}
+          selectedOption={selectedOption}
+          handleClean={handleRemoveSelection}
+        />
+        <FilterForm
+          tab={tab}
+          changePopupVisible={changePopupVisible}
+          form={form}
+          handleSearch={handleSearch}
+        />
+        <Table
+          data={data}
+          setData={setData}
+          tab={tab}
+          handleTableChange={handleTableChange}
+          disabledPre={pageParams.current === 1}
+          disabledNext={!disabledNext}
+        />
+      </>
+    );
+  })
 );
 
 export default TabPane;

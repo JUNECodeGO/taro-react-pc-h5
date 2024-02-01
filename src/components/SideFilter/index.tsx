@@ -1,42 +1,42 @@
 /** @format */
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, forwardRef, useState, useImperativeHandle} from 'react';
 import {View} from '@tarojs/components';
 import {Collapse, Radio} from '@nutui/nutui-react-taro';
 import {ArrowUp2} from '@nutui/icons-react-taro';
 import {FilterCategory} from './constants';
 import {TableTabType} from '@/common/type';
+import {CommonOption} from '@/api/search/dto';
 
 import './index.scss';
-import {getCategories} from '@/api/search';
 
 interface SideFilterProps {
   className?: string;
-  handleSearch: (val: string) => void;
+  handleSearch?: (val: string) => void;
   tab: TableTabType;
+  cates: CommonOption[];
+  selectedOption: CommonOption | null;
 }
 
-const SideFilter = React.memo((props: SideFilterProps) => {
-  const {className = '', handleSearch, tab} = props;
-  const [filters, setFilters] = useState<string[]>([]);
-  const [cates, setCates] = useState([]);
+const SideFilter = forwardRef((props: SideFilterProps, ref) => {
+  const {className = '', handleSearch, cates, tab, selectedOption} = props;
+  const [selected, setSelected] = useState();
 
   const handleChange = useCallback(val => {
-    setFilters([val]);
-    handleSearch(val);
+    setSelected(val);
+    handleSearch?.(val);
   }, []);
 
-  const initList = useCallback(async () => {
-    try {
-      const {List = []} = await getCategories();
-      console.log(results);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  useImperativeHandle(ref, () => {
+    return {
+      handleClean: () => {
+        setSelected(undefined);
+      },
+      handleSave: () => selected,
+    };
+  });
 
-  useEffect(() => {
-    initList();
-  }, []);
+  // console.log(selection.name === 'category' ? cates : selection.items, '+++');
+
   return (
     <View className={`side-filter ${className}`}>
       <Collapse defaultActiveName={['category']}>
@@ -48,10 +48,11 @@ const SideFilter = React.memo((props: SideFilterProps) => {
             expandIcon={<ArrowUp2 size='16' />}>
             <Radio.Group
               className='radio-wrapper'
-              value={filters[0]}
+              value={selected}
+              defaultValue={selectedOption?.value}
               onChange={handleChange}>
-              {selection.items.map(item => (
-                <Radio value={item.label} key={item.label}>
+              {cates.map(item => (
+                <Radio value={item.value} key={item.value}>
                   {item.label}
                 </Radio>
               ))}

@@ -44,33 +44,34 @@
       font-weight: 400;
     }
 
-    .checked-wrapper {
-      padding: 0.5rem;
-      margin: 0.5rem 1.25rem 0 1.25rem;
-      display: flex;
-      flex: 1;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 0.5rem;
-      border: 1px dashed rgba(145, 158, 171, 0.16);
 
-      &-inner {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        font-size: 0.875rem;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 1.375rem;
-      }
-
-      .delete-icon {
-        float: left;
-      }
-    }
   }
 
+  .checked-wrapper {
+    padding: 0.5rem;
+    margin: 0.5rem 1.25rem 0 1.25rem;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0.5rem;
+    border: 1px dashed rgba(145, 158, 171, 0.16);
+
+    &-inner {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.375rem;
+    }
+
+    .delete-icon {
+      float: left;
+    }
+  }
 }
 
 .filter-form {

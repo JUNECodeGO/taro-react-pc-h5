@@ -1,13 +1,18 @@
 /** @format */
-import {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Input, TextArea, Uploader} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import Breadcrumb from '@/components/Bread';
+import Navigator from '@/common/utils/navigator';
+import Taro, {useRouter} from '@tarojs/taro';
+import {createItem, updateItem} from '@/api/search';
 
 import './index.scss';
 
 const AddPage = () => {
+  const router = useRouter();
+  const {id} = Navigator.serialize(router.params) || {};
   const breadList = useMemo(
     () => [
       {
@@ -20,17 +25,81 @@ const AddPage = () => {
     ],
     []
   );
+
+  const handleCreate = useCallback(
+    async values => {
+      try {
+        Taro.showLoading();
+        const data = await createItem(values);
+        if (data && data.code === 0) {
+          Taro.showToast({
+            title: '创建成功',
+          });
+          Navigator.navigateBack();
+        } else {
+          throw Error();
+        }
+      } catch (error) {
+        Taro.showToast({
+          title: '创建失败，请稍后再试',
+        });
+      } finally {
+        Taro.hideLoading();
+      }
+    },
+    [id]
+  );
+  const handleUpdate = useCallback(
+    async values => {
+      try {
+        Taro.showLoading();
+        const data = await updateItem(values);
+        if (data && data.code === 0) {
+          Taro.showToast({
+            title: '修改成功',
+          });
+          Navigator.navigateBack();
+        } else {
+          throw Error();
+        }
+      } catch (error) {
+        Taro.showToast({
+          title: '修改失败，请稍后再试',
+        });
+      } finally {
+        Taro.hideLoading();
+      }
+    },
+    [id]
+  );
+  const handleSubmit = useCallback(
+    async values => {
+      if (id) {
+        handleUpdate(values);
+      } else {
+        handleCreate(values);
+      }
+    },
+    [id]
+  );
+
+  const submitFailed = useCallback(error => {
+    Taro.showToast({title: JSON.stringify(error), icon: 'error'});
+  }, []);
+
   return (
     <BasicLayout title='信息填报'>
       <Breadcrumb items={breadList} />
       <Form
         labelPosition='left'
+        onFinish={handleSubmit}
+        onFinishFailed={(values, errors) => submitFailed(errors)}
         footer={
           <View className='add-footer'>
-            <Button block type='primary'>
+            <Button block type='primary' formType='reset'>
               重置
             </Button>
-            <Button block type='primary'>
+            <Button block type='primary' formType='submit'>
               提交
             </Button>
           </View>
@@ -44,7 +113,7 @@ const AddPage = () => {
               <Form.Item
                 required
                 label='作（植）物类别'
-                name='username'
+                name='name'
                 className='add-form-item'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
@@ -52,14 +121,14 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请选择作（植）物类别'
                   type='text'
                 />
               </Form.Item>
               <Form.Item
                 required
                 label='作（植）物名称'
-                name='username'
+                name='crop_name'
                 className='add-form-item'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
@@ -67,7 +136,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入作（植）物名称'
                   type='text'
                 />
               </Form.Item>
@@ -82,7 +151,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请选择科名'
                   type='text'
                 />
               </Form.Item>
@@ -97,7 +166,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请选择属名或亚属名'
                   type='text'
                 />
               </Form.Item>
@@ -112,7 +181,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入种名'
                   type='text'
                 />
               </Form.Item>
@@ -120,14 +189,14 @@ const AddPage = () => {
                 required
                 label='种质名称'
                 className='add-form-item'
-                name='username'
+                name='germ_name'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入种质名称'
                   type='text'
                 />
               </Form.Item>
@@ -135,14 +204,14 @@ const AddPage = () => {
                 required
                 label='外文名称'
                 className='add-form-item'
-                name='username'
+                name='alien_name'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入外文名称'
                   type='text'
                 />
               </Form.Item>
@@ -150,14 +219,14 @@ const AddPage = () => {
                 required
                 label='学名'
                 className='add-form-item'
-                name='username'
+                name='scientific_name'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入学名'
                   type='text'
                 />
               </Form.Item>
@@ -172,14 +241,14 @@ const AddPage = () => {
                 required
                 label='种质类型'
                 className='add-form-item'
-                name='username'
+                name='germ_type'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请选择种质类型'
                   type='text'
                 />
               </Form.Item>
@@ -194,7 +263,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请选择收集方式'
                   type='text'
                 />
               </Form.Item>
@@ -209,7 +278,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入种质来源'
                   type='text'
                 />
               </Form.Item>
@@ -217,14 +286,14 @@ const AddPage = () => {
                 required
                 label='来源国'
                 className='add-form-item'
-                name='username'
+                name='country'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入来源国家'
                   type='text'
                 />
               </Form.Item>
@@ -239,7 +308,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入来源省（州、邦）'
                   type='text'
                 />
               </Form.Item>
@@ -247,14 +316,14 @@ const AddPage = () => {
                 required
                 label='来源地'
                 className='add-form-item'
-                name='username'
+                name='address'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入来源地'
                   type='text'
                 />
               </Form.Item>
@@ -269,7 +338,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入来源机构'
                   type='text'
                 />
               </Form.Item>
@@ -277,14 +346,14 @@ const AddPage = () => {
                 required
                 label='原产国'
                 className='add-form-item'
-                name='username'
+                name='origin_country'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入原产国'
                   type='text'
                 />
               </Form.Item>
@@ -299,8 +368,8 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
-                  type='text'
+                  placeholder='请输入收集地经度'
+                  type='number'
                 />
               </Form.Item>
               <Form.Item
@@ -314,22 +383,22 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
-                  type='text'
+                  placeholder='请输入收集地纬度'
+                  type='number'
                 />
               </Form.Item>
               <Form.Item
                 required
                 label='收集地海拔'
                 className='add-form-item'
-                name='username'
+                name='height'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入地海拔'
                   type='text'
                 />
               </Form.Item>
@@ -337,14 +406,14 @@ const AddPage = () => {
                 required
                 label='土壤类型'
                 className='add-form-item'
-                name='username'
+                name='soil_type'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入土壤类型'
                   type='text'
                 />
               </Form.Item>
@@ -352,14 +421,14 @@ const AddPage = () => {
                 required
                 label='收集地生态类型'
                 className='add-form-item'
-                name='username'
+                name='ecological_type'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入收集地生态类型'
                   type='text'
                 />
               </Form.Item>
@@ -367,14 +436,14 @@ const AddPage = () => {
                 required
                 label='收集材料类型'
                 className='add-form-item'
-                name='username'
+                name='material_type'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入收集材料类型'
                   type='text'
                 />
               </Form.Item>
@@ -382,14 +451,14 @@ const AddPage = () => {
                 required
                 label='收集人'
                 className='add-form-item'
-                name='username'
+                name='collecter'
                 rules={[
                   {max: 5, message: 'Field A cannot exceed 5 characters'},
                   {required: true, message: 'Please enter Field A'},
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入收集人'
                   type='text'
                 />
               </Form.Item>
@@ -404,7 +473,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入收集单位'
                   type='text'
                 />
               </Form.Item>
@@ -419,7 +488,7 @@ const AddPage = () => {
                 ]}>
                 <Input
                   className='nut-input-text'
-                  placeholder='Please type in Field A'
+                  placeholder='请输入收集时间'
                   type='text'
                 />
               </Form.Item>
@@ -427,11 +496,7 @@ const AddPage = () => {
                 required
                 label='原生境图片'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='image'>
                 <Uploader url='https://my-json-server.typicode.com/linrufeng/demo/posts' />
               </Form.Item>
               <Form.Item
@@ -439,11 +504,8 @@ const AddPage = () => {
                 label='备注'
                 className='add-form-item'
                 name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <TextArea placeholder='请输入字段D' maxLength={100} />
+                rules={[{max: 100, message: '最多输入100个字符'}]}>
+                <TextArea placeholder='请输入填写备注' maxLength={100} />
               </Form.Item>
             </View>
           </View>

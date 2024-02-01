@@ -19,34 +19,35 @@
       flex-wrap: wrap;
 
       .add-form-item {
-        flex-basis: 30%;
+        flex-basis: 100%;
+
       }
     }
   }
-
-
 }
 
 .add-footer {
+
   display: flex;
   flex-direction: row;
   flex: 1;
   justify-content: flex-end;
+  box-sizing: border-box;
 
   .nut-button-block {
-    width: 5rem;
+
+    flex: 1;
     margin-left: 0.5rem;
   }
 }
 
-@media (max-width: 756px) {
+@media (min-width: 756px) {
+
   .add-container {
     .card {
-      &-title {}
-
       &-content {
         .add-form-item {
-          flex-basis: 100%;
+          flex-basis: 30%;
         }
       }
     }
@@ -55,10 +56,9 @@
   }
 
   .add-footer {
-    box-sizing: border-box;
 
     .nut-button-block {
-      flex: 1;
+      width: 5rem;
       margin-left: 0.5rem;
     }
   }

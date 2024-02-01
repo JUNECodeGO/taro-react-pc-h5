@@ -108,7 +108,7 @@ const Table = props => {
       if (disabled) return;
       handleTableChange(type);
     },
-    [disabledPre, disabledNext]
+    [disabledPre, disabledNext, handleTableChange]
   );
   return (
     <View className='table-wrapper'>
