@@ -16,9 +16,6 @@ const Search = () => {
         handleSearch={handleSearch}
         total={0}
       />
-      <Swiper>
-        <Swiper.Item>123</Swiper.Item>
-      </Swiper>
     </BasicLayout>
   );
 };

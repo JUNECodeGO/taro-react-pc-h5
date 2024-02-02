@@ -25,7 +25,11 @@ const Header = () => {
     <View className='header'>
       <Text className='title'>热带作物种质资源引进中转平台</Text>
       <View className='header-right'>
-        {isH5 ? <Menu list={MenuList} className='menu' /> : <></>}
+        {process.env.TARO_ENV === 'h5' ? (
+          <Menu list={MenuList} className='menu' />
+        ) : (
+          <></>
+        )}
         <Popover
           visible={visible}
           list={MenuList}
@@ -39,7 +43,7 @@ const Header = () => {
             className={isH5 ? 'popover' : ''}
           />
         </Popover>
-        {isH5 ? (
+        {process.env.TARO_ENV === 'h5' ? (
           <Button
             size='small'
             className='login-button'

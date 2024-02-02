@@ -11,6 +11,7 @@ export default function SignIn() {
   const handleJump = useCallback(() => {
     Navigator.redirectTo('/login');
   }, []);
+
   return (
     <LoginSignInWrapper>
       <View className='signIn-component'>

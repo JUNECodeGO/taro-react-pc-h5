@@ -3,7 +3,6 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Tabs} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import SideFilter from '@/components/SideFilter';
-import {isH5} from '@/common/utils';
 import {useStore} from '@/store';
 import {TableTabType} from '@/common/type';
 import FilterPopup from '@/components/FilterPopup';
@@ -100,7 +99,7 @@ const Listing = () => {
       title='资源列表'
       className='listing-container'
       leftSlot={
-        isH5 ? (
+        process.env.TARO_ENV === 'h5' ? (
           <SideFilter
             handleSearch={handleSearch}
             tab={currentTab}

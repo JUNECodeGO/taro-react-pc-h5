@@ -10,7 +10,7 @@ import './index.scss';
 
 export default function Login() {
   const handleJumpSign = useCallback(() => {
-    Navigator.redirectTo('/signin');
+    Navigator.redirectTo('main/signin');
   }, []);
 
   return (

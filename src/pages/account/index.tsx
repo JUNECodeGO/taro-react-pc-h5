@@ -1,5 +1,6 @@
 /** @format */
-
+import Taro, {useDidShow} from '@tarojs/taro';
+import {updateUserInfoAPI} from '@/api/user';
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Image, Input} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
@@ -7,13 +8,13 @@ import {useCallback, useMemo, useState} from 'react';
 import Navigator from '@/common/utils/navigator';
 import {observer, useStore} from '@/store';
 import PasswordForm from '@/components/PasswardForm';
-import {isH5} from '@/common/utils';
 
 import './index.scss';
-import Taro, {useDidShow} from '@tarojs/taro';
-import {updateUserInfoAPI} from '@/api/user';
 
-const SideLayout = isH5 ? require('@/components/SideLayout/index.h5') : null;
+const SideLayout =
+  process.env.TARO_ENV === 'h5'
+    ? require('@/components/SideLayout/index.h5')
+    : null;
 
 enum TabType {
   account = 'account',
@@ -26,7 +27,7 @@ const tabList = [
     label: '个人资料',
     name: TabType.account,
   },
-  ...(isH5
+  ...(process.env.TARO_ENV === 'h5'
     ? [
         {
           label: '修改密码',
