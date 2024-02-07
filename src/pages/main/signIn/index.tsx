@@ -1,15 +1,18 @@
 /** @format */
 import {useCallback} from 'react';
 import {View, Text} from '@tarojs/components';
-import {Button, Form, Input} from '@nutui/nutui-react-taro';
+import {Button, Form} from '@nutui/nutui-react-taro';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
-
+import useVerification from '@/common/hook/useVerification';
 import './index.scss';
-
 export default function SignIn() {
+  const [form] = Form.useForm();
+
+  const {Phone, VerificationGroup} = useVerification(form);
+
   const handleJump = useCallback(() => {
-    Navigator.redirectTo('/login');
+    Navigator.redirectTo('main/login');
   }, []);
 
   return (
@@ -19,6 +22,7 @@ export default function SignIn() {
         <Form
           labelPosition='top'
           divider
+          form={form}
           footer={
             <>
               <Button block type='primary' className='signIn-button'>
@@ -26,26 +30,10 @@ export default function SignIn() {
               </Button>
             </>
           }>
-          <Form.Item required label='手机号' name='phone'>
-            <Input
-              className='nut-input-text'
-              placeholder='请输入手机号'
-              type='text'
-            />
-          </Form.Item>
-          <View className='verification'>
-            <Form.Item required label='验证码' name='code'>
-              <Input
-                className='nut-input-text'
-                placeholder='请输入验证码'
-                type='text'
-              />
-            </Form.Item>
-            <View className='verification-text'>
-              <Text>获取验证码</Text>
-            </View>
-          </View>
+          {Phone}
+          {VerificationGroup}
         </Form>
+
         <View className='footer'>
           <Text className='normal' onClick={handleJump}>
             账号密码登录

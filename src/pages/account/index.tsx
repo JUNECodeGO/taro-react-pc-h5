@@ -88,7 +88,7 @@ const Account = () => {
       case TabType.password:
         return (
           <View className='card'>
-            <PasswordForm />
+            <PasswordForm needPhone={false} />
           </View>
         );
       case TabType.account:

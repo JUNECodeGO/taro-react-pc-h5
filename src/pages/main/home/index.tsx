@@ -16,6 +16,7 @@ import Navigator from '@/common/utils/navigator';
 import Footer from '@/components/Footer';
 
 import './index.scss';
+import {useStore} from '@/store';
 
 const options = [
   {
@@ -32,6 +33,10 @@ const categories = ['产胶作物', '热带牧草', '热带水果', '热带粮�
 const sources = ['产胶作物', '热带牧草', '热带水果', '热带粮食作物'];
 
 export default function Home() {
+  const {
+    useUserStore: {userInfo},
+  } = useStore();
+
   const navLink = useMemo(() => {
     return homeMenus.map(route => (
       <Col
@@ -46,7 +51,7 @@ export default function Home() {
   }, []);
 
   const handleJumpLogin = useCallback(() => {
-    Navigator.navigateTo('main/login');
+    Navigator.navigateTo('main/signIn');
   }, []);
 
   return (
@@ -57,13 +62,17 @@ export default function Home() {
             <div>欢迎</div>
             <div className='title'>热带作物种质资源引进中转平台</div>
             <Flex align='flex-start' gap='small'>
-              <Button
-                type='default'
-                size='small'
-                className='header-button'
-                onClick={handleJumpLogin}>
-                登陆
-              </Button>
+              {userInfo ? (
+                `欢迎，${userInfo.nickName || userInfo.username}`
+              ) : (
+                <Button
+                  type='default'
+                  size='small'
+                  className='header-button'
+                  onClick={handleJumpLogin}>
+                  登陆
+                </Button>
+              )}
             </Flex>
           </header>
           <Divider className='divider' />

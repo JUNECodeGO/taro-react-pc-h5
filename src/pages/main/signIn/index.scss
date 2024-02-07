@@ -36,6 +36,13 @@
       flex-shrink: 0;
       padding: 0 0.5rem;
       border-left: 1px solid rgba(145, 158, 171, 0.08);
+      cursor: pointer;
+      flex-basis: 28%;
+      text-align: center;
+    }
+
+    .disabled {
+      color: #637381
     }
 
 

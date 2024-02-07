@@ -28,3 +28,5 @@ export const uploadAvatarAPI = (data: FormData) =>
 // 修改密码
 export const updatePwdAPI = data =>
   http('PUT', '/user/profile/updatePwd', data);
+
+export const getVerification = () => http('POST', '/verification');

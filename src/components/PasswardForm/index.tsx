@@ -1,12 +1,16 @@
 /** @format */
 
 import {updateUserInfoAPI} from '@/api/user';
+import useVerification from '@/common/hook/useVerification';
 import {Button, Form, Input} from '@nutui/nutui-react-taro';
-import {View, Text} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import {useCallback} from 'react';
 
-const PasswordForm = () => {
+const PasswordForm = (props: {needPhone?: boolean}) => {
+  const {needPhone = true} = props;
+  const [form] = Form.useForm();
+  const {Phone, VerificationGroup} = useVerification(form);
+
   const handleChangePassword = useCallback(async values => {
     const {email, nickName} = values || {};
     try {
@@ -33,6 +37,7 @@ const PasswordForm = () => {
       labelPosition='left'
       divider
       onFinish={handleChangePassword}
+      form={form}
       footer={
         <>
           <Button
@@ -44,25 +49,34 @@ const PasswordForm = () => {
           </Button>
         </>
       }>
-      <Form.Item label='新设密码' name='password'>
+      {needPhone ? Phone : null}
+      <Form.Item label='新设密码' name='password' required>
         <Input
           className='nut-input-text'
           placeholder='请输入密码'
           type='password'
         />
       </Form.Item>
-      <View className='verification'>
-        <Form.Item required label='验证码' name='code'>
-          <Input
-            className='nut-input-text'
-            placeholder='请输入验证码'
-            type='text'
-          />
-        </Form.Item>
-        <View className='verification-text'>
-          <Text>获取验证码</Text>
-        </View>
-      </View>
+      <Form.Item
+        label='确认密码'
+        name='passwordConfirm'
+        required
+        rules={[
+          {
+            validator: (rule, value: string) => {
+              const password = form.getFieldValue('password');
+              return password === value;
+            },
+            message: '请输入正确密码',
+          },
+        ]}>
+        <Input
+          className='nut-input-text'
+          placeholder='请重新输入密码'
+          type='password'
+        />
+      </Form.Item>
+      {VerificationGroup}
     </Form>
   );
 };

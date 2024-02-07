@@ -16,6 +16,11 @@
   .home-table {
     background-color: $white;
 
+    .table {
+      -webkit-user-drag: none;
+      user-select: none;
+      touch-action: none;
+    }
   }
 }
 

@@ -2,7 +2,7 @@
 
 import React, {useCallback, useMemo, useState} from 'react';
 import {View, Text} from '@tarojs/components';
-import {Button, Table as NutiTable} from '@nutui/nutui-react-taro';
+import {Button, Table as NutiTable, Pagination} from '@nutui/nutui-react-taro';
 import {ArrowSize6} from '@nutui/icons-react-taro';
 import Navigator from '@/common/utils/navigator';
 
@@ -49,7 +49,6 @@ const Table = props => {
       id,
     });
   }, []);
-
   const handleJumpDetail = useCallback(id => {
     Navigator.navigateTo('main/detail', {
       id,
@@ -117,6 +116,7 @@ const Table = props => {
           columns={columnsStickRight}
           data={data}
           style={{height: 350}}
+          className='table'
         />
         <View className='pagination'>
           <ArrowSize6

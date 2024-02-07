@@ -5,7 +5,6 @@ import {View, Text} from '@tarojs/components';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
 import PasswordForm from '@/components/PasswardForm';
-
 import './index.scss';
 
 export default function Login() {

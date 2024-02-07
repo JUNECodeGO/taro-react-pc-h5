@@ -10,8 +10,13 @@ import './index.scss';
 
 export default function Login() {
   const handleJumpSign = useCallback(() => {
-    Navigator.redirectTo('/signin');
+    Navigator.redirectTo('main/signIn');
   }, []);
+
+  const handleJumpPassword = useCallback(() => {
+    Navigator.redirectTo('main/password');
+  }, []);
+
   return (
     <LoginSignInWrapper>
       <View className='login-component'>
@@ -26,7 +31,21 @@ export default function Login() {
               </Button>
             </>
           }>
-          <Form.Item required label='手机号' name='phone'>
+          <Form.Item
+            required
+            label='手机号'
+            name='phone'
+            rules={[
+              {required: true, message: '请输入正确的电话号码'},
+              {
+                validator: (rule, value: string) => {
+                  return /((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)/.test(
+                    value
+                  );
+                },
+                message: '请输入正确电话',
+              },
+            ]}>
             <Input
               className='nut-input-text'
               placeholder='请输入手机号'
@@ -43,7 +62,9 @@ export default function Login() {
         </Form>
         <View className='forget'>
           <Text onClick={handleJumpSign}>快速登录</Text>
-          <Text className='normal underline'>忘记密码</Text>
+          <Text onClick={handleJumpPassword} className='normal underline'>
+            忘记密码
+          </Text>
         </View>
       </View>
     </LoginSignInWrapper>
