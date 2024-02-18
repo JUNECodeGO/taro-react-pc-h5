@@ -14,7 +14,7 @@ const columns = {
     {
       title: '作（植）物名称',
       key: 'germ_name',
-      width: 110,
+      width: 80,
     },
     {
       title: '种质名称',
@@ -37,7 +37,7 @@ const columns = {
       title: '种质编号',
       key: 'name',
       align: 'cate_id',
-      width: 80,
+      width: 110,
     },
   ],
 };
@@ -77,7 +77,6 @@ const Table = props => {
       {
         title: '操作',
         key: 'action',
-        fixed: 'right',
         width: 80,
         render: data => {
           return (
@@ -124,6 +123,7 @@ const Table = props => {
             className={`pre ${disabledPre ? 'grey' : ''}`}
             onClick={() => handleChange('pre')}
           />
+          <View className='line' />
           <ArrowSize6
             size={12}
             className={`next ${disabledNext ? 'grey' : ''}`}

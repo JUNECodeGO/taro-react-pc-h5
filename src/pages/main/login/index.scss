@@ -49,6 +49,13 @@
     justify-content: space-between;
     margin-top: 1rem;
     color: #637381;
+    padding: 0 0.1rem;
 
+    &-tip {
+      font-size: smaller;
+      margin-left: 0.5rem;
+    }
+
+    --nutui-radio-icon-font-size: 1rem
   }
 }

@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Tabs} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import SideFilter from '@/components/SideFilter';
-import {useStore} from '@/store';
+import {observer, useStore} from '@/store';
 import {TableTabType} from '@/common/type';
 import FilterPopup from '@/components/FilterPopup';
 import TabPane from './components/tabpane';
@@ -138,4 +138,4 @@ const Listing = () => {
   );
 };
 
-export default Listing;
+export default observer(Listing);

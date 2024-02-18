@@ -7,6 +7,7 @@ import Empty from '@/components/Empty';
 import Chart from '@/components/Charts';
 
 import './index.scss';
+import Item from 'antd/es/list/Item';
 
 const NotYet = false;
 const tabList = ['种质圃TOP10', '类型分析'];
@@ -70,9 +71,11 @@ const DataCenterPage = () => {
           onChange={value => {
             setTab1value(value);
           }}>
-          <Tabs.TabPane title={tabList[0]}>
-            <Chart />
-          </Tabs.TabPane>
+          {tabList.map((item, index) => (
+            <Tabs.TabPane title={item} key={String(index)}>
+              <Chart />
+            </Tabs.TabPane>
+          ))}
         </Tabs>
       </View>
     </BasicLayout>
@@ -80,12 +83,3 @@ const DataCenterPage = () => {
 };
 
 export default DataCenterPage;
-
-// import BasicLayout from '@/components/BasicLayout';
-// import Empty from '@/components/Empty';
-
-// export default () => (
-//   <BasicLayout className='data-center' title='数据中心'>
-//     <Empty />
-//   </BasicLayout>
-// );

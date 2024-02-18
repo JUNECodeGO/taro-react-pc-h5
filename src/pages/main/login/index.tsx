@@ -100,7 +100,7 @@ export default function Login() {
         </Button>
         <View className='forget '>
           <Radio checked={checked} onChange={handleCheck} />
-          <Text>
+          <Text className='forget-tip'>
             若手机号未注册则进入注册流程，注册即为同意《用户注册协议》《隐私政策》
           </Text>
         </View>

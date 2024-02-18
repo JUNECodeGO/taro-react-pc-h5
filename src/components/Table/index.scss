@@ -20,6 +20,12 @@
       -webkit-user-drag: none;
       user-select: none;
       touch-action: none;
+
+      .nut-table-summary {
+        position: absolute;
+        top: 50%;
+        left: 40%;
+      }
     }
   }
 }
@@ -27,17 +33,22 @@
 .pagination {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  padding: 0.62rem 0.7rem;
+  justify-content: space-between;
+  padding: 1rem 0.7rem;
 
   .button {
     width: 0.8rem;
     height: 0.8rem;
   }
 
+  .line {
+    display: block;
+    width: 0.1rem;
+    background-color: rgba(128, 128, 128, 0.445);
+  }
+
   .pre {
     transform: rotateZ(180deg);
-    margin-right: 20px;
 
     &.grey {
       opacity: 0.5;
@@ -48,6 +59,22 @@
 .next {
   &.grey {
     opacity: 0.5;
+  }
+
+}
+
+@media (min-width: 756px) {
+
+  .pagination {
+    justify-content: flex-end;
+
+    .line {
+      display: none;
+    }
+
+    .pre {
+      margin-right: 20px;
+    }
   }
 
 }

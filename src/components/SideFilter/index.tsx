@@ -40,7 +40,7 @@ const SideFilter = forwardRef((props: SideFilterProps, ref) => {
   return (
     <View className={`side-filter ${className}`}>
       <Collapse defaultActiveName={['category']}>
-        {FilterCategory[tab].map(selection => (
+        {FilterCategory[tab].slice(0, 1).map(selection => (
           <Collapse.Item
             key={selection.name}
             title={selection.title}
