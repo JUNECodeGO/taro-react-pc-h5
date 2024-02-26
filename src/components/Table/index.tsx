@@ -58,20 +58,26 @@ const Table = props => {
   const columnsStickRight = useMemo(
     () => [
       {
-        title: '种质编号',
-        key: 'enumber',
+        title: 'ID',
+        key: 'base_id',
         align: 'center',
-        width: 80,
+        width: 20,
         render: data => {
           return (
             <Button
               fill='none'
               size='mini'
-              onClick={() => handleJumpDetail(data?.enumber)}>
-              {data?.enumber || '-'}
+              onClick={() => handleJumpDetail(data?.base_id)}>
+              {data?.base_id || '-'}
             </Button>
           );
         },
+      },
+      {
+        title: '种质编号',
+        key: 'enumber',
+        align: 'center',
+        width: 80,
       },
       ...columns[tab],
       {
@@ -83,7 +89,7 @@ const Table = props => {
             <Button
               fill='none'
               size='mini'
-              onClick={() => handleJump(data?.enumber)}>
+              onClick={() => handleJump(data?.base_id)}>
               共享资源
             </Button>
           );

@@ -14,18 +14,17 @@ import Table from '@/components/Table';
 import Filter, {FilterForm} from '@/components/Filter';
 import {Form} from '@nutui/nutui-react-taro';
 import {TableTabType} from '@/common/type';
-import {CommonOption} from '@/api/search/dto';
 
 interface TabPaneProps {
   tab: TableTabType;
   changePopupVisible: (e: any) => void;
-  selectedOption: CommonOption | null;
+  selectedOption: string | null;
   handleClean?: () => void;
 }
 const TabPane = React.memo(
   React.forwardRef((props: TabPaneProps, ref) => {
     const {tab, changePopupVisible, selectedOption, handleClean} = props;
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<any>([]);
     const [form] = Form.useForm();
     const currentFilterParams = useRef({});
 
@@ -44,18 +43,24 @@ const TabPane = React.memo(
       async (params?: any) => {
         try {
           Taro.showLoading();
-          const {current = 1, ...rest} = params || {};
+          const {current = 1, cleanSelect, ...rest} = params || {};
           const {pageSize} = pageParams;
           const fn = tab === TableTabType.ALL ? searchListAll : searchListMine;
+          const values = {
+            ...rest,
+            ...(cleanSelect
+              ? {type: undefined, states: undefined, holders: undefined}
+              : {}),
+          };
           const res = await fn({
             page_num: current,
             page_size: pageSize,
-            ...rest,
+            ...values,
           });
 
           if (res && !res.code) {
-            const {content} = res.data || {};
-            const {lists = [], counts} = content || {};
+            currentFilterParams.current = values;
+            const {lists = [], counts = '0'} = res.data || {};
             setData(lists);
             setPageParams(pre => ({...pre, ...params, total: +counts}));
           }
@@ -71,14 +76,13 @@ const TabPane = React.memo(
       values => {
         const allValues = {...currentFilterParams.current, ...values};
         fetchList(allValues);
-        currentFilterParams.current = values;
       },
       [fetchList]
     );
 
     const handleRemoveSelection = useCallback(() => {
       handleClean?.();
-      fetchList({type_id: undefined, ...currentFilterParams.current});
+      fetchList({cleanSelect: true, ...currentFilterParams.current});
     }, [handleClean, fetchList]);
 
     const handleTableChange = useCallback(

@@ -8,7 +8,12 @@ export enum UserRole {
 export interface UserInfo {
   avatar?: string;
   email?: string;
-  nickName?: string;
+  nickname?: string;
   role: UserRole;
   username: string;
+}
+
+export enum CodeType {
+  LOGIN = 1,
+  PASSWORD = 2,
 }

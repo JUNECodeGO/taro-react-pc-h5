@@ -1,10 +1,14 @@
 /** @format */
 
 import {http} from '@/api';
-import {UserInfo} from './dto';
+import {CodeType, UserInfo} from './dto';
 // 登录
 export const loginAPI = data =>
   http<{token: string}>('POST', '/wx_signin', data);
+
+// 快速登录
+export const quickLoginAPI = data =>
+  http<{phone: string; verificationCode: string}>('POST', '/signin', data);
 
 // 获取用户信息(包含权限)
 export const getUserAPI = () => http<UserInfo>('GET', '/get_userinfo');
@@ -29,4 +33,5 @@ export const uploadAvatarAPI = (data: FormData) =>
 export const updatePwdAPI = data =>
   http('PUT', '/user/profile/updatePwd', data);
 
-export const getVerification = () => http('POST', '/verification');
+export const getVerification = (data: {type: CodeType; phone: string}) =>
+  http('POST', '/verification', data);

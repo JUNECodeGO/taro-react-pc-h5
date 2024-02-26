@@ -7,7 +7,7 @@ import {observer, useStore} from '@/store';
 import {TableTabType} from '@/common/type';
 import FilterPopup from '@/components/FilterPopup';
 import TabPane from './components/tabpane';
-import {getCategories} from '@/api/search';
+import {getGroupByItems} from '@/api/search';
 
 import './index.scss';
 import {CommonOption} from '@/api/search/dto';
@@ -24,7 +24,7 @@ const Listing = () => {
   });
   const filterRef = useRef<any>();
   const [currentTab, setCurrentTab] = useState(TableTabType.ALL);
-  const [cates, setCates] = useState<CommonOption[]>([]);
+  const [groupItems, setGroupItems] = useState();
   const [visible, setVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState<CommonOption | null>(
     null
@@ -51,21 +51,21 @@ const Listing = () => {
 
   const handleSearch = useCallback(
     val => {
+      let kv;
       if (!val) {
         setSelectedOption(null);
       } else {
-        const target = cates.find(target => target.value === val);
-        console.log(target, cates, val, '+++');
-        setSelectedOption(target || null);
+        setSelectedOption(val || null);
+        kv = val.split('--');
       }
       const tab = tabPaneRefs.current?.[currentTab];
       if (tab.current) {
         tab.current?.handleSearch({
-          type_id: val,
+          ...(kv ? {[kv[0]]: kv[1]} : {cleanSelect: true}),
         });
       }
     },
-    [currentTab, cates]
+    [currentTab]
   );
 
   const changePopupVisible = useCallback(e => {
@@ -80,11 +80,8 @@ const Listing = () => {
 
   const initList = useCallback(async () => {
     try {
-      const {data} = await getCategories();
-      const {list = []} = data || {};
-      setCates(
-        list.map(item => ({value: item.cate_id, label: item.cate_name}))
-      );
+      const {data} = await getGroupByItems();
+      setGroupItems(data);
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +100,7 @@ const Listing = () => {
           <SideFilter
             handleSearch={handleSearch}
             tab={currentTab}
-            cates={cates}
+            groupItems={groupItems}
             selectedOption={selectedOption}
           />
         ) : null
@@ -129,7 +126,7 @@ const Listing = () => {
         filterRef={filterRef}
         tab={currentTab}
         handleSearch={handleSearch}
-        cates={cates}
+        groupItems={groupItems}
         visible={visible}
         changePopupVisible={changePopupVisible}
         selectedOption={selectedOption}

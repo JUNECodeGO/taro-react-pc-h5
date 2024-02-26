@@ -1,19 +1,19 @@
 /** @format */
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Text, View} from '@tarojs/components';
 import {Form, Button, Input} from '@nutui/nutui-react-taro';
 import {Search, MaskClose, Del, More, Add} from '@nutui/icons-react-taro';
 import Navigator from '@/common/utils/navigator';
 import {TableTabType} from '@/common/type';
 import {FormInstance} from '@nutui/nutui-react-taro/dist/types/packages/form/types';
-import {CommonOption} from '@/api/search/dto';
+import {GroupType} from '../SideFilter/constants';
 
 import './index.scss';
 
 const CheckItem = ({label, value}) => {
   return (
     <View key={value} className='check-item'>
-      <Text className='check-item-text'>{label}</Text>
+      <Text className='check-item-text'>{`${GroupType[label]}: ${value}`}</Text>
       <MaskClose color='#6f7473' />
     </View>
   );
@@ -81,7 +81,7 @@ interface FilterProps {
   tab: TableTabType;
   className?: string;
   handleSubmit: () => void;
-  selectedOption: CommonOption | null;
+  selectedOption: string | null;
   handleClean?: () => void;
 }
 
@@ -94,6 +94,12 @@ const Filter = (props: FilterProps) => {
     selectedOption,
     handleClean,
   } = props;
+
+  const selected = useMemo(() => {
+    if (selectedOption && typeof selectedOption === 'string') {
+      return selectedOption.split('--');
+    }
+  }, [selectedOption]);
 
   const handleAdd = useCallback(() => {
     Navigator.redirectTo('main/add');
@@ -123,14 +129,11 @@ const Filter = (props: FilterProps) => {
         </View>
       </View>
 
-      {selectedOption ? (
+      {selected ? (
         <View className='checked-wrapper'>
           <View className='checked-wrapper-inner'>
             <Text>筛选：</Text>
-            <CheckItem
-              label={selectedOption.label}
-              value={selectedOption.value}
-            />
+            <CheckItem label={selected[0]} value={selected[1]} />
           </View>
 
           <Del className='delete-icon' onClick={handleClean} />

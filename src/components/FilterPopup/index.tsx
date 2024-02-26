@@ -16,7 +16,7 @@ interface FilterPopupProps {
   ) => void;
   visible: boolean;
   tab: TableTabType;
-  cates: CommonOption[];
+  groupItems: any;
   selectedOption: CommonOption | null;
   filterRef: any;
 }

@@ -6,6 +6,7 @@ import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
 import PasswordForm from '@/components/PasswardForm';
 import './index.scss';
+import {CodeType} from '@/api/user/dto';
 
 export default function Login() {
   const handleJumpSign = useCallback(() => {
@@ -16,7 +17,7 @@ export default function Login() {
     <LoginSignInWrapper>
       <View className='password-component'>
         <Text className='title'>密码修改</Text>
-        <PasswordForm />
+        <PasswordForm type={CodeType.LOGIN} />
       </View>
     </LoginSignInWrapper>
   );

@@ -3,7 +3,7 @@ import {useCallback, forwardRef, useState, useImperativeHandle} from 'react';
 import {View} from '@tarojs/components';
 import {Collapse, Radio} from '@nutui/nutui-react-taro';
 import {ArrowUp2} from '@nutui/icons-react-taro';
-import {FilterCategory} from './constants';
+import {GroupType} from './constants';
 import {TableTabType} from '@/common/type';
 import {CommonOption} from '@/api/search/dto';
 
@@ -13,12 +13,12 @@ interface SideFilterProps {
   className?: string;
   handleSearch?: (val: string) => void;
   tab: TableTabType;
-  cates: CommonOption[];
+  groupItems: any;
   selectedOption: CommonOption | null;
 }
 
 const SideFilter = forwardRef((props: SideFilterProps, ref) => {
-  const {className = '', handleSearch, cates, tab, selectedOption} = props;
+  const {className = '', handleSearch, groupItems = {}, selectedOption} = props;
   const [selected, setSelected] = useState();
 
   const handleChange = useCallback(val => {
@@ -35,25 +35,23 @@ const SideFilter = forwardRef((props: SideFilterProps, ref) => {
     };
   });
 
-  // console.log(selection.name === 'category' ? cates : selection.items, '+++');
-
   return (
     <View className={`side-filter ${className}`}>
       <Collapse defaultActiveName={['category']}>
-        {FilterCategory[tab].slice(0, 1).map(selection => (
+        {Object.entries(groupItems).map(([key, lists = []]) => (
           <Collapse.Item
-            key={selection.name}
-            title={selection.title}
-            name={selection.name}
+            key={key}
+            title={GroupType[key]}
+            name={key}
             expandIcon={<ArrowUp2 size='16' />}>
             <Radio.Group
               className='radio-wrapper'
               value={selected}
               defaultValue={selectedOption?.value}
               onChange={handleChange}>
-              {cates.map(item => (
-                <Radio value={item.value} key={item.value}>
-                  {item.label}
+              {(lists || []).map(item => (
+                <Radio value={`${key}--${item.group}`} key={item.group}>
+                  {`${item.group}(${item.count})`}
                 </Radio>
               ))}
             </Radio.Group>

@@ -1,15 +1,16 @@
 /** @format */
 
 import {updateUserInfoAPI} from '@/api/user';
+import {CodeType} from '@/api/user/dto';
 import useVerification from '@/common/hook/useVerification';
 import {Button, Form, Input} from '@nutui/nutui-react-taro';
 import Taro from '@tarojs/taro';
 import {useCallback} from 'react';
 
-const PasswordForm = (props: {needPhone?: boolean}) => {
-  const {needPhone = true} = props;
+const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
+  const {needPhone = true, type} = props;
   const [form] = Form.useForm();
-  const {Phone, VerificationGroup} = useVerification(form);
+  const {Phone, VerificationGroup} = useVerification({form, type});
 
   const handleChangePassword = useCallback(async values => {
     const {email, nickName} = values || {};

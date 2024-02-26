@@ -6,13 +6,42 @@ import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
 import useVerification from '@/common/hook/useVerification';
 import './index.scss';
+import Taro from '@tarojs/taro';
+import {quickLoginAPI} from '@/api/user';
+import {CodeType} from '@/api/user/dto';
 export default function SignIn() {
   const [form] = Form.useForm();
 
-  const {Phone, VerificationGroup} = useVerification(form);
+  const {Phone, VerificationGroup} = useVerification({
+    form,
+    type: CodeType.LOGIN,
+  });
 
   const handleJump = useCallback(() => {
     Navigator.redirectTo('main/login');
+  }, []);
+
+  const handleSubmit = useCallback(async values => {
+    try {
+      Taro.showLoading();
+      const data = await quickLoginAPI(values);
+      if (data && data.code === 0) {
+        Taro.showToast({
+          title: '登录成功，正在跳转',
+          success: () => {
+            Navigator.navigateBack();
+          },
+        });
+      } else {
+        throw Error();
+      }
+    } catch (error) {
+      Taro.showToast({
+        title: '登录失败，请稍后再试',
+      });
+    } finally {
+      Taro.hideLoading();
+    }
   }, []);
 
   return (
@@ -23,6 +52,7 @@ export default function SignIn() {
           labelPosition='top'
           divider
           form={form}
+          onFinish={handleSubmit}
           footer={
             <>
               <Button block type='primary' className='signIn-button'>

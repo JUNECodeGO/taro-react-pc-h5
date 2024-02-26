@@ -11,23 +11,23 @@ import Navigator from '@/common/utils/navigator';
 import {getCateDetail} from '@/api/search';
 
 const InfoList = [
-  {name: '种质编号'},
-  {name: '作物（植物类别'},
-  {name: '作（植）名称'},
-  {name: '种质名称'},
-  {name: '科名'},
-  {name: '学名'},
-  {name: '主要特性'},
-  {name: '保存圃'},
-  {name: '收集时间'},
-  {name: '资源描述'},
-  {name: '种质图片'},
+  {name: '种质编号', value: 'enumber'},
+  {name: '作物（植物类别)', value: 'cate1'},
+  {name: '作（植）名称', value: 'germ_name'},
+  {name: '种质名称', value: 'germ_name'},
+  {name: '科名', value: 'germ_name'},
+  {name: '学名', value: 'germ_name'},
+  {name: '主要特性', value: 'germ_name'},
+  {name: '保存圃', value: 'germ_name'},
+  {name: '收集时间', value: 'germ_name'},
+  {name: '资源描述', value: 'germ_name'},
+  {name: '种质图片', value: 'germ_name'},
 ];
-const Info = ({label}) => {
+const Info = ({label, value}) => {
   return (
     <View className='card-info'>
       <Text className='label'>{label}</Text>
-      <Text className='value'>XXX</Text>
+      <Text className='value'>{value}</Text>
     </View>
   );
 };
@@ -52,13 +52,22 @@ const DetailPage = () => {
   const fetchCateDetail = useCallback(async id => {
     try {
       Taro.showLoading();
-      const data = await getCateDetail({id});
-      console.log(data, '+++');
+      const res = await getCateDetail({id});
+      if (res && !res.code) {
+        const {data} = res;
+        setData(data);
+      }
     } catch (error) {
     } finally {
       Taro.hideLoading();
     }
   }, []);
+
+  const handleJump = useCallback(() => {
+    Navigator.navigateTo('main/apply', {
+      id,
+    });
+  }, [id]);
 
   useEffect(() => {
     if (id && !data) {
@@ -71,12 +80,18 @@ const DetailPage = () => {
       <Breadcrumb items={breadList} />
       <View className='card'>
         <View className='card-head'>
-          <Text className='card-title'>3X10-2BT</Text>
-          <Button type='info'>获取意向书</Button>
+          <Text className='card-title'>{data?.germ_name || '-'}</Text>
+          <Button type='info' onClick={handleJump}>
+            获取意向书
+          </Button>
         </View>
         <View className='card-content'>
           {InfoList.map(item => (
-            <Info key={item.name} label={item.name} />
+            <Info
+              key={item.name}
+              label={item.name}
+              value={data?.[item.value] || '-'}
+            />
           ))}
         </View>
       </View>

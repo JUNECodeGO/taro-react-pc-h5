@@ -7,7 +7,7 @@ import Taro from '@tarojs/taro';
 import {useCallback, useMemo, useRef, useState} from 'react';
 
 const useVerification = props => {
-  const {form} = props;
+  const {form, type} = props;
   const [countDownInfo, setCountDownInfo] = useState({
     text: '获取验证码',
     count: 60,
@@ -22,7 +22,10 @@ const useVerification = props => {
       if (!phone) {
         Taro.showToast({title: '  请输入手机号！'});
       }
-      const res = await getVerification();
+      const res = await getVerification({
+        type,
+        phone,
+      });
       timer.current = setInterval(() => {
         setCountDownInfo(pre => {
           const target = {...pre};
@@ -42,7 +45,7 @@ const useVerification = props => {
     } catch (error) {
       Taro.showToast({title: '获取验证码失败，请稍后再试'});
     }
-  }, []);
+  }, [countDownInfo, form, type]);
 
   const Phone = useMemo(() => {
     return (
@@ -73,7 +76,7 @@ const useVerification = props => {
   const VerificationGroup = useMemo(() => {
     return (
       <View className='verification'>
-        <Form.Item required label='验证码' name='code'>
+        <Form.Item required label='验证码' name='verificationCode'>
           <Input
             className='nut-input-text'
             placeholder='请输入验证码'

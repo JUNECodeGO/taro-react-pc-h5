@@ -1,6 +1,6 @@
 /** @format */
 import Taro, {useDidShow} from '@tarojs/taro';
-import {updateUserInfoAPI} from '@/api/user';
+import {getUserAPI, updateUserInfoAPI} from '@/api/user';
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Image, Input} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
@@ -8,6 +8,7 @@ import {useCallback, useMemo, useState} from 'react';
 import Navigator from '@/common/utils/navigator';
 import {observer, useStore} from '@/store';
 import PasswordForm from '@/components/PasswardForm';
+import {CodeType} from '@/api/user/dto';
 
 import './index.scss';
 
@@ -44,7 +45,7 @@ const tabList = [
 
 const Account = () => {
   const {
-    useUserStore: {userInfo},
+    useUserStore: {userInfo, setUserInfo},
   } = useStore();
   const [tab, setTab] = useState(TabType.account);
 
@@ -57,12 +58,22 @@ const Account = () => {
     setTab(tab);
   }, []);
 
+  const handleRefresh = useCallback(async () => {
+    try {
+      const res = await getUserAPI();
+      if (res?.data) {
+        setUserInfo(res.data);
+      }
+    } catch (error) {}
+  }, []);
+
   const handleChangeUserInfo = useCallback(async values => {
-    const {email, nickName} = values || {};
+    const {email, nickname} = values || {};
     try {
       Taro.showLoading();
-      const data = await updateUserInfoAPI({email, nickName});
+      const data = await updateUserInfoAPI({email, nickname});
       if (data && data.code === 0) {
+        handleRefresh();
         Taro.showToast({
           title: '修改成功',
         });
@@ -88,7 +99,7 @@ const Account = () => {
       case TabType.password:
         return (
           <View className='card'>
-            <PasswordForm needPhone={false} />
+            <PasswordForm needPhone={false} type={CodeType.PASSWORD} />
           </View>
         );
       case TabType.account:
@@ -111,7 +122,7 @@ const Account = () => {
                   </Button>
                 </>
               }>
-              <Form.Item label='显示昵称' name='nickName'>
+              <Form.Item label='显示昵称' name='nickname'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入昵称'
@@ -158,7 +169,7 @@ const Account = () => {
           />
           <Text className='name'>
             {userInfo
-              ? userInfo.nickName || userInfo.username
+              ? userInfo.nickname || userInfo.username
               : '快速登录/注册'}
           </Text>
         </View>
