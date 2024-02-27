@@ -14,11 +14,13 @@ import Table from '@/components/Table';
 import Filter, {FilterForm} from '@/components/Filter';
 import {Form} from '@nutui/nutui-react-taro';
 import {TableTabType} from '@/common/type';
+import {useRouter} from '@tarojs/taro';
+import Navigator from '@/common/utils/navigator';
 
 interface TabPaneProps {
   tab: TableTabType;
   changePopupVisible: (e: any) => void;
-  selectedOption: string | null;
+  selectedOption?: string;
   handleClean?: () => void;
 }
 const TabPane = React.memo(
@@ -27,6 +29,8 @@ const TabPane = React.memo(
     const [data, setData] = useState<any>([]);
     const [form] = Form.useForm();
     const currentFilterParams = useRef({});
+    const router = useRouter();
+    const initParams = Navigator.serialize(router.params) || {};
 
     const [pageParams, setPageParams] = useState({
       current: 1,
@@ -102,8 +106,19 @@ const TabPane = React.memo(
       [pageParams, fetchList]
     );
 
-    useEffect(() => {
+    const handleReset = useCallback(() => {
+      form.resetFields();
+      handleClean?.();
       fetchList();
+    }, []);
+
+    useEffect(() => {
+      if (tab === TableTabType.ALL && Object.values(initParams).length) {
+        fetchList(initParams);
+        form.setFieldsValue(initParams);
+      } else {
+        fetchList();
+      }
     }, []);
 
     useImperativeHandle(ref, () => ({
@@ -120,6 +135,7 @@ const TabPane = React.memo(
           tab={tab}
           selectedOption={selectedOption}
           handleClean={handleRemoveSelection}
+          handleReset={handleReset}
         />
         <FilterForm
           tab={tab}

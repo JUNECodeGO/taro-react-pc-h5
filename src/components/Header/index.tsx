@@ -27,8 +27,8 @@ const Header = () => {
 
   const accountButton = useMemo(() => {
     if (userInfo) {
-      const {nickName, username} = userInfo;
-      return <Text>欢迎 {nickName || username}</Text>;
+      const {nickname, username} = userInfo;
+      return <Text>欢迎 {nickname || username}</Text>;
     } else {
       return (
         <Button size='small' className='login-button' onClick={handleJumpLogin}>
@@ -37,6 +37,19 @@ const Header = () => {
       );
     }
   }, [userInfo]);
+
+  const popoverList = useMemo(
+    () =>
+      MenuList.map(item => ({
+        ...item,
+        action: {
+          onClick: () => {
+            Navigator.navigateTo(item.path);
+          },
+        },
+      })),
+    [MenuList]
+  );
 
   return (
     <View className='header'>
@@ -47,19 +60,22 @@ const Header = () => {
         ) : (
           <></>
         )}
-        <Popover
-          visible={visible}
-          list={MenuList}
-          className={isH5 ? 'popover' : ''}
-          location='bottom'
-          onClick={changeNarBar}>
-          <More
-            color='#fff'
-            size={20}
-            onClick={changeNarBar}
+        {MenuList.length && (
+          <Popover
+            visible={visible}
+            list={popoverList}
             className={isH5 ? 'popover' : ''}
-          />
-        </Popover>
+            location='bottom'
+            onClick={changeNarBar}>
+            <More
+              color='#fff'
+              size={20}
+              onClick={changeNarBar}
+              className={isH5 ? 'popover' : ''}
+            />
+          </Popover>
+        )}
+
         {process.env.TARO_ENV === 'h5' ? accountButton : <></>}
       </View>
     </View>

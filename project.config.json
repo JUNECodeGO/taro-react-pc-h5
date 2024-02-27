@@ -2,14 +2,14 @@
   "miniprogramRoot": "dist/",
   "projectname": "youcha",
   "description": "youcha",
-  "appid": "wx9be9ba64b9ff35e4",
+  "appid": "wxca79080a9fecfc61",
   "setting": {
     "urlCheck": true,
-    "es6": false,
-    "enhance": false,
+    "es6": true,
+    "enhance": true,
     "compileHotReLoad": false,
     "postcss": false,
-    "minified": false,
+    "minified": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],

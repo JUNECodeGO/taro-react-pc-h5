@@ -2,10 +2,9 @@
 import {useCallback, forwardRef, useState, useImperativeHandle} from 'react';
 import {View} from '@tarojs/components';
 import {Collapse, Radio} from '@nutui/nutui-react-taro';
-import {ArrowUp2} from '@nutui/icons-react-taro';
+import {ArrowDown2} from '@nutui/icons-react-taro';
 import {GroupType} from './constants';
 import {TableTabType} from '@/common/type';
-import {CommonOption} from '@/api/search/dto';
 
 import './index.scss';
 
@@ -14,7 +13,7 @@ interface SideFilterProps {
   handleSearch?: (val: string) => void;
   tab: TableTabType;
   groupItems: any;
-  selectedOption: CommonOption | null;
+  selectedOption?: string;
 }
 
 const SideFilter = forwardRef((props: SideFilterProps, ref) => {
@@ -43,11 +42,11 @@ const SideFilter = forwardRef((props: SideFilterProps, ref) => {
             key={key}
             title={GroupType[key]}
             name={key}
-            expandIcon={<ArrowUp2 size='16' />}>
+            expandIcon={<ArrowDown2 size='16' />}>
             <Radio.Group
               className='radio-wrapper'
               value={selected}
-              defaultValue={selectedOption?.value}
+              defaultValue={selectedOption}
               onChange={handleChange}>
               {(lists || []).map(item => (
                 <Radio value={`${key}--${item.group}`} key={item.group}>

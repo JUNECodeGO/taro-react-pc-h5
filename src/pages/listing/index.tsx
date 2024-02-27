@@ -10,7 +10,6 @@ import TabPane from './components/tabpane';
 import {getGroupByItems} from '@/api/search';
 
 import './index.scss';
-import {CommonOption} from '@/api/search/dto';
 
 const Listing = () => {
   const {
@@ -26,9 +25,7 @@ const Listing = () => {
   const [currentTab, setCurrentTab] = useState(TableTabType.ALL);
   const [groupItems, setGroupItems] = useState();
   const [visible, setVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<CommonOption | null>(
-    null
-  );
+  const [selectedOption, setSelectedOption] = useState<string>();
   const tabList = useMemo(() => {
     const tabs = [
       {
@@ -53,9 +50,9 @@ const Listing = () => {
     val => {
       let kv;
       if (!val) {
-        setSelectedOption(null);
+        setSelectedOption(undefined);
       } else {
-        setSelectedOption(val || null);
+        setSelectedOption(val);
         kv = val.split('--');
       }
       const tab = tabPaneRefs.current?.[currentTab];

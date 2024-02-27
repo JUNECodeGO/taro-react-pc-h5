@@ -1,13 +1,12 @@
 /** @format */
-import {useRef, useCallback} from 'react';
+import {useCallback} from 'react';
 import {View, Text} from '@tarojs/components';
 import {Button, Popup} from '@nutui/nutui-react-taro';
 import {Close} from '@nutui/icons-react-taro';
 import SideFilter from '../SideFilter';
+import {TableTabType} from '@/common/type';
 
 import './index.scss';
-import {TableTabType} from '@/common/type';
-import {CommonOption} from '@/api/search/dto';
 
 interface FilterPopupProps {
   handleSearch: (values: any) => void;
@@ -17,7 +16,7 @@ interface FilterPopupProps {
   visible: boolean;
   tab: TableTabType;
   groupItems: any;
-  selectedOption: CommonOption | null;
+  selectedOption?: string;
   filterRef: any;
 }
 

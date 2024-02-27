@@ -8,6 +8,7 @@ import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
 import {TableTabType} from '@/common/type';
+import CTable from '../CTable';
 
 const columns = {
   [TableTabType.ALL]: [
@@ -62,6 +63,7 @@ const Table = props => {
         key: 'base_id',
         align: 'center',
         width: 20,
+
         render: data => {
           return (
             <Button
@@ -84,6 +86,7 @@ const Table = props => {
         title: '操作',
         key: 'action',
         width: 80,
+
         render: data => {
           return (
             <Button
@@ -117,7 +120,7 @@ const Table = props => {
   return (
     <View className='table-wrapper'>
       <View className='home-table'>
-        <NutiTable
+        <CTable
           columns={columnsStickRight}
           data={data}
           style={{height: 350}}

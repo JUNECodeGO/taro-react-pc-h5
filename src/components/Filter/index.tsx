@@ -2,7 +2,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {Text, View} from '@tarojs/components';
 import {Form, Button, Input} from '@nutui/nutui-react-taro';
-import {Search, MaskClose, Del, More, Add} from '@nutui/icons-react-taro';
+import {Search, Brush, Del, More, Add} from '@nutui/icons-react-taro';
 import Navigator from '@/common/utils/navigator';
 import {TableTabType} from '@/common/type';
 import {FormInstance} from '@nutui/nutui-react-taro/dist/types/packages/form/types';
@@ -14,7 +14,7 @@ const CheckItem = ({label, value}) => {
   return (
     <View key={value} className='check-item'>
       <Text className='check-item-text'>{`${GroupType[label]}: ${value}`}</Text>
-      <MaskClose color='#6f7473' />
+      {/* <MaskClose color='#6f7473' /> */}
     </View>
   );
 };
@@ -40,7 +40,6 @@ export const FilterForm = React.memo((props: FilterFormProps) => {
           className='nut-input-text'
           placeholder='请输入名称'
           type='text'
-          clearable
         />
       </Form.Item>
       <Form.Item label='特性' name='feature'>
@@ -48,7 +47,6 @@ export const FilterForm = React.memo((props: FilterFormProps) => {
           className='nut-input-text'
           placeholder='请输入特性'
           type='text'
-          clearable
         />
       </Form.Item>
       <Form.Item label='用途' name='usage'>
@@ -56,7 +54,6 @@ export const FilterForm = React.memo((props: FilterFormProps) => {
           className='nut-input-text'
           placeholder='请输入用途'
           type='text'
-          clearable
         />
       </Form.Item>
       <View className='last-form'>
@@ -65,11 +62,10 @@ export const FilterForm = React.memo((props: FilterFormProps) => {
             className='nut-input-text'
             placeholder='请输入描述'
             type='text'
-            clearable
           />
         </Form.Item>
         {tab !== TableTabType.SUB && (
-          <More size={24} className='more' onClick={changePopupVisible} />
+          <More size={22} className='more' onClick={changePopupVisible} />
         )}
       </View>
     </Form>
@@ -81,8 +77,9 @@ interface FilterProps {
   tab: TableTabType;
   className?: string;
   handleSubmit: () => void;
-  selectedOption: string | null;
+  selectedOption?: string;
   handleClean?: () => void;
+  handleReset?: () => void;
 }
 
 const Filter = (props: FilterProps) => {
@@ -93,6 +90,7 @@ const Filter = (props: FilterProps) => {
     handleSubmit,
     selectedOption,
     handleClean,
+    handleReset,
   } = props;
 
   const selected = useMemo(() => {
@@ -116,8 +114,10 @@ const Filter = (props: FilterProps) => {
         )}
 
         <View>
+          <Button icon={<Brush />} onClick={handleReset} />
           <Button
             type='primary'
+            style={{marginLeft: 8}}
             icon={<Search color='#fff' />}
             onClick={handleSubmit}
           />

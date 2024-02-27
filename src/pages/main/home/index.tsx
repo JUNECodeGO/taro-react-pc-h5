@@ -1,5 +1,5 @@
 /** @format */
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {
   Flex,
   Button,
@@ -20,12 +20,20 @@ import {useStore} from '@/store';
 
 const options = [
   {
-    value: '按地域',
-    label: '按地域',
+    value: 'name',
+    label: '按名称',
   },
   {
-    value: 'jiangsu',
-    label: 'Jiangsu',
+    value: 'feature',
+    label: '按特性',
+  },
+  {
+    value: 'usage',
+    label: '按用途',
+  },
+  {
+    value: 'keywords',
+    label: '按描述',
   },
 ];
 
@@ -36,6 +44,8 @@ export default function Home() {
   const {
     useUserStore: {userInfo},
   } = useStore();
+
+  const [val, setVal] = useState('name');
 
   const navLink = useMemo(() => {
     return homeMenus.map(route => (
@@ -54,6 +64,27 @@ export default function Home() {
     Navigator.navigateTo('main/signIn');
   }, []);
 
+  const handleChange = useCallback(() => {
+    setVal(val);
+  }, []);
+
+  const onSearch = useCallback(keywords => {
+    let urlStr = window.location.href.split('?')[1];
+    const urlSearchParams = new URLSearchParams(urlStr);
+    const result = Object.fromEntries(urlSearchParams.entries());
+    if (result.sources && result.sources === 'mini') {
+      Navigator.navigateBack();
+      return;
+    }
+    Navigator.navigateTo('listing', {
+      [val]: keywords,
+    });
+    return;
+  }, []);
+
+  const handleJumpSearch = useCallback(() => {
+    Navigator.navigateTo('main/search');
+  }, []);
   return (
     <Row align='middle' justify='center'>
       <Col xs={23} md={20} lg={20} xl={20}>
@@ -63,7 +94,7 @@ export default function Home() {
             <div className='title'>热带作物种质资源引进中转平台</div>
             <Flex align='flex-start' gap='small'>
               {userInfo ? (
-                `欢迎，${userInfo.nickName || userInfo.username}`
+                `欢迎，${userInfo.nickname || userInfo.username}`
               ) : (
                 <Button
                   type='default'
@@ -129,8 +160,11 @@ export default function Home() {
           <Space.Compact className='home-search-input'>
             <Input.Search
               size='large'
-              addonBefore={<Select defaultValue='按地域' options={options} />}
-              defaultValue='Xihu District, Hangzhou'
+              addonBefore={
+                <Select value={val} options={options} onChange={handleChange} />
+              }
+              placeholder='请输入搜索词'
+              onSearch={onSearch}
             />
           </Space.Compact>
         </div>
@@ -143,7 +177,13 @@ export default function Home() {
           }}
           className='home-card'>
           {categories.map((item, index) => (
-            <Col key={String(index)} xl={12} lg={12} md={12} xs={24}>
+            <Col
+              key={String(index)}
+              xl={12}
+              lg={12}
+              md={12}
+              xs={24}
+              onClick={handleJumpSearch}>
               <div className='home-card-content'>{item}</div>
             </Col>
           ))}
@@ -157,7 +197,13 @@ export default function Home() {
           }}
           className='home-card'>
           {sources.map((item, index) => (
-            <Col key={String(index)} xl={12} lg={12} md={12} xs={24}>
+            <Col
+              key={String(index)}
+              xl={12}
+              lg={12}
+              md={12}
+              xs={24}
+              onClick={handleJumpSearch}>
               <div className='home-card-content'>{item}</div>
             </Col>
           ))}

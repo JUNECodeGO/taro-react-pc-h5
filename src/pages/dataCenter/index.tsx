@@ -7,7 +7,6 @@ import Empty from '@/components/Empty';
 import Chart from '@/components/Charts';
 
 import './index.scss';
-import Item from 'antd/es/list/Item';
 
 const NotYet = false;
 const tabList = ['种质圃TOP10', '类型分析'];
