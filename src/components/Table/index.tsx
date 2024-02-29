@@ -15,22 +15,22 @@ const columns = {
     {
       title: '作（植）物名称',
       key: 'germ_name',
-      width: 80,
+      width: '100px',
     },
     {
       title: '种质名称',
       key: 'cate1',
-      width: 80,
+      width: '100px',
     },
     {
       title: '科名',
       key: 'family',
-      width: 80,
+      width: '100px',
     },
     {
       title: '属名或亚属名',
       key: 'genus',
-      width: 100,
+      width: '100px',
     },
   ],
   [TableTabType.MINE]: [
@@ -38,7 +38,7 @@ const columns = {
       title: '种质编号',
       key: 'name',
       align: 'cate_id',
-      width: 110,
+      width: '110px',
     },
   ],
 };
@@ -62,7 +62,7 @@ const Table = props => {
         title: 'ID',
         key: 'base_id',
         align: 'center',
-        width: 20,
+        width: '80px',
 
         render: data => {
           return (
@@ -79,13 +79,13 @@ const Table = props => {
         title: '种质编号',
         key: 'enumber',
         align: 'center',
-        width: 80,
+        width: '110px',
       },
       ...columns[tab],
       {
         title: '操作',
         key: 'action',
-        width: 80,
+        width: '80px',
 
         render: data => {
           return (

@@ -23,13 +23,18 @@ export const searchListMine = data =>
   http<{
     counts: number;
     lists: Collection[];
-  }>('GET', '/get_categories', data);
+  }>('GET', '/search_user_items', data);
 
 export const getCateDetail = data =>
   http<{data: Cate}>('GET', '/get_detail', data);
 
 export const applyShare = data => http<{}>('POST', '/apply_share', data);
 
-export const createItem = data => http<{}>('POST', '/create', data);
+export const searchShareList = data =>
+  http<{}>('GET', '/search_share_list', data);
 
-export const updateItem = data => http<{}>('POST', '/update', data);
+export const createItem = data => http<{}>('POST', '/create_item', data);
+
+export const updateItem = data => http<{}>('POST', '/update_item', data);
+
+export const getCateInfo = () => http('GET', '/get_cate_info');

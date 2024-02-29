@@ -1,9 +1,10 @@
 /** @format */
 import React, {useMemo} from 'react';
 
-import './index.scss';
 import {Col, Grid, Row} from '@nutui/nutui-react-taro';
 import {View} from '@tarojs/components';
+
+import './index.scss';
 
 const CTable = props => {
   const {columns, data, style, className} = props;
@@ -19,27 +20,27 @@ const CTable = props => {
   return (
     <View className={`${className} ctable`} style={style}>
       <View className='ctable-content'>
-        <Row className='ctable-row'>
+        <View className='ctable-row head'>
           {realColumns.map(item => (
-            <Col
+            <View
               key={item.key}
               className='ctable-col'
               style={{width: item.width}}>
               {item.title}
-            </Col>
+            </View>
           ))}
-        </Row>
+        </View>
         {data.map(target => (
-          <Row className='ctable-row'>
+          <View className='ctable-row'>
             {realColumns.map(item => (
-              <Col
+              <View
                 key={item.key}
                 style={{width: item.width}}
                 className='ctable-col'>
                 {item.render ? item.render(target) : target[item.key]}
-              </Col>
+              </View>
             ))}
-          </Row>
+          </View>
         ))}
       </View>
     </View>

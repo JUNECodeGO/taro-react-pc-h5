@@ -11,6 +11,7 @@ import PasswordForm from '@/components/PasswardForm';
 import {CodeType} from '@/api/user/dto';
 
 import './index.scss';
+import ShareList from './components/ShareList';
 
 const SideLayout =
   process.env.TARO_ENV === 'h5'
@@ -149,11 +150,11 @@ const Account = () => {
           </View>
         );
       case TabType.share:
-        return <></>;
+        return <ShareList />;
       default:
         break;
     }
-  }, [userInfo]);
+  }, [userInfo, tab]);
 
   return (
     <BasicLayout className='account' leftSlot={SideLayout}>

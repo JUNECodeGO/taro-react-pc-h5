@@ -1,18 +1,35 @@
 /** @format */
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {View, Text} from '@tarojs/components';
-import {Button, Form, Input, TextArea, Uploader} from '@nutui/nutui-react-taro';
+import {
+  Button,
+  Form,
+  Input,
+  Radio,
+  TextArea,
+  Uploader,
+} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import Breadcrumb from '@/components/Bread';
+import Selection from '@/components/Selection';
 import Navigator from '@/common/utils/navigator';
 import Taro, {useRouter} from '@tarojs/taro';
-import {createItem, updateItem} from '@/api/search';
-
+import {createItem, getCateInfo, updateItem} from '@/api/search';
 import './index.scss';
+import {
+  collectingMaterial,
+  ecosystemType,
+  germType,
+  soilType,
+} from './constants';
 
 const AddPage = () => {
   const router = useRouter();
   const {id} = Navigator.serialize(router.params) || {};
+  const [cates, setCates] = useState([]);
+  const [currentFamily, setCurrentFamily] = useState();
+  const [family, setFamilies] = useState([]);
+  const familyInfo = useRef({});
   const breadList = useMemo(
     () => [
       {
@@ -30,7 +47,36 @@ const AddPage = () => {
     async values => {
       try {
         Taro.showLoading();
-        const data = await createItem(values);
+        const {
+          cate_id = [],
+          family = [],
+          genus = [],
+          germ_type = [],
+          soil_type = [],
+          ecosystem_type = [],
+          collecting_material = [],
+        } = values;
+        let realFamily = typeof family === 'string' ? family : family[0];
+
+        if (realFamily) {
+          realFamily = familyInfo.current[realFamily].parentId;
+        }
+        const data = await createItem({
+          ...values,
+          cate_id: typeof cate_id === 'string' ? cate_id : cate_id[0],
+          family: realFamily,
+          genus: typeof genus === 'string' ? genus : genus[0],
+          germ_type: typeof germ_type === 'string' ? germ_type : germ_type[0],
+          soil_type: typeof soil_type === 'string' ? soil_type : soil_type[0],
+          ecosystem_type:
+            typeof ecosystem_type === 'string'
+              ? ecosystem_type
+              : ecosystem_type[0],
+          collecting_material:
+            typeof collecting_material === 'string'
+              ? collecting_material
+              : collecting_material[0],
+        });
         if (data && data.code === 0) {
           Taro.showToast({
             title: '创建成功',
@@ -49,6 +95,7 @@ const AddPage = () => {
     },
     [id]
   );
+
   const handleUpdate = useCallback(
     async values => {
       try {
@@ -72,6 +119,7 @@ const AddPage = () => {
     },
     [id]
   );
+
   const handleSubmit = useCallback(
     async values => {
       if (id) {
@@ -85,6 +133,51 @@ const AddPage = () => {
 
   const submitFailed = useCallback(error => {
     Taro.showToast({title: JSON.stringify(error), icon: 'error'});
+  }, []);
+
+  const getSelectInfos = useCallback(async () => {
+    try {
+      Taro.showLoading();
+      const {cate = [], family = []} = (await getCateInfo()) || {};
+
+      const families = [];
+      setCates(cate.map(item => ({value: item.cate_id, text: item.cate_name})));
+
+      for (let target of family) {
+        const {cate_name, cate_name_cn, genus = [], cate_id} = target;
+        const option = {
+          value: cate_id,
+          text: `(${cate_name})${cate_name_cn}`,
+        };
+        families.push(option);
+        familyInfo.current[String(cate_id)] = {
+          genus: genus.map(({cate_name, cate_name_cn}) => ({
+            value: `(${cate_name})${cate_name_cn}`,
+            text: `(${cate_name})${cate_name_cn}`,
+          })),
+          parentId: `(${cate_name})${cate_name_cn}`,
+        };
+      }
+
+      setFamilies(families);
+    } catch (error) {
+    } finally {
+      Taro.hideLoading();
+    }
+  }, []);
+
+  const subFamily = useMemo(() => {
+    const target =
+      currentFamily?.[0] && (familyInfo.current[currentFamily[0]] as any);
+    return target?.genus || {};
+  }, [currentFamily]);
+
+  const handleFamilyChange = useCallback((_, option) => {
+    setCurrentFamily(option);
+  }, []);
+
+  useEffect(() => {
+    getSelectInfos();
   }, []);
 
   return (
@@ -110,75 +203,37 @@ const AddPage = () => {
               <Text>基本信息</Text>
             </View>
             <View className='card-content'>
-              <Form.Item
+              <Selection
                 required
+                rules={[{required: true, message: '请选择作（植）物类别'}]}
                 label='作（植）物类别'
-                name='name'
-                className='add-form-item'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请选择作（植）物类别'
-                  type='text'
-                />
-              </Form.Item>
-              <Form.Item
-                required
-                label='作（植）物名称'
-                name='crop_name'
-                className='add-form-item'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入作（植）物名称'
-                  type='text'
-                />
-              </Form.Item>
-              <Form.Item
-                required
+                name='cate_id'
+                placeholder='请选择作（植）物类别'
+                options={cates}
+              />
+              <Selection
                 label='科名'
-                className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请选择科名'
-                  type='text'
-                />
-              </Form.Item>
-              <Form.Item
+                name='family'
+                placeholder='请选择科名'
                 required
+                rules={[{required: true, message: '请选择科名'}]}
+                options={family}
+                onChange={handleFamilyChange}
+              />
+              <Selection
                 label='属名或亚属名'
-                className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请选择属名或亚属名'
-                  type='text'
-                />
-              </Form.Item>
+                name='genus'
+                placeholder='请选择科名'
+                required
+                rules={[{required: true, message: '请选择属名或亚属名'}]}
+                options={subFamily}
+              />
               <Form.Item
                 required
                 label='种名'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='species'
+                rules={[{required: true, message: '请输入种名'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入种名'
@@ -190,10 +245,7 @@ const AddPage = () => {
                 label='种质名称'
                 className='add-form-item'
                 name='germ_name'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                rules={[{required: true, message: 'Please enter Field A'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入种质名称'
@@ -205,10 +257,7 @@ const AddPage = () => {
                 label='外文名称'
                 className='add-form-item'
                 name='alien_name'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                rules={[{required: true, message: '请输入外文名称'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入外文名称'
@@ -216,14 +265,9 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='学名'
                 className='add-form-item'
-                name='scientific_name'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='scientific_name'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入学名'
@@ -237,60 +281,45 @@ const AddPage = () => {
               <Text>信息录入</Text>
             </View>
             <View className='card-content'>
-              <Form.Item
-                required
+              <Selection
                 label='种质类型'
-                className='add-form-item'
                 name='germ_type'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请选择种质类型'
-                  type='text'
-                />
-              </Form.Item>
+                placeholder='请选择种质类型'
+                required
+                rules={[{required: true, message: '请选择种质类型'}]}
+                options={germType}
+              />
+
               <Form.Item
                 required
                 label='收集方式'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请选择收集方式'
-                  type='text'
-                />
+                name='collecting_type'
+                rules={[{required: true, message: '请选择收集方式'}]}>
+                <Radio.Group>
+                  <Radio value='考察'>考察</Radio>
+                  <Radio value='征集'>征集</Radio>
+                  <Radio value='引进'>引进</Radio>
+                  <Radio value='创制'>创制</Radio>
+                </Radio.Group>
               </Form.Item>
               <Form.Item
                 required
                 label='种质来源'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入种质来源'
-                  type='text'
-                />
+                name='from_type'
+                rules={[{required: true, message: '请选择种质来源'}]}>
+                <Radio.Group>
+                  <Radio value='境内'>境内</Radio>
+                  <Radio value='境外'>境外</Radio>
+                </Radio.Group>
               </Form.Item>
               <Form.Item
                 required
                 label='来源国'
                 className='add-form-item'
-                name='country'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='laiyuan_guobie'
+                rules={[{required: true, message: '请输入来源国家'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入来源国家'
@@ -298,14 +327,9 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='来源省（州、邦）'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='province'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入来源省（州、邦）'
@@ -313,14 +337,9 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='来源地'
                 className='add-form-item'
-                name='address'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='address'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入来源地'
@@ -328,14 +347,9 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='来源机构'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='from_org'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入来源机构'
@@ -343,14 +357,9 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='原产国'
                 className='add-form-item'
-                name='origin_country'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='origin_country'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入原产国'
@@ -358,14 +367,9 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='收集地经度'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='origin_lng'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集地经度'
@@ -373,14 +377,9 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='收集地纬度'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='origin_lat'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集地纬度'
@@ -388,74 +387,40 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='收集地海拔'
                 className='add-form-item'
-                name='height'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='origin_elevation'>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入地海拔'
                   type='text'
                 />
               </Form.Item>
-              <Form.Item
-                required
+              <Selection
                 label='土壤类型'
-                className='add-form-item'
                 name='soil_type'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入土壤类型'
-                  type='text'
-                />
-              </Form.Item>
-              <Form.Item
-                required
+                placeholder='请选择土壤类型'
+                options={soilType}
+              />
+              <Selection
                 label='收集地生态类型'
-                className='add-form-item'
-                name='ecological_type'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入收集地生态类型'
-                  type='text'
-                />
-              </Form.Item>
-              <Form.Item
-                required
+                name='ecosystem_type'
+                placeholder='请选择收集地生态类型'
+                options={ecosystemType}
+              />
+              <Selection
                 label='收集材料类型'
-                className='add-form-item'
-                name='material_type'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入收集材料类型'
-                  type='text'
-                />
-              </Form.Item>
+                name='collecting_material'
+                placeholder='请选择收集材料类型'
+                options={collectingMaterial}
+              />
+
               <Form.Item
                 required
                 label='收集人'
                 className='add-form-item'
-                name='collecter'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='collecting_person'
+                rules={[{required: true, message: '请输入收集人'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集人'
@@ -466,11 +431,8 @@ const AddPage = () => {
                 required
                 label='收集单位'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='collecting_company'
+                rules={[{required: true, message: '请输入收集单位'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集单位'
@@ -479,13 +441,10 @@ const AddPage = () => {
               </Form.Item>
               <Form.Item
                 required
-                label='收集时间'
+                label='收集时间(年份)'
                 className='add-form-item'
-                name='username'
-                rules={[
-                  {max: 5, message: 'Field A cannot exceed 5 characters'},
-                  {required: true, message: 'Please enter Field A'},
-                ]}>
+                name='collecting_date'
+                rules={[{required: true, message: '请输入收集时间'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集时间'
@@ -493,18 +452,12 @@ const AddPage = () => {
                 />
               </Form.Item>
               <Form.Item
-                required
                 label='原生境图片'
                 className='add-form-item'
                 name='image'>
                 <Uploader url='https://my-json-server.typicode.com/linrufeng/demo/posts' />
               </Form.Item>
-              <Form.Item
-                required
-                label='备注'
-                className='add-form-item'
-                name='username'
-                rules={[{max: 100, message: '最多输入100个字符'}]}>
+              <Form.Item label='备注' className='add-form-item' name='note'>
                 <TextArea placeholder='请输入填写备注' maxLength={100} />
               </Form.Item>
             </View>

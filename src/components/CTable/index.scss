@@ -1,5 +1,5 @@
 .ctable {
-  width: 100%;
+  min-width: 100%;
   overflow: hidden;
   background: $white;
 
@@ -7,23 +7,38 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    overflow: scroll;
+    overflow: scroll hidden;
     flex: 1;
     width: auto;
+
+
   }
 
   &-row {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    flex: 1;
-    flex-shrink: 0;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px dashed #63738157;
+    margin: 0;
+    white-space: nowrap;
+
+    &.head {
+      .ctable-col {
+        background-color: #F4F6F8 !important;
+        color: #637381;
+      }
+
+      border: none
+    }
   }
 
   &-col {
     display: flex;
-    flex-wrap: nowrap;
+    box-sizing: border-box;
+    padding: 0.8rem 1rem;
     flex-shrink: 0;
+    margin: 0;
 
   }
 }

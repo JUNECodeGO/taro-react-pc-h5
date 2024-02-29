@@ -10,10 +10,11 @@ import TabPane from './components/tabpane';
 import {getGroupByItems} from '@/api/search';
 
 import './index.scss';
+import {UserRole} from '@/api/user/dto';
 
 const Listing = () => {
   const {
-    useUserStore: {userInfo},
+    useUserStore: {userInfo, role},
   } = useStore();
 
   // pane
@@ -33,7 +34,8 @@ const Listing = () => {
         title: '所有',
       },
     ];
-    if (userInfo) {
+
+    if (userInfo && role === UserRole.TOP) {
       tabs.push({
         key: TableTabType.MINE,
         title: '我的',
