@@ -1,37 +1,73 @@
 /** @format */
-import {useRef} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import Echarts, {EChartOption, EchartsHandle} from 'taro-react-echarts';
 import echarts from '@/assets/js/echarts.js';
+import {getNurseryLists, getOverviewByGermType} from '@/api/search';
+import Taro from '@tarojs/taro';
 
-const MyChart = () => {
+interface Props {
+  type: 'nursery' | 'overview';
+}
+const MyChart = (props: Props) => {
+  const {type} = props;
   const echartsRef = useRef<EchartsHandle>(null);
-  const option: EChartOption = {
-    legend: {
-      top: 50,
-      left: 'center',
-      z: 100,
-    },
-    tooltip: {
-      trigger: 'axis',
-      show: true,
-      confine: true,
-    },
-    xAxis: {
-      type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    },
-    yAxis: {
-      type: 'value',
-    },
-    series: [
-      {
-        data: [150, 230, 224, 218, 135, 147, 260],
-        type: 'line',
-      },
-    ],
-  };
+  const [data, setData] = useState<EChartOption>({});
 
-  return <Echarts echarts={echarts} option={option} ref={echartsRef}></Echarts>;
+  const getList = useCallback(async () => {
+    const isLine = type === 'nursery';
+    const fn = isLine ? getNurseryLists : getOverviewByGermType;
+    try {
+      Taro.showLoading();
+      const {data = []} = await fn();
+      const [xAxisData, seriesData] = data.reduce(
+        (cur, pre) => {
+          cur[1].push(+pre.count);
+          cur[0].push(pre.nursery_name || pre.germ_type);
+          return cur;
+        },
+        [[], []]
+      );
+
+      setData({
+        legend: {
+          top: 50,
+          left: 'center',
+          z: 100,
+        },
+        tooltip: {
+          trigger: 'axis',
+          show: true,
+          confine: true,
+        },
+        xAxis: {
+          type: 'category',
+          data: xAxisData,
+          nameTextStyle: {
+            width: '15px',
+            overflow: 'break',
+          },
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: seriesData,
+            type: isLine ? 'bar' : 'pie',
+          },
+        ],
+      });
+    } catch (error) {
+    } finally {
+      Taro.hideLoading();
+    }
+  }, [type]);
+
+  useEffect(() => {
+    getList();
+  }, []);
+
+  return <Echarts echarts={echarts} option={data} ref={echartsRef}></Echarts>;
 };
 
 export default MyChart;

@@ -29,7 +29,7 @@ const Table = props => {
         title: 'ID',
         key: 'base_id',
         align: 'center',
-        width: '80px',
+        width: '20%',
         render: data => {
           return (
             <Button
@@ -45,7 +45,7 @@ const Table = props => {
         title: '种质编号',
         key: 'enumber',
         align: 'center',
-        width: '110px',
+        width: '30%',
         renter: data => {
           console.log(data.enumber, '+++');
           return <Text>{data.enumber ? data.enumber : '未入圃（库)'}</Text>;
@@ -54,28 +54,27 @@ const Table = props => {
       {
         title: '作（植）物名称',
         key: 'germ_name',
-        width: '120px',
+        width: '30%',
       },
       {
         title: '种质名称',
         key: 'cate1',
-        width: '100px',
+        width: '20%',
       },
       {
         title: '科名',
         key: 'family',
-        width: '100px',
+        width: '20%',
       },
       {
         title: '属名或亚属名',
         key: 'genus',
-        width: '100px',
+        width: '30%',
       },
       {
         title: '操作',
         key: 'action',
-        width: '80px',
-
+        width: '30%',
         render: data => {
           return (
             <Button

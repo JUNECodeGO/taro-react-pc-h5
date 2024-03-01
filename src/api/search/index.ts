@@ -38,3 +38,8 @@ export const createItem = data => http<{}>('POST', '/create_item', data);
 export const updateItem = data => http<{}>('POST', '/update_item', data);
 
 export const getCateInfo = () => http('GET', '/get_cate_info');
+
+export const getNurseryLists = () => http('GET', '/get_nursery_lists');
+
+export const getOverviewByGermType = () =>
+  http('GET', 'get_overview_by_germ_type');

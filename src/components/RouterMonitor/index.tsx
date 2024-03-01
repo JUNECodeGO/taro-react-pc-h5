@@ -30,10 +30,10 @@ const RouterMonitor = () => {
     initUser();
   }, []);
 
-  // 有token去login
-  if (whiteList.some(path => handleUrl.indexOf(path) < 0) && !userInfo) {
-    Navigator.redirectTo('main/signIn');
-  }
+  // // 有token去login
+  // if (whiteList.some(path => handleUrl.indexOf(path) < 0) && !userInfo) {
+  //   Navigator.redirectTo('main/signIn');
+  // }
 
   return <></>;
 };

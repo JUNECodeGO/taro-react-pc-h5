@@ -9,33 +9,36 @@ import Chart from '@/components/Charts';
 import './index.scss';
 
 const NotYet = false;
-const tabList = ['种质圃TOP10', '类型分析'];
+const tabList = [
+  {text: '种质圃TOP10', type: 'nursery'},
+  {text: '类型分析', type: 'overview'},
+];
 const topList = [
   {
     title: '保持信息',
     value: '449993份',
     icon: require('../../assets/images/svg/Group_57.svg'),
   },
-  {
-    title: '保持信息',
-    value: '449993份',
-    icon: require('../../assets/images/svg/Group_36.svg'),
-  },
-  {
-    title: '保持信息',
-    value: '449993份',
-    icon: require('../../assets/images/svg/Group_47.svg'),
-  },
-  {
-    title: '保持信息',
-    value: '449993份',
-    icon: require('../../assets/images/svg/Group_53.svg'),
-  },
-  {
-    title: '保持信息',
-    value: '449993份',
-    icon: require('../../assets/images/svg/Group_60.svg'),
-  },
+  // {
+  //   title: '保持信息',
+  //   value: '449993份',
+  //   icon: require('../../assets/images/svg/Group_36.svg'),
+  // },
+  // {
+  //   title: '保持信息',
+  //   value: '449993份',
+  //   icon: require('../../assets/images/svg/Group_47.svg'),
+  // },
+  // {
+  //   title: '保持信息',
+  //   value: '449993份',
+  //   icon: require('../../assets/images/svg/Group_53.svg'),
+  // },
+  // {
+  //   title: '保持信息',
+  //   value: '449993份',
+  //   icon: require('../../assets/images/svg/Group_60.svg'),
+  // },
 ];
 
 const DataCenterPage = () => {
@@ -71,8 +74,8 @@ const DataCenterPage = () => {
             setTab1value(value);
           }}>
           {tabList.map((item, index) => (
-            <Tabs.TabPane title={item} key={String(index)}>
-              <Chart />
+            <Tabs.TabPane title={item.text} key={String(index)}>
+              <Chart type={item.type} />
             </Tabs.TabPane>
           ))}
         </Tabs>
