@@ -3,7 +3,6 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -37,11 +36,6 @@ const TabPane = React.memo(
       pageSize: 5,
       total: 0,
     });
-
-    const disabledNext = useMemo(() => {
-      const {current, pageSize, total} = pageParams;
-      return current * pageSize < total;
-    }, [pageParams]);
 
     const fetchList = useCallback(
       async (params?: any) => {
@@ -92,6 +86,7 @@ const TabPane = React.memo(
     const handleTableChange = useCallback(
       type => {
         try {
+          console.log(type, '====');
           let current = pageParams.current;
           switch (type) {
             case 'next':
@@ -148,8 +143,7 @@ const TabPane = React.memo(
           setData={setData}
           tab={tab}
           handleTableChange={handleTableChange}
-          disabledPre={pageParams.current === 1}
-          disabledNext={!disabledNext}
+          pageParams={pageParams}
         />
       </>
     );

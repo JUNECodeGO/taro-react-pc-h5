@@ -10,7 +10,7 @@ import {CodeType} from '@/api/user/dto';
 
 export default function Login() {
   const handleJumpSign = useCallback(() => {
-    Navigator.redirectTo('main/signin');
+    Navigator.navigateTo('main/signin');
   }, []);
 
   return (

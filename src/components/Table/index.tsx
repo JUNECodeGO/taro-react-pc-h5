@@ -1,49 +1,16 @@
 /** @format */
 
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {View, Text} from '@tarojs/components';
-import {Button, Table as NutiTable, Pagination} from '@nutui/nutui-react-taro';
-import {ArrowSize6} from '@nutui/icons-react-taro';
+import {Button} from '@nutui/nutui-react-taro';
 import Navigator from '@/common/utils/navigator';
-
-import './index.scss';
 import {TableTabType} from '@/common/type';
 import CTable from '../CTable';
 
-const columns = {
-  [TableTabType.ALL]: [
-    {
-      title: '作（植）物名称',
-      key: 'germ_name',
-      width: '100px',
-    },
-    {
-      title: '种质名称',
-      key: 'cate1',
-      width: '100px',
-    },
-    {
-      title: '科名',
-      key: 'family',
-      width: '100px',
-    },
-    {
-      title: '属名或亚属名',
-      key: 'genus',
-      width: '100px',
-    },
-  ],
-  [TableTabType.MINE]: [
-    {
-      title: '种质编号',
-      key: 'name',
-      align: 'cate_id',
-      width: '110px',
-    },
-  ],
-};
+import './index.scss';
+
 const Table = props => {
-  const {data, handleTableChange, tab, disabledNext, disabledPre} = props;
+  const {data, tab, ...rest} = props;
 
   const handleJump = useCallback(id => {
     Navigator.navigateTo('main/apply', {
@@ -63,7 +30,6 @@ const Table = props => {
         key: 'base_id',
         align: 'center',
         width: '80px',
-
         render: data => {
           return (
             <Button
@@ -80,8 +46,31 @@ const Table = props => {
         key: 'enumber',
         align: 'center',
         width: '110px',
+        renter: data => {
+          console.log(data.enumber, '+++');
+          return <Text>{data.enumber ? data.enumber : '未入圃（库)'}</Text>;
+        },
       },
-      ...columns[tab],
+      {
+        title: '作（植）物名称',
+        key: 'germ_name',
+        width: '120px',
+      },
+      {
+        title: '种质名称',
+        key: 'cate1',
+        width: '100px',
+      },
+      {
+        title: '科名',
+        key: 'family',
+        width: '100px',
+      },
+      {
+        title: '属名或亚属名',
+        key: 'genus',
+        width: '100px',
+      },
       {
         title: '操作',
         key: 'action',
@@ -102,44 +91,16 @@ const Table = props => {
     [tab]
   );
 
-  const handleChange = useCallback(
-    type => {
-      let disabled = true;
-      switch (type) {
-        case 'next':
-          disabled = disabledNext;
-          break;
-        default:
-          disabled = disabledPre;
-      }
-      if (disabled) return;
-      handleTableChange(type);
-    },
-    [disabledPre, disabledNext, handleTableChange]
-  );
   return (
     <View className='table-wrapper'>
       <View className='home-table'>
         <CTable
           columns={columnsStickRight}
           data={data}
-          style={{height: 350}}
+          style={{minHeight: tab === TableTabType.MINE ? 200 : 350}}
           className='table'
+          {...rest}
         />
-        <View className='pagination'>
-          <ArrowSize6
-            size={12}
-            className={`pre ${disabledPre ? 'grey' : ''}`}
-            onClick={() => handleChange('pre')}
-          />
-          <View className='line' />
-          <ArrowSize6
-            size={12}
-            className={`next ${disabledNext ? 'grey' : ''}`}
-            data-type='next'
-            onClick={() => handleChange('next')}
-          />
-        </View>
       </View>
     </View>
   );

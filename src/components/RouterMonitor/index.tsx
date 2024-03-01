@@ -3,8 +3,13 @@
 import {observer, useStore} from '@/store';
 import {getUserAPI} from '@/api/user';
 import {useCallback, useEffect} from 'react';
+import Navigator from '@/common/utils/navigator';
+
+const whiteList = ['/main/add', '/main/apply'];
 
 const RouterMonitor = () => {
+  const url = window.location.href;
+  const handleUrl = url.split('pages')[1]?.split('?')[0];
   const {
     useUserStore: {userInfo, setUserInfo},
   } = useStore();
@@ -24,6 +29,11 @@ const RouterMonitor = () => {
   useEffect(() => {
     initUser();
   }, []);
+
+  // 有token去login
+  if (whiteList.some(path => handleUrl.indexOf(path) < 0) && !userInfo) {
+    Navigator.redirectTo('main/signIn');
+  }
 
   return <></>;
 };

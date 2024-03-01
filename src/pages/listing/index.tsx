@@ -8,9 +8,9 @@ import {TableTabType} from '@/common/type';
 import FilterPopup from '@/components/FilterPopup';
 import TabPane from './components/tabpane';
 import {getGroupByItems} from '@/api/search';
+import {UserRole} from '@/api/user/dto';
 
 import './index.scss';
-import {UserRole} from '@/api/user/dto';
 
 const Listing = () => {
   const {

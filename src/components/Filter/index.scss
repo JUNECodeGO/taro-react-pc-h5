@@ -5,6 +5,13 @@
   flex: 1;
   background: #fff;
 
+  .filter-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
   span {
     color: $color-primary;
   }

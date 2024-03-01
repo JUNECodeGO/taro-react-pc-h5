@@ -44,7 +44,6 @@ export default function Login() {
       Taro.showLoading;
       const res = await getUserAPI();
       if (res?.data) {
-        console.log(res.data, ')))))');
         setUserInfo(res.data);
       }
     } catch (error) {

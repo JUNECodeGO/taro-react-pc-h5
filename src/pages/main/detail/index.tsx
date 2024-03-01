@@ -12,16 +12,16 @@ import {getCateDetail} from '@/api/search';
 
 const InfoList = [
   {name: '种质编号', value: 'enumber'},
-  {name: '作物（植物类别)', value: 'cate1'},
-  {name: '作（植）名称', value: 'germ_name'},
+  {name: '作物（植物类别)', value: 'cate_name_cn'},
+  {name: '作（植）名称', value: 'cate1'},
   {name: '种质名称', value: 'germ_name'},
-  {name: '科名', value: 'germ_name'},
-  {name: '学名', value: 'germ_name'},
-  {name: '主要特性', value: 'germ_name'},
-  {name: '保存圃', value: 'germ_name'},
-  {name: '收集时间', value: 'germ_name'},
-  {name: '资源描述', value: 'germ_name'},
-  {name: '种质图片', value: 'germ_name'},
+  {name: '科名', value: 'family'},
+  {name: '学名', value: 'scientific_name'},
+  {name: '主要特性', value: 'ZX'},
+  {name: '保存圃', value: 'nursery_name'},
+  {name: '收集时间', value: 'created'},
+  {name: '资源描述', value: 'note'},
+  {name: '种质图片', value: ''},
 ];
 const Info = ({label, value}) => {
   return (
@@ -90,7 +90,7 @@ const DetailPage = () => {
             <Info
               key={item.name}
               label={item.name}
-              value={data?.[item.value] || '-'}
+              value={data?.[item.value] || '未知'}
             />
           ))}
         </View>

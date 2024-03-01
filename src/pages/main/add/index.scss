@@ -21,6 +21,22 @@
       .add-form-item {
         flex-basis: 100%;
 
+        .nut-cell-left {
+          flex-grow: 2;
+
+        }
+
+        .nut-cell-extra {
+          flex-grow: 1;
+        }
+
+        .nut-radiogroup {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          vertical-align: baseline;
+        }
       }
     }
   }
@@ -35,7 +51,7 @@
   box-sizing: border-box;
 
   .nut-button-block {
-
+    height: 2.5rem;
     flex: 1;
     margin-left: 0.5rem;
   }

@@ -60,7 +60,7 @@ const Header = () => {
         ) : (
           <></>
         )}
-        {MenuList.length && (
+        {MenuList.length ? (
           <Popover
             visible={visible}
             list={popoverList}
@@ -74,6 +74,8 @@ const Header = () => {
               className={isH5 ? 'popover' : ''}
             />
           </Popover>
+        ) : (
+          <></>
         )}
 
         {process.env.TARO_ENV === 'h5' ? accountButton : <></>}

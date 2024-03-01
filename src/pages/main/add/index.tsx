@@ -15,13 +15,14 @@ import Selection from '@/components/Selection';
 import Navigator from '@/common/utils/navigator';
 import Taro, {useRouter} from '@tarojs/taro';
 import {createItem, getCateInfo, updateItem} from '@/api/search';
-import './index.scss';
 import {
   collectingMaterial,
   ecosystemType,
   germType,
   soilType,
 } from './constants';
+
+import './index.scss';
 
 const AddPage = () => {
   const router = useRouter();

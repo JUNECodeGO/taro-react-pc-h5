@@ -5,7 +5,7 @@ import {Cell, Form, Picker} from '@nutui/nutui-react-taro';
 
 interface Props {
   options: any[];
-  onChange?: (val: any, option: any) => void;
+  onChange?: (val: any) => void;
   label: string;
   name: string;
   placeholder: string;

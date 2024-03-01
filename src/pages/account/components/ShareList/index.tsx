@@ -2,18 +2,18 @@
 import {searchShareList} from '@/api/search';
 import CTable from '@/components/CTable';
 import Taro from '@tarojs/taro';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 const columnsStickRight = [
   {
     title: '圃编号',
     key: 'id',
-    width: '100px',
+    width: '70px',
   },
   {
     title: '作物名称',
     key: 'zuowuname',
-    width: '100px',
+    width: '80px',
   },
   {
     title: '所属单位',
@@ -28,7 +28,7 @@ const columnsStickRight = [
   {
     title: '提供数量',
     key: 'tgnum',
-    width: '100px',
+    width: '60px',
   },
   {
     title: '提供形态',
@@ -68,18 +68,17 @@ const columnsStickRight = [
   {
     title: '审核状态',
     key: 'status',
-    width: '100px',
+    width: '60px',
   },
   {
     title: '操作',
     key: 'genus',
-    width: '100px',
+    width: '60px',
   },
 ];
 
 export default () => {
   const [data, setData] = useState([]);
-
   const [pageParams, setPageParams] = useState({
     current: 1,
     pageSize: 5,
@@ -89,19 +88,17 @@ export default () => {
   const fetchShareList = useCallback(async (params?: any) => {
     try {
       Taro.showLoading();
-      const {current = 1} = params;
-      const {lists = [], counts} =
-        (await searchShareList({page_num: current})) || {};
+      const {current = 1} = params || {};
+      const {data = {}} = (await searchShareList({page_num: current})) || {};
+      const {lists = [], counts} = data;
+      console.log(lists, '+++');
       setData(lists);
-      setPageParams(pre => ({...pre, ...params, total: +counts}));
+      setPageParams(pre => ({...pre, current, total: +counts}));
     } catch (error) {
+      console.log(error, '++++');
     } finally {
       Taro.hideLoading();
     }
-  }, []);
-
-  useEffect(() => {
-    fetchShareList();
   }, []);
 
   const handleTableChange = useCallback(
@@ -120,20 +117,20 @@ export default () => {
     },
     [pageParams]
   );
-  const disabledNext = useMemo(() => {
-    const {current, pageSize, total} = pageParams;
-    return current * pageSize < total;
-  }, [pageParams]);
+
+  console.log(data.length, '+++');
+  useEffect(() => {
+    fetchShareList();
+  }, []);
 
   return (
     <CTable
       columns={columnsStickRight}
+      className='share-table'
       data={data}
-      style={{height: 350}}
-      className='table'
+      style={{minHeight: 200}}
       handleTableChange={handleTableChange}
-      disabledPre={pageParams.current === 1}
-      disabledNext={!disabledNext}
+      pageParams={pageParams}
     />
   );
 };

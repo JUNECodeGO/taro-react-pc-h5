@@ -18,7 +18,7 @@ export default function SignIn() {
   });
 
   const handleJump = useCallback(() => {
-    Navigator.redirectTo('main/login');
+    Navigator.navigateTo('main/login');
   }, []);
 
   const handleSubmit = useCallback(async values => {

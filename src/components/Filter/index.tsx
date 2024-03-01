@@ -100,7 +100,7 @@ const Filter = (props: FilterProps) => {
   }, [selectedOption]);
 
   const handleAdd = useCallback(() => {
-    Navigator.redirectTo('main/add');
+    Navigator.navigateTo('main/add');
   }, []);
 
   return (
@@ -113,16 +113,21 @@ const Filter = (props: FilterProps) => {
           </View>
         )}
 
-        <View>
-          <Button icon={<Brush />} onClick={handleReset} />
+        <View className='filter-left'>
+          <Brush onClick={handleReset} />
           <Button
+            size='small'
             type='primary'
             style={{marginLeft: 8}}
-            icon={<Search color='#fff' />}
+            icon={<Search color='#fff' size={16} />}
             onClick={handleSubmit}
           />
           {tab === TableTabType.MINE && (
-            <Button icon={<Add />} style={{marginLeft: 8}} onClick={handleAdd}>
+            <Button
+              size='small'
+              icon={<Add size={14} />}
+              style={{marginLeft: 8}}
+              onClick={handleAdd}>
               新增资源
             </Button>
           )}

@@ -24,6 +24,9 @@
   }
 
   .radio-wrapper {
-    padding: 0 1rem;
+    padding: 0 0.5rem;
+
+    --nutui-radiogroup-radio-label-margin: 0 5PX 0 0.8rem;
+
   }
 }
