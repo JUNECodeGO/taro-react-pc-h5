@@ -85,6 +85,9 @@
 }
 
 @media (min-width: 756px) {
+  .ctable {
+    max-width: 100% !important;
+  }
 
   .pagination {
     justify-content: flex-end;

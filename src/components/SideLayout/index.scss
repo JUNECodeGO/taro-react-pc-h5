@@ -1,0 +1,17 @@
+.account-menu {
+  display: flex;
+  width: 15rem;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 0.07143rem solid rgba(5, 5, 5, 0.06);
+
+
+
+  .menu-item {
+    margin: 0;
+    padding: 0 0px 0 26px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+  }
+}

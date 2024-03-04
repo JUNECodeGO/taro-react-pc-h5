@@ -16,7 +16,7 @@ import Navigator from '@/common/utils/navigator';
 import Footer from '@/components/Footer';
 
 import './index.scss';
-import {useStore} from '@/store';
+import {observer, useStore} from '@/store';
 
 const options = [
   {
@@ -40,7 +40,7 @@ const options = [
 const categories = ['产胶作物', '热带牧草', '热带水果', '热带粮食作物'];
 const sources = ['产胶作物', '热带牧草', '热带水果', '热带粮食作物'];
 
-export default function Home() {
+function Home() {
   const {
     useUserStore: {userInfo},
   } = useStore();
@@ -214,3 +214,5 @@ export default function Home() {
     </Row>
   );
 }
+
+export default observer(Home);

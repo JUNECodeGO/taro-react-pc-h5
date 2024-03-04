@@ -1,26 +1,34 @@
 /** @format */
 
-import {updateUserInfoAPI} from '@/api/user';
+import {updatePwdAPI} from '@/api/user';
 import {CodeType} from '@/api/user/dto';
 import useVerification from '@/common/hook/useVerification';
 import {Button, Form, Input} from '@nutui/nutui-react-taro';
 import Taro from '@tarojs/taro';
 import {useCallback} from 'react';
+import './index.scss';
+import {useStore} from '@/store';
+import Navigator from '@/common/utils/navigator';
 
 const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
   const {needPhone = true, type} = props;
   const [form] = Form.useForm();
   const {Phone, VerificationGroup} = useVerification({form, type});
+  const {
+    useUserStore: {removeLocalToken, removeUserInfo},
+  } = useStore();
 
   const handleChangePassword = useCallback(async values => {
-    const {email, nickName} = values || {};
     try {
       Taro.showLoading();
-      const data = await updateUserInfoAPI({email, nickName});
+      const data = await updatePwdAPI(values);
       if (data && data.code === 0) {
         Taro.showToast({
           title: '修改成功',
         });
+        removeLocalToken('');
+        removeUserInfo();
+        Navigator.navigateTo('main/login');
       } else {
         throw Error();
       }
@@ -39,6 +47,7 @@ const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
       divider
       onFinish={handleChangePassword}
       form={form}
+      className='password-wrapper'
       footer={
         <>
           <Button

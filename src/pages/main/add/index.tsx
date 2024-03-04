@@ -21,6 +21,7 @@ import {
   germType,
   soilType,
 } from './constants';
+import events from '@/common/event';
 
 import './index.scss';
 
@@ -82,7 +83,11 @@ const AddPage = () => {
           Taro.showToast({
             title: '创建成功',
           });
-          Navigator.navigateBack();
+          Navigator.navigateBack({
+            success: () => {
+              events.trigger('MY_REFRESH');
+            },
+          });
         } else {
           throw Error();
         }

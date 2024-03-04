@@ -7,10 +7,58 @@ import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
+import {useStore} from '@/store';
+import Taro from '@tarojs/taro';
+import {getUserAPI, loginPCAPI} from '@/api/user';
 
 export default function Login() {
+  const [form] = Form.useForm();
+  const {
+    useUserStore: {setToken, setUserInfo},
+  } = useStore();
+
+  const handleSuccess = useCallback(async () => {
+    try {
+      Taro.showLoading;
+      const res = await getUserAPI();
+      if (res?.data) {
+        setUserInfo(res.data);
+      }
+    } catch (error) {
+      Taro.showToast({title: '刷新失败'});
+    } finally {
+      Taro.hideKeyboard();
+    }
+  }, []);
+
   const handleJumpSign = useCallback(() => {
     Navigator.redirectTo('main/signIn');
+  }, []);
+
+  const handleSubmit = useCallback(async values => {
+    try {
+      Taro.showLoading();
+      const res = await loginPCAPI(values);
+      if (res && res.code === 0) {
+        const {data = {}} = res || {};
+        setToken(data.token);
+        Taro.showToast({
+          title: '登录成功，正在跳转',
+          success: () => {
+            Navigator.navigateBack();
+            handleSuccess();
+          },
+        });
+      } else {
+        throw Error();
+      }
+    } catch (error) {
+      Taro.showToast({
+        title: '登录失败，请稍后再试',
+      });
+    } finally {
+      Taro.hideLoading();
+    }
   }, []);
 
   const handleJumpPassword = useCallback(() => {
@@ -24,6 +72,8 @@ export default function Login() {
         <Form
           labelPosition='top'
           divider
+          onFinish={handleSubmit}
+          form={form}
           footer={
             <>
               <Button block type='primary' className='login-button'>

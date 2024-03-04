@@ -13,50 +13,123 @@ const MyChart = (props: Props) => {
   const echartsRef = useRef<EchartsHandle>(null);
   const [data, setData] = useState<EChartOption>({});
 
+  const format = useCallback(val => {
+    const len = val.length;
+    const count = Math.ceil(len / 5);
+
+    if (count >= 1) {
+      let i = 0;
+      let str = '';
+      while (i < count) {
+        str = str + val.substring(i * 5, i * 5 + 5) + '\r\n';
+        i++;
+      }
+
+      return str;
+    } else {
+      return val;
+    }
+  }, []);
   const getList = useCallback(async () => {
     const isLine = type === 'nursery';
     const fn = isLine ? getNurseryLists : getOverviewByGermType;
     try {
       Taro.showLoading();
       const {data = []} = await fn();
-      const [xAxisData, seriesData] = data.reduce(
-        (cur, pre) => {
-          cur[1].push(+pre.count);
-          cur[0].push(pre.nursery_name || pre.germ_type);
-          return cur;
-        },
-        [[], []]
-      );
 
-      setData({
-        legend: {
-          top: 50,
-          left: 'center',
-          z: 100,
-        },
-        tooltip: {
-          trigger: 'axis',
-          show: true,
-          confine: true,
-        },
-        xAxis: {
-          type: 'category',
-          data: xAxisData,
-          nameTextStyle: {
-            width: '15px',
-            overflow: 'break',
+      let option;
+      if (isLine) {
+        const [xAxisData, seriesData] = data?.reduce(
+          (cur, pre) => {
+            cur[1].push(+pre.count);
+            cur[0].push(pre.nursery_name);
+            return cur;
           },
-        },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            data: seriesData,
-            type: isLine ? 'bar' : 'pie',
+          [[], []]
+        );
+        option = {
+          legend: {
+            z: 100,
           },
-        ],
-      });
+          grid: {
+            top: 10,
+            left: '20%',
+          },
+          dataZoom: [
+            {
+              startValue: xAxisData[0],
+              endValue: xAxisData[2],
+              height: 15,
+              bottom: 10,
+            },
+          ],
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow',
+            },
+          },
+          xAxis: {
+            type: 'category',
+            data: xAxisData,
+            axisLabel: {
+              fontSize: 10,
+              internal: 0,
+              formatter: format,
+            },
+          },
+          yAxis: {
+            type: 'value',
+          },
+          series: [
+            {
+              type: 'bar',
+              barWidth: '60%',
+              data: seriesData,
+              itemStyle: {
+                color: '#637381',
+              },
+              showBackground: true,
+              backgroundStyle: {
+                color: 'rgba(180, 180, 180, 0.2)',
+              },
+            },
+          ],
+        };
+      } else {
+        const seriesData = data?.map(item => ({
+          value: +item.count,
+          name: item.germ_type,
+        }));
+        option = {
+          legend: {
+            orient: 'horizontal',
+            top: 'bottom',
+            type: 'scroll',
+          },
+          grid: {
+            top: 0,
+          },
+          tooltip: {
+            trigger: 'item',
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: '50%',
+              data: seriesData,
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              },
+            },
+          ],
+        };
+      }
+      setData(option);
     } catch (error) {
     } finally {
       Taro.hideLoading();

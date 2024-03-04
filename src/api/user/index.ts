@@ -6,6 +6,10 @@ import {CodeType, UserInfo} from './dto';
 export const loginAPI = data =>
   http<{token: string}>('POST', '/wx_signin', data);
 
+// 登录
+export const loginPCAPI = data =>
+  http<{token: string}>('POST', '/signin_by_password', data);
+
 // 快速登录
 export const quickLoginAPI = data =>
   http<{phone: string; verificationCode: string}>('POST', '/signin', data);
@@ -30,8 +34,7 @@ export const uploadAvatarAPI = (data: FormData) =>
   http('POST', '/user/profile/avatar', data);
 
 // 修改密码
-export const updatePwdAPI = data =>
-  http('PUT', '/user/profile/updatePwd', data);
+export const updatePwdAPI = data => http('POST', '/reset_password', data);
 
 export const getVerification = (data: {type: CodeType; phone: string}) =>
   http('POST', '/verification', data);

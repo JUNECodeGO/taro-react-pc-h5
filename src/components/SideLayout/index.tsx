@@ -1,7 +1,9 @@
 /** @format */
 import {useCallback} from 'react';
-import {Menu} from 'antd';
 import Navigator from '@/common/utils/navigator';
+import {View, Text} from '@tarojs/components';
+
+import './index.scss';
 
 const items = [
   {
@@ -22,14 +24,17 @@ const SideLayout = () => {
   const handleClick = useCallback(e => {
     Navigator.navigateTo('account');
   }, []);
+
   return (
-    <Menu
-      onClick={handleClick}
-      mode='inline'
-      inlineCollapsed={false}
-      items={items}
-      style={{width: '15rem', flexShrink: 0}}
-    />
+    <View onClick={handleClick} className='account-menu'>
+      {items.map(item => {
+        return (
+          <View key={item.key} className='menu-item' onClick={handleClick}>
+            <Text>{item.label}</Text>
+          </View>
+        );
+      })}
+    </View>
   );
 };
 

@@ -9,9 +9,12 @@ import './index.scss';
 import Taro from '@tarojs/taro';
 import {quickLoginAPI} from '@/api/user';
 import {CodeType} from '@/api/user/dto';
+import {useStore} from '@/store';
 export default function SignIn() {
   const [form] = Form.useForm();
-
+  const {
+    useUserStore: {setToken},
+  } = useStore();
   const {Phone, VerificationGroup} = useVerification({
     form,
     type: CodeType.LOGIN,
@@ -24,8 +27,10 @@ export default function SignIn() {
   const handleSubmit = useCallback(async values => {
     try {
       Taro.showLoading();
-      const data = await quickLoginAPI(values);
-      if (data && data.code === 0) {
+      const res = await quickLoginAPI(values);
+      if (res && res.code === 0) {
+        const {data = {}} = res || {};
+        setToken(data.token);
         Taro.showToast({
           title: '登录成功，正在跳转',
           success: () => {

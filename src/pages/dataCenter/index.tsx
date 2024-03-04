@@ -1,56 +1,56 @@
 /** @format */
-import {useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {View, Text} from '@tarojs/components';
 import {Image, Tabs} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
-import Empty from '@/components/Empty';
 import Chart from '@/components/Charts';
-
+import {getSummarize} from '@/api/search';
 import './index.scss';
 
-const NotYet = false;
 const tabList = [
   {text: '种质圃TOP10', type: 'nursery'},
   {text: '类型分析', type: 'overview'},
 ];
-const topList = [
-  {
-    title: '保持信息',
-    value: '449993份',
-    icon: require('../../assets/images/svg/Group_57.svg'),
-  },
-  // {
-  //   title: '保持信息',
-  //   value: '449993份',
-  //   icon: require('../../assets/images/svg/Group_36.svg'),
-  // },
-  // {
-  //   title: '保持信息',
-  //   value: '449993份',
-  //   icon: require('../../assets/images/svg/Group_47.svg'),
-  // },
-  // {
-  //   title: '保持信息',
-  //   value: '449993份',
-  //   icon: require('../../assets/images/svg/Group_53.svg'),
-  // },
-  // {
-  //   title: '保持信息',
-  //   value: '449993份',
-  //   icon: require('../../assets/images/svg/Group_60.svg'),
-  // },
-];
 
 const DataCenterPage = () => {
   const [tab1value, setTab1value] = useState(0);
+  const [data, setData] = useState();
+  const topList = useMemo(() => {
+    const {total_items, total_family, total_genus, total_species} = data || {};
+    return [
+      {
+        title: '收集信息',
+        value: `${total_items || '-'} 份`,
+        icon: require('../../assets/images/svg/Group_57.svg'),
+      },
+      {
+        title: '涉及作物科',
+        value: `${total_family || '-'}份`,
+        icon: require('../../assets/images/svg/Group_36.svg'),
+      },
+      {
+        title: '涉及作物属',
+        value: `${total_species || '-'} 份`,
+        icon: require('../../assets/images/svg/Group_47.svg'),
+      },
+      {
+        title: '涉及作物物种',
+        value: `${total_genus || '-'}份`,
+        icon: require('../../assets/images/svg/Group_53.svg'),
+      },
+    ];
+  }, [data]);
 
-  if (NotYet) {
-    return (
-      <BasicLayout className='data-center' title='数据中心'>
-        <Empty />
-      </BasicLayout>
-    );
-  }
+  const getSources = useCallback(async () => {
+    try {
+      const {data} = (await getSummarize()) || {};
+      setData(data);
+    } catch (error) {}
+  }, []);
+
+  useEffect(() => {
+    getSources();
+  }, []);
 
   return (
     <BasicLayout className='data-center' title='数据中心'>

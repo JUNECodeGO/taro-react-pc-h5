@@ -23,6 +23,7 @@ const Listing = () => {
     [TableTabType.MINE]: React.createRef(),
   });
   const filterRef = useRef<any>();
+  const filterH5Ref = useRef<any>();
   const [currentTab, setCurrentTab] = useState(TableTabType.ALL);
   const [groupItems, setGroupItems] = useState();
   const [visible, setVisible] = useState(false);
@@ -75,6 +76,8 @@ const Listing = () => {
   const handleClean = useCallback(() => {
     setSelectedOption(null);
     filterRef.current?.handleClean();
+    console.log(filterH5Ref.current, '!!!!!');
+    filterH5Ref.current?.handleClean();
   }, []);
 
   const initList = useCallback(async () => {
@@ -97,6 +100,7 @@ const Listing = () => {
       leftSlot={
         process.env.TARO_ENV === 'h5' ? (
           <SideFilter
+            ref={filterH5Ref}
             handleSearch={handleSearch}
             tab={currentTab}
             groupItems={groupItems}

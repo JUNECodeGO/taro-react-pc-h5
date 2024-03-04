@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-
 import {searchListAll, searchListMine} from '@/api/search';
 import Taro from '@tarojs/taro';
 import Table from '@/components/Table';
@@ -15,6 +14,7 @@ import {Form} from '@nutui/nutui-react-taro';
 import {TableTabType} from '@/common/type';
 import {useRouter} from '@tarojs/taro';
 import Navigator from '@/common/utils/navigator';
+import {createEventHook} from '@/common/event';
 
 interface TabPaneProps {
   tab: TableTabType;
@@ -86,7 +86,6 @@ const TabPane = React.memo(
     const handleTableChange = useCallback(
       type => {
         try {
-          console.log(type, '====');
           let current = pageParams.current;
           switch (type) {
             case 'next':
@@ -119,6 +118,8 @@ const TabPane = React.memo(
     useImperativeHandle(ref, () => ({
       handleSearch: handleSearch,
     }));
+
+    createEventHook('MY_REFRESH')(fetchList);
 
     return (
       <>

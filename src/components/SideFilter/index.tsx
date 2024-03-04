@@ -33,6 +33,7 @@ const SideFilter = forwardRef((props: SideFilterProps, ref) => {
       handleSave: () => selected,
     };
   });
+  console.log(selected, selectedOption, '====++');
 
   return (
     <View className={`side-filter ${className}`}>

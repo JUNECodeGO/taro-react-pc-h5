@@ -27,6 +27,7 @@ const RouterMonitor = () => {
   }, []);
 
   useEffect(() => {
+    console.log(123);
     initUser();
   }, []);
 

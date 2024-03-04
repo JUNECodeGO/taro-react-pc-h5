@@ -9,14 +9,9 @@ import Navigator from '@/common/utils/navigator';
 import {observer, useStore} from '@/store';
 import PasswordForm from '@/components/PasswardForm';
 import {CodeType} from '@/api/user/dto';
-
+import SideLayout from '@/components/SideLayout';
 import './index.scss';
 import ShareList from './components/ShareList';
-
-const SideLayout =
-  process.env.TARO_ENV === 'h5'
-    ? require('@/components/SideLayout/index.h5')
-    : null;
 
 enum TabType {
   account = 'account',
@@ -100,7 +95,7 @@ const Account = () => {
       case TabType.password:
         return (
           <View className='card'>
-            <PasswordForm needPhone={false} type={CodeType.PASSWORD} />
+            <PasswordForm needPhone={true} type={CodeType.PASSWORD} />
           </View>
         );
       case TabType.account:
@@ -157,7 +152,7 @@ const Account = () => {
   }, [userInfo, tab]);
 
   return (
-    <BasicLayout className='account' leftSlot={SideLayout}>
+    <BasicLayout className='account' leftSlot={<SideLayout />}>
       <View className='account-card'>
         <View className='account-card-top' onClick={handleJumpLogin}>
           <Image

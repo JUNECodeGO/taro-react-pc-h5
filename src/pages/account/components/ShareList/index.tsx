@@ -91,11 +91,9 @@ export default () => {
       const {current = 1} = params || {};
       const {data = {}} = (await searchShareList({page_num: current})) || {};
       const {lists = [], counts} = data;
-      console.log(lists, '+++');
       setData(lists);
       setPageParams(pre => ({...pre, current, total: +counts}));
     } catch (error) {
-      console.log(error, '++++');
     } finally {
       Taro.hideLoading();
     }
@@ -118,7 +116,6 @@ export default () => {
     [pageParams]
   );
 
-  console.log(data.length, '+++');
   useEffect(() => {
     fetchShareList();
   }, []);

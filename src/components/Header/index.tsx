@@ -38,18 +38,12 @@ const Header = () => {
     }
   }, [userInfo]);
 
-  const popoverList = useMemo(
-    () =>
-      MenuList.map(item => ({
-        ...item,
-        action: {
-          onClick: () => {
-            Navigator.navigateTo(item.path);
-          },
-        },
-      })),
-    [MenuList]
-  );
+  const chooseHandle = useCallback(target => {
+    const path = target?.path;
+    if (path) {
+      Navigator.navigateTo(path);
+    }
+  }, []);
 
   return (
     <View className='header'>
@@ -63,9 +57,10 @@ const Header = () => {
         {MenuList.length ? (
           <Popover
             visible={visible}
-            list={popoverList}
+            list={MenuList}
             className={isH5 ? 'popover' : ''}
             location='bottom'
+            onSelect={chooseHandle}
             onClick={changeNarBar}>
             <More
               color='#fff'
