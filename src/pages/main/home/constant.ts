@@ -13,18 +13,18 @@ export const homeMenus = [
 export const dataList = [
   {
     label: '资源数',
-    key: '1',
+    key: 'total_items',
   },
   {
     label: '涉及科',
-    key: '2',
+    key: 'total_family',
   },
   {
     label: '涉及属',
-    key: '3',
+    key: 'total_species',
   },
   {
     label: '涉及种',
-    key: '4',
+    key: 'total_genus',
   },
 ];

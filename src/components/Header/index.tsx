@@ -32,7 +32,7 @@ const Header = () => {
     } else {
       return (
         <Button size='small' className='login-button' onClick={handleJumpLogin}>
-          登陆
+          登录
         </Button>
       );
     }

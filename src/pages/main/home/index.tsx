@@ -1,5 +1,5 @@
 /** @format */
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Flex,
   Button,
@@ -14,9 +14,10 @@ import {
 import {homeMenus, dataList} from './constant';
 import Navigator from '@/common/utils/navigator';
 import Footer from '@/components/Footer';
+import {observer, useStore} from '@/store';
+import {getSummarize} from '@/api/search';
 
 import './index.scss';
-import {observer, useStore} from '@/store';
 
 const options = [
   {
@@ -44,6 +45,8 @@ function Home() {
   const {
     useUserStore: {userInfo},
   } = useStore();
+
+  const [data, setData] = useState();
 
   const [val, setVal] = useState('name');
 
@@ -85,6 +88,18 @@ function Home() {
   const handleJumpSearch = useCallback(() => {
     Navigator.navigateTo('main/search');
   }, []);
+
+  const getSources = useCallback(async () => {
+    try {
+      const {data} = (await getSummarize()) || {};
+      setData(data);
+    } catch (error) {}
+  }, []);
+
+  useEffect(() => {
+    getSources();
+  }, []);
+
   return (
     <Row align='middle' justify='center'>
       <Col xs={23} md={20} lg={20} xl={20}>
@@ -142,7 +157,7 @@ function Home() {
                     className='home-data-item'
                     key={item.key}
                     title={item.label}
-                    value={item.key}
+                    value={data?.[item.key] || '-'}
                   />
                 </Col>
               ))}

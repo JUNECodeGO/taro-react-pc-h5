@@ -2,7 +2,7 @@
 
 import {Form} from '@nutui/nutui-react-taro';
 import {Select} from 'antd';
-
+import './index.scss';
 interface Props {
   options: any[];
   onChange?: (val: any) => void;
@@ -18,8 +18,8 @@ export default (props: Props) => {
   return (
     <Form.Item label={label} name={name} {...rest}>
       <Select
+        className='special_selection'
         placeholder={placeholder}
-        style={{flex: 1, display: 'flex'}}
         options={
           options.map
             ? options.map(({value, text}) => ({

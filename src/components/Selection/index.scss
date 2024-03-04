@@ -1,0 +1,13 @@
+ .special_selection {
+   display: 'flex';
+   flex: 1
+ }
+
+ @media (min-width: 756px) {
+
+   .special_selection {
+     flex-basis: 30%;
+   }
+
+
+ }

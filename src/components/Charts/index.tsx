@@ -140,7 +140,7 @@ const MyChart = (props: Props) => {
     getList();
   }, []);
 
-  return <Echarts echarts={echarts} option={data} ref={echartsRef}></Echarts>;
+  return <Echarts echarts={echarts} option={data} ref={echartsRef} />;
 };
 
 export default MyChart;
