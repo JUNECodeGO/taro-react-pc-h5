@@ -1,0 +1,61 @@
+.login-component {
+  background-color: $white;
+  border-radius: 1rem;
+  padding: 4rem 1rem 1rem 1rem;
+  margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+
+  &.wx {
+    align-items: center;
+    padding-bottom: 6rem;
+  }
+
+  .login-button {
+    height: 2.5rem
+  }
+
+  .nut-cell {
+    padding: 0.8rem 0;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+  }
+
+  .normal {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+  }
+
+
+  .underline {
+    text-decoration-line: underline;
+  }
+
+  .wx-button {
+    margin: 2rem 0 0 0;
+    padding: 1.7rem 0;
+    width: 100%;
+
+  }
+
+  .forget {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    color: #637381;
+    padding: 0 0.1rem;
+
+    &-tip {
+      font-size: smaller;
+      margin-left: 0.5rem;
+    }
+
+    --nutui-radio-icon-font-size: 1rem
+  }
+}

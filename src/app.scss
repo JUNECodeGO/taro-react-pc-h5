@@ -1,0 +1,96 @@
+$font-family: -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  'Noto Sans',
+  sans-serif,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol',
+  'Noto Color Emoji';
+
+:root,
+page {
+  font-size: 14px;
+  font-family: $font-family;
+
+  // 重置变量
+  --nutui-color-primary: #0B4F4A;
+  --nutui-navbar-height: 40px;
+  --nutui-navbar-background: #0B4F4A;
+  --nutui-navbar-margin-bottom: 12px;
+  --nutui-navbar-title-font-size: 14px;
+  --nutui-navbar-box-shadow: 0 0.0104rem 0.0312rem rgba(84, 84, 102, .2);
+
+  --nutui-collapse-item-padding: 12px 0 12px 12px;
+  --nutui-collapse-wrapper-content-padding: 0;
+  --nutui-sidenavbar-sub-item-padding: 10px 8px 10px 20px;
+  // 主要内容用色，常用语常规标题内容、细文浏览、常规按钮文字以及图表引导。
+
+  --nutui-gray-7: #212B36;
+  --nutui-gray-12: #919eab29;
+
+  --nutui-color-text-link: #0B4F4A; // 按钮
+
+  --nutui-button-border-radius: 8px;
+  --nutui-button-default-border-color: #0B4F4A;
+  --nutui-button-default-background-color: #fff;
+  --nutui-color-primary-stop-1: #0B4F4A;
+  --nutui-color-primary-stop-2: #0B4F4A;
+  --nutui-button-default-color: #0B4F4A;
+
+  --nutui-button-primary-border-color: #0B4F4A;
+  --nutui-button-primary-background: #0B4F4A;
+  --nutui-button-primary-color: #fff;
+
+  --nutui-form-item-label-width: 100px;
+  --nutui-radiogroup-radio-margin: 0 0 0.8rem 0;
+  --nutui-radiogroup-radio-label-margin: 0 10px;
+
+  --nutui-tabs-titles-background-color: #fff; // 自定义变量
+  --nutui-tabs-titles-item-color: #637381;
+  --nutui-tabs-titles-item-active-color: #212B36;
+  --nutui-tabs-titles-item-active-font-weight: 600;
+  --nutui-tabs-titles-font-size: 14px;
+  --nutui-tabs-titles-item-active-font-size: 14px;
+  --nutui-tabs-titles-padding: 0;
+  --nutui-tabs-tab-line-width: 0;
+  --background-color: #fff;
+
+  // 全局设置
+  color: #212B36;
+
+}
+
+
+
+// taro 的h5为 默认的 tabbar 组件，所以这里将其样式清除掉  taro issues https://github.com/NervJS/taro/issues/10049
+.taro-tabbar__tabbar-bottom {
+  display: none;
+}
+
+.taro-tabbar__container,
+.taro_page.taro_tabbar_page {
+  height: auto !important;
+}
+
+
+.nut-collapse-item-extra {
+  padding: 0 8px !important;
+}
+
+.ant-input:focus,
+.ant-input:hover,
+.ant-btn-default:hover,
+.ant-btn-default:focus {
+  border-color: #0B4F4A !important;
+  box-shadow: none !important;
+  color: #0B4F4A !important;
+}
+
+.ant-menu-item-selected {
+  color: #0B4F4A !important;
+  background: rgba(0, 167, 111, 0.08) !important;
+}

@@ -1,0 +1,121 @@
+.account {
+  &-card {
+    border-radius: 1rem;
+    background: $white;
+    background: radial-gradient(circle at 10% 20%,
+        rgba(216, 241, 230, 0.46) 0.1%,
+        rgba(233, 226, 226, 0.28) 90.1%);
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+      0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+
+
+    &-top {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 15rem;
+
+      .avatar {
+        margin-bottom: 2rem;
+      }
+
+      .name {
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.375rem;
+        opacity: 0.48;
+      }
+    }
+
+    &-tab {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: $white;
+
+      &-item {
+
+        flex: 1;
+        text-align: center;
+        width: auto;
+        box-sizing: border-box;
+        margin: 0 1.5rem;
+        height: 3rem;
+        line-height: 3rem;
+        text-align: center;
+      }
+
+      .title {
+        color: #637381;
+
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.375rem;
+      }
+
+      &-item.active {
+        border-bottom: 2px solid #212b36;
+
+        .title {
+          color: #212b36;
+        }
+      }
+    }
+
+
+  }
+
+  .share-table {
+    border-radius: 1rem;
+    background: $white;
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+      0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+    flex-shrink: 2;
+  }
+
+  .card {
+    padding: 0.8rem 1rem;
+    border-radius: 1rem;
+    background: $white;
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+      0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+
+    .nut-form-item {
+      border-radius: 0.5rem;
+      border: 1px solid rgba(145, 158, 171, 0.2);
+      margin-bottom: 1rem;
+    }
+
+    .nut-form-item-label {
+      padding-left: 0;
+      color: #637381;
+      width: 3.2rem;
+    }
+
+    .login-button {
+      height: 2.5rem
+    }
+  }
+}
+
+@media (min-width: 756px) {
+  .account {
+    &-card {
+      &-tab {
+        justify-content: flex-end;
+
+        &-item {
+          flex: 0 0 6rem;
+        }
+
+
+      }
+    }
+  }
+}

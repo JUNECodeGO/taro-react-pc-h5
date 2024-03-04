@@ -1,0 +1,27 @@
+.side-filter {
+  display: none;
+  width: 20rem;
+  border-right: 1px solid rgba(5, 5, 5, 0.06);
+
+  &.show {
+    display: block;
+    border-right: none;
+    width: 100%;
+  }
+
+  .nut-collapse-item-content-text {
+    padding: 1rem 1rem 1rem 1rem;
+  }
+
+  .nut-collapse-item-header {
+    align-items: center;
+  }
+}
+
+@media (min-width: 756px) {
+  .side-filter {
+    display: block;
+    width: auto;
+  }
+
+}

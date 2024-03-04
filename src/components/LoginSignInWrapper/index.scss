@@ -1,0 +1,22 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  flex-direction: row;
+  justify-content: center;
+  background: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
+  box-sizing: border-box;
+
+  .content {
+    width: 100%;
+    margin: 0 1.5rem;
+
+  }
+}
+
+@media (min-width: 756px) {
+  .login-container {
+    .content {
+      width: 25rem;
+    }
+  }
+}

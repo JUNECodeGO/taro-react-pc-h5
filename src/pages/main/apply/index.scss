@@ -1,0 +1,65 @@
+.apply-container {
+
+  .card {
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+      0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+
+    border-radius: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
+
+    &-title {
+      padding: 1rem 1rem 0 1rem;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .add-form-item {
+        flex-basis: 100%;
+
+      }
+    }
+  }
+
+
+}
+
+.add-footer {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
+
+  .nut-button-block {
+    flex: 1;
+    height: 2.5rem;
+    margin-left: 0.5rem;
+  }
+}
+
+@media (min-width: 756px) {
+  .add-container {
+    .card {
+      &-content {
+
+        .add-form-item {
+          flex-basis: 30% !important;
+        }
+      }
+    }
+
+
+  }
+
+  .add-footer {
+    box-sizing: border-box;
+
+    .nut-button-block {
+      width: 5rem;
+      margin-left: 0.5rem;
+    }
+  }
+}

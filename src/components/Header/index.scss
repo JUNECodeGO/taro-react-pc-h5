@@ -1,0 +1,69 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-primary;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 0rem 1.2rem 0px rgba(0, 0, 0, 0.05);
+  color: $white;
+
+  .title {
+    white-space: nowrap;
+  }
+
+  &-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 1;
+  }
+
+  .menu {
+
+    .nut-tabs-titles {
+      background-color: transparent;
+
+      .nut-tabs-titles {
+        height: 2.2rem;
+      }
+
+      .nut-tabs-titles-item {
+        color: $white;
+      }
+
+      .nut-tabs-titles-item-line {
+        background-color: $white;
+      }
+    }
+  }
+
+  .popover {
+    display: none;
+  }
+
+  .login-button {
+    margin-left: 1rem;
+  }
+}
+
+@media (min-width: 756px) {
+  .header {
+    .menu {
+      display: block;
+    }
+  }
+}
+
+@media (max-width: 756px) {
+  .header {
+    .popover {
+      display: block;
+      margin-right: 10px;
+    }
+
+    .menu {
+      display: none;
+    }
+  }
+}
