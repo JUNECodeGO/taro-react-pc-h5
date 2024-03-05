@@ -66,8 +66,9 @@ const DetailPage = () => {
   const handleJump = useCallback(() => {
     Navigator.navigateTo('main/apply', {
       id,
+      name: data?.germ_name,
     });
-  }, [id]);
+  }, [id, data]);
 
   useEffect(() => {
     if (id && !data) {

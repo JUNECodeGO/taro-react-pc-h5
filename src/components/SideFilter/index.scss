@@ -21,7 +21,17 @@
 @media (min-width: 756px) {
   .side-filter {
     display: block;
-    width: auto;
-  }
+    width: 20rem;
+    height: 90vh;
+    overflow: hidden;
+    flex-shrink: 0;
 
+    .nut-collapse {
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      overflow: hidden scroll;
+      height: 100%;
+    }
+  }
 }

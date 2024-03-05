@@ -86,7 +86,13 @@
 
 @media (min-width: 756px) {
   .ctable {
-    max-width: 100% !important;
+    &-content {
+      max-width: 100%;
+    }
+
+    &-col {
+      flex-shrink: 2;
+    }
   }
 
   .pagination {

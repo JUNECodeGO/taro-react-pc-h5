@@ -70,6 +70,7 @@ const httpMessageHandle = (
       Taro.showToast({
         title: `${data.message}`,
         icon: 'error',
+        duration: 2000,
       });
       break;
     case 4003:
@@ -97,12 +98,14 @@ const httpMessageHandle = (
       Taro.showToast({
         title: `${data.message}`,
         icon: 'error',
+        duration: 2000,
       });
       break;
     case '500':
       Taro.showToast({
         title: `${data.message}`,
         icon: 'error',
+        duration: 2000,
       });
       break;
 
@@ -111,6 +114,7 @@ const httpMessageHandle = (
         Taro.showToast({
           title: '未知错误，请联系管理人员',
           icon: 'error',
+          duration: 2000,
         });
       break;
   }

@@ -93,9 +93,11 @@
     }
 
     .nut-form-item-label {
-      padding-left: 0;
       color: #637381;
-      width: 3.2rem;
+    }
+
+    .nut-cell-divider {
+      display: none;
     }
 
     .login-button {
@@ -113,7 +115,6 @@
         &-item {
           flex: 0 0 6rem;
         }
-
 
       }
     }

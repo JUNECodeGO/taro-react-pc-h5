@@ -12,10 +12,8 @@ import './index.scss';
 const Table = props => {
   const {data, tab, ...rest} = props;
 
-  const handleJump = useCallback(id => {
-    Navigator.navigateTo('main/apply', {
-      id,
-    });
+  const handleJump = useCallback(data => {
+    Navigator.navigateTo('main/apply', data);
   }, []);
   const handleJumpDetail = useCallback(id => {
     Navigator.navigateTo('main/detail', {
@@ -47,7 +45,6 @@ const Table = props => {
         align: 'center',
         width: '30%',
         renter: data => {
-          console.log(data.enumber, '+++');
           return <Text>{data.enumber ? data.enumber : '未入圃（库)'}</Text>;
         },
       },
@@ -80,7 +77,9 @@ const Table = props => {
             <Button
               fill='none'
               size='mini'
-              onClick={() => handleJump(data?.base_id)}>
+              onClick={() =>
+                handleJump({id: data?.base_id, name: data?.germ_name})
+              }>
               共享资源
             </Button>
           );

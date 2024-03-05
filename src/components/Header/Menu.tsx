@@ -3,8 +3,10 @@ import React, {useCallback} from 'react';
 import {Tabs} from '@nutui/nutui-react-taro';
 import Navigator from '@/common/utils/navigator';
 
-const Menu = ({list, className}) => {
+const Menu = ({list, className, handleUrl}) => {
   const handleChange = useCallback(path => {
+    const isActive = handleUrl === `/${path}/index`;
+    if (isActive) return;
     Navigator.navigateTo(path);
   }, []);
 

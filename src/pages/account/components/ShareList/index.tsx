@@ -46,11 +46,6 @@ const columnsStickRight = [
     width: '100px',
   },
   {
-    title: '邮箱',
-    key: 'email',
-    width: '100px',
-  },
-  {
     title: '地址',
     key: 'address',
     width: '100px',
@@ -64,16 +59,6 @@ const columnsStickRight = [
     title: '利用材料',
     key: 'usematerial',
     width: '100px',
-  },
-  {
-    title: '审核状态',
-    key: 'status',
-    width: '60px',
-  },
-  {
-    title: '操作',
-    key: 'genus',
-    width: '60px',
   },
 ];
 

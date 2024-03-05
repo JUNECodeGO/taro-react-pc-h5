@@ -58,7 +58,7 @@ export default function Login() {
       Taro.showToast({
         title: '您未同意并阅读用户协议和隐私政策',
         icon: 'none',
-        duration: 1000,
+        duration: 2000,
       });
       return false;
     }
@@ -68,6 +68,8 @@ export default function Login() {
     if (result) {
       Taro.showToast({
         title: '登录成功',
+        duration: 2000,
+        icon: 'success',
       });
 
       Navigator.navigateBack({
@@ -77,7 +79,7 @@ export default function Login() {
       Taro.showToast({
         title: '授权失败, 请稍后再试',
         icon: 'none',
-        duration: 1000,
+        duration: 2000,
       });
     }
   }, []);

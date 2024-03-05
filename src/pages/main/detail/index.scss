@@ -72,6 +72,9 @@
 
   .detail-container {
     .card {
+      margin: 0 20%;
+      padding: 1.2rem 1.8rem;
+
       &-content {
         display: flex;
         flex-direction: row;
@@ -79,10 +82,30 @@
 
       }
 
+      &-title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+
+      }
+
       &-info {
         display: flex;
         flex-direction: row;
-        width: 30%;
+        width: 50%;
+        padding-bottom: 0.5rem;
+
+        .label {
+
+          font-size: 1.175rem;
+          line-height: 1.875rem;
+
+        }
+
+        .value {
+
+          font-size: 1.175rem;
+          line-height: 1.875rem;
+        }
       }
     }
   }

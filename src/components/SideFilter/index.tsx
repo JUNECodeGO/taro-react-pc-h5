@@ -1,5 +1,11 @@
 /** @format */
-import {useCallback, forwardRef, useState, useImperativeHandle} from 'react';
+import {
+  useCallback,
+  forwardRef,
+  useState,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {View} from '@tarojs/components';
 import {Collapse, Radio} from '@nutui/nutui-react-taro';
 import {ArrowDown2} from '@nutui/icons-react-taro';
@@ -18,26 +24,38 @@ interface SideFilterProps {
 
 const SideFilter = forwardRef((props: SideFilterProps, ref) => {
   const {className = '', handleSearch, groupItems = {}, selectedOption} = props;
-  const [selected, setSelected] = useState();
-
+  const [selected, setSelected] = useState<string | null | undefined>();
+  const [activeName, setActiveName] = useState();
   const handleChange = useCallback(val => {
     setSelected(val);
     handleSearch?.(val);
   }, []);
 
+  const handleCollapseChange = useCallback(val => {
+    setActiveName(val);
+  }, []);
+
   useImperativeHandle(ref, () => {
     return {
       handleClean: () => {
-        setSelected(undefined);
+        setSelected(null);
       },
       handleSave: () => selected,
     };
   });
-  console.log(selected, selectedOption, '====++');
+
+  useEffect(() => {
+    if (!activeName && groupItems) {
+      let list = Object.keys(groupItems || {});
+      if (list.length) {
+        setActiveName(list);
+      }
+    }
+  }, [groupItems]);
 
   return (
     <View className={`side-filter ${className}`}>
-      <Collapse defaultActiveName={['category']}>
+      <Collapse onChange={handleCollapseChange} activeName={activeName}>
         {Object.entries(groupItems).map(([key, lists = []]) => (
           <Collapse.Item
             key={key}

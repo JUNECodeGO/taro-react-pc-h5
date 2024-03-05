@@ -12,6 +12,8 @@ import {useStore} from '@/store';
 import './index.scss';
 
 const Header = () => {
+  const url = window.location.href;
+  const handleUrl = url.split('pages')[1]?.split('?')[0];
   const {
     useUserStore: {userInfo},
   } = useStore();
@@ -27,7 +29,7 @@ const Header = () => {
 
   const accountButton = useMemo(() => {
     if (userInfo) {
-      const {nickname, username} = userInfo;
+      const {nickname, username} = userInfo || {};
       return <Text>欢迎 {nickname || username}</Text>;
     } else {
       return (
@@ -38,19 +40,32 @@ const Header = () => {
     }
   }, [userInfo]);
 
-  const chooseHandle = useCallback(target => {
-    const path = target?.path;
-    if (path) {
-      Navigator.navigateTo(path);
+  const handleBackHome = useCallback(() => {
+    if (process.env.TARO_ENV === 'h5') {
+      Navigator.redirectTo('main/home');
     }
   }, []);
 
+  const chooseHandle = useCallback(
+    target => {
+      const path = target?.path;
+      const isActive = handleUrl === `/${path}/index`;
+      if (isActive) return;
+      if (path) {
+        Navigator.navigateTo(path);
+      }
+    },
+    [handleUrl]
+  );
+
   return (
     <View className='header'>
-      <Text className='title'>热带作物种质资源引进中转平台</Text>
+      <Text className='title' onClick={handleBackHome}>
+        热带作物种质资源引进中转平台
+      </Text>
       <View className='header-right'>
         {process.env.TARO_ENV === 'h5' ? (
-          <Menu list={MenuList} className='menu' />
+          <Menu list={MenuList} className='menu' handleUrl={handleUrl} />
         ) : (
           <></>
         )}

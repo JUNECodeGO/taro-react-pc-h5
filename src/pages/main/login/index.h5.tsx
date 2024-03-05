@@ -5,11 +5,11 @@ import {View, Text} from '@tarojs/components';
 import {Button, Form, Input} from '@nutui/nutui-react-taro';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
-
-import './index.scss';
 import {useStore} from '@/store';
 import Taro from '@tarojs/taro';
 import {getUserAPI, loginPCAPI} from '@/api/user';
+
+import './index.scss';
 
 export default function Login() {
   const [form] = Form.useForm();
@@ -25,7 +25,7 @@ export default function Login() {
         setUserInfo(res.data);
       }
     } catch (error) {
-      Taro.showToast({title: '刷新失败'});
+      Taro.showToast({title: '刷新失败', duration: 2000, icon: 'error'});
     } finally {
       Taro.hideKeyboard();
     }
@@ -42,11 +42,13 @@ export default function Login() {
       if (res && res.code === 0) {
         const {data = {}} = res || {};
         setToken(data.token);
+        handleSuccess();
         Taro.showToast({
           title: '登录成功，正在跳转',
+          duration: 2000,
+          icon: 'success',
           success: () => {
             Navigator.navigateBack();
-            handleSuccess();
           },
         });
       } else {
@@ -55,6 +57,8 @@ export default function Login() {
     } catch (error) {
       Taro.showToast({
         title: '登录失败，请稍后再试',
+        duration: 2000,
+        icon: 'error',
       });
     } finally {
       Taro.hideLoading();

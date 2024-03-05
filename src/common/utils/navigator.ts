@@ -28,7 +28,6 @@ function createUrl(url: string, param?: {}): string {
     return '/pages/listing/index';
   }
   const newUrl = `/pages/${url}/index`;
-  console.log(newUrl, '=====');
   if (param) {
     return `${newUrl}?routerQuery=${encodeURIComponent(JSON.stringify(param))}`;
   }

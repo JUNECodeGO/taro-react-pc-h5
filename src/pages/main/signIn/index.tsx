@@ -7,21 +7,33 @@ import Navigator from '@/common/utils/navigator';
 import useVerification from '@/common/hook/useVerification';
 import './index.scss';
 import Taro from '@tarojs/taro';
-import {quickLoginAPI} from '@/api/user';
+import {getUserAPI, quickLoginAPI} from '@/api/user';
 import {CodeType} from '@/api/user/dto';
 import {useStore} from '@/store';
 export default function SignIn() {
   const [form] = Form.useForm();
   const {
-    useUserStore: {setToken},
+    useUserStore: {setToken, setUserInfo},
   } = useStore();
   const {Phone, VerificationGroup} = useVerification({
     form,
     type: CodeType.LOGIN,
   });
-
+  const handleSuccess = useCallback(async () => {
+    try {
+      Taro.showLoading;
+      const res = await getUserAPI();
+      if (res?.data) {
+        setUserInfo(res.data);
+      }
+    } catch (error) {
+      Taro.showToast({title: '刷新失败'});
+    } finally {
+      Taro.hideLoading();
+    }
+  }, []);
   const handleJump = useCallback(() => {
-    Navigator.navigateTo('main/login');
+    Navigator.redirectTo('main/login');
   }, []);
 
   const handleSubmit = useCallback(async values => {
@@ -31,8 +43,11 @@ export default function SignIn() {
       if (res && res.code === 0) {
         const {data = {}} = res || {};
         setToken(data.token);
+        handleSuccess();
         Taro.showToast({
           title: '登录成功，正在跳转',
+          duration: 2000,
+          icon: 'success',
           success: () => {
             Navigator.navigateBack();
           },
@@ -42,6 +57,8 @@ export default function SignIn() {
       }
     } catch (error) {
       Taro.showToast({
+        duration: 2000,
+        icon: 'error',
         title: '登录失败，请稍后再试',
       });
     } finally {

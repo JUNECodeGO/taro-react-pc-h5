@@ -12,7 +12,7 @@ import './index.scss';
 
 const ApplyPage = () => {
   const router = useRouter();
-  const {id} = Navigator.serialize(router.params) || {};
+  const {id, name} = Navigator.serialize(router.params) || {};
   const breadList = useMemo(
     () => [
       {
@@ -33,6 +33,8 @@ const ApplyPage = () => {
       if (data && data.code === 0) {
         Taro.showToast({
           title: '申请成功，请等待联系',
+          duration: 2000,
+          icon: 'success',
           success: () => {
             Navigator.navigateBack();
           },
@@ -43,6 +45,8 @@ const ApplyPage = () => {
     } catch (error) {
       Taro.showToast({
         title: '申请失败，请稍后再试',
+        duration: 2000,
+        icon: 'error',
       });
     } finally {
       Taro.hideLoading();
@@ -58,7 +62,7 @@ const ApplyPage = () => {
       <Breadcrumb items={breadList} />
       <View className='card'>
         <View className='card-title'>
-          <Text>共享申请</Text>
+          <Text>{`${name} 共享申请`}</Text>
         </View>
 
         <Form

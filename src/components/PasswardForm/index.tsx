@@ -25,6 +25,8 @@ const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
       if (data && data.code === 0) {
         Taro.showToast({
           title: '修改成功',
+          duration: 2000,
+          icon: 'success',
         });
         removeLocalToken('');
         removeUserInfo();
@@ -35,6 +37,8 @@ const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
     } catch (error) {
       Taro.showToast({
         title: '修改失败，请稍后再试',
+        duration: 2000,
+        icon: 'error',
       });
     } finally {
       Taro.hideLoading();

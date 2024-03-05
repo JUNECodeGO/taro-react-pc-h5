@@ -1,6 +1,6 @@
 /** @format */
-import {useCallback} from 'react';
-import {View, Text} from '@tarojs/components';
+import {useCallback, useMemo} from 'react';
+import {View, Text, ScrollView} from '@tarojs/components';
 import {Button, Popup} from '@nutui/nutui-react-taro';
 import {Close} from '@nutui/icons-react-taro';
 import SideFilter from '../SideFilter';
@@ -32,6 +32,16 @@ const FilterPopup = (props: FilterPopupProps) => {
     [handleSearch]
   );
 
+  const content = useMemo(() => {
+    if (process.env.TARO_ENV === 'h5')
+      return <SideFilter ref={filterRef} className='show' {...rest} />;
+    return (
+      <ScrollView scrollY scrollWithAnimation style={{height: '100%'}}>
+        <SideFilter ref={filterRef} className='show' {...rest} />;
+      </ScrollView>
+    );
+  }, [rest, filterRef]);
+
   return (
     <Popup visible={visible} className='popup-filter' position='bottom'>
       <View className='popup-filter-content'>
@@ -42,7 +52,7 @@ const FilterPopup = (props: FilterPopupProps) => {
             保存
           </Button>
         </View>
-        <SideFilter ref={filterRef} className='show' {...rest} />
+        {content}
       </View>
     </Popup>
   );

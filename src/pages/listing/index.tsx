@@ -76,7 +76,6 @@ const Listing = () => {
   const handleClean = useCallback(() => {
     setSelectedOption(null);
     filterRef.current?.handleClean();
-    console.log(filterH5Ref.current, '!!!!!');
     filterH5Ref.current?.handleClean();
   }, []);
 

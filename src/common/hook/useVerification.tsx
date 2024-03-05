@@ -20,7 +20,11 @@ const useVerification = props => {
       let count = countDownInfo.count;
       const phone = form.getFieldValue('phone');
       if (!phone) {
-        Taro.showToast({title: '  请输入手机号！'});
+        Taro.showToast({
+          title: '  请输入手机号！',
+          duration: 2000,
+          icon: 'error',
+        });
       }
       const res = await getVerification({
         type,
@@ -43,7 +47,11 @@ const useVerification = props => {
         });
       }, 1000);
     } catch (error) {
-      Taro.showToast({title: '获取验证码失败，请稍后再试'});
+      Taro.showToast({
+        title: '获取验证码失败，请稍后再试',
+        duration: 2000,
+        icon: 'error',
+      });
     }
   }, [countDownInfo, form, type]);
 

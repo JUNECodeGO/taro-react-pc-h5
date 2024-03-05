@@ -41,13 +41,13 @@
 }
 
 @media (min-width: 756px) {
-  .add-container {
+  .apply-container {
     .card {
-      &-content {
+      margin: 2% 20% 0 20%;
 
-        .add-form-item {
-          flex-basis: 30% !important;
-        }
+      &-title {
+        font-size: 1.5rem;
+        font-weight: 500;
       }
     }
 

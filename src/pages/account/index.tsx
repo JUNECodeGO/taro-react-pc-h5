@@ -48,7 +48,7 @@ const Account = () => {
   const handleJumpLogin = useCallback(() => {
     if (userInfo) return;
     Navigator.navigateTo('main/login');
-  }, []);
+  }, [userInfo]);
 
   const handleChangeTab = useCallback(tab => {
     setTab(tab);
@@ -72,6 +72,8 @@ const Account = () => {
         handleRefresh();
         Taro.showToast({
           title: '修改成功',
+          duration: 2000,
+          icon: 'success',
         });
       } else {
         throw Error();
@@ -79,6 +81,8 @@ const Account = () => {
     } catch (error) {
       Taro.showToast({
         title: '修改失败，请稍后再试',
+        duration: 2000,
+        icon: 'error',
       });
     } finally {
       Taro.hideLoading();
@@ -152,7 +156,9 @@ const Account = () => {
   }, [userInfo, tab]);
 
   return (
-    <BasicLayout className='account' leftSlot={<SideLayout />}>
+    <BasicLayout
+      className='account'
+      leftSlot={process.env.TARO_ENV === 'h5' ? <SideLayout /> : null}>
       <View className='account-card'>
         <View className='account-card-top' onClick={handleJumpLogin}>
           <Image

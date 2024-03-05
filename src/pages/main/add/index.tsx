@@ -82,6 +82,8 @@ const AddPage = () => {
         if (data && data.code === 0) {
           Taro.showToast({
             title: '创建成功',
+            duration: 2000,
+            icon: 'success',
           });
           Navigator.navigateBack({
             success: () => {
@@ -94,6 +96,8 @@ const AddPage = () => {
       } catch (error) {
         Taro.showToast({
           title: '创建失败，请稍后再试',
+          duration: 2000,
+          icon: 'error',
         });
       } finally {
         Taro.hideLoading();
@@ -110,6 +114,8 @@ const AddPage = () => {
         if (data && data.code === 0) {
           Taro.showToast({
             title: '修改成功',
+            duration: 2000,
+            icon: 'success',
           });
           Navigator.navigateBack();
         } else {
@@ -118,6 +124,8 @@ const AddPage = () => {
       } catch (error) {
         Taro.showToast({
           title: '修改失败，请稍后再试',
+          duration: 2000,
+          icon: 'error',
         });
       } finally {
         Taro.hideLoading();
@@ -302,7 +310,7 @@ const AddPage = () => {
                 className='add-form-item'
                 name='collecting_type'
                 rules={[{required: true, message: '请选择收集方式'}]}>
-                <Radio.Group>
+                <Radio.Group direction='horizontal'>
                   <Radio value='考察'>考察</Radio>
                   <Radio value='征集'>征集</Radio>
                   <Radio value='引进'>引进</Radio>
@@ -315,7 +323,7 @@ const AddPage = () => {
                 className='add-form-item'
                 name='from_type'
                 rules={[{required: true, message: '请选择种质来源'}]}>
-                <Radio.Group>
+                <Radio.Group direction='horizontal'>
                   <Radio value='境内'>境内</Radio>
                   <Radio value='境外'>境外</Radio>
                 </Radio.Group>

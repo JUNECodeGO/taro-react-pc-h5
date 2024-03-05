@@ -30,13 +30,13 @@
           flex-grow: 1;
         }
 
-        .nut-radiogroup {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          align-items: center;
-          vertical-align: baseline;
-        }
+        // .nut-radiogroup {
+        //   display: flex;
+        //   flex-direction: row;
+        //   flex-wrap: wrap;
+        //   align-items: center;
+        //   vertical-align: baseline;
+        // }
       }
     }
   }
@@ -61,13 +61,14 @@
 
   .add-container {
     .card {
+
       &-content {
         .add-form-item {
-          flex-basis: 30%;
+          flex-basis: 50%;
         }
 
         .nut-cell-value {
-          flex-basis: 30%;
+          flex-basis: 50%;
         }
       }
     }
