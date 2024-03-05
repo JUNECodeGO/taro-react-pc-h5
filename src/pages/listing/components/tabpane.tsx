@@ -117,6 +117,7 @@ const TabPane = React.memo(
 
     useImperativeHandle(ref, () => ({
       handleSearch: handleSearch,
+      handleReset: handleReset,
     }));
 
     createEventHook('MY_REFRESH')(fetchList);

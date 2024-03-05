@@ -36,7 +36,7 @@ const Listing = () => {
       },
     ];
 
-    if (userInfo && role === UserRole.TOP) {
+    if (userInfo) {
       tabs.push({
         key: TableTabType.MINE,
         title: '我的',
@@ -45,8 +45,18 @@ const Listing = () => {
     return tabs;
   }, [userInfo]);
 
+  const handleClean = useCallback(() => {
+    setSelectedOption(null);
+    filterRef.current?.handleClean();
+    filterH5Ref.current?.handleClean();
+  }, []);
+
   const handleChangeTab = useCallback(val => {
     setCurrentTab(val);
+    const tab = tabPaneRefs.current?.[val];
+    if (tab.current) {
+      tab.current?.handleReset();
+    }
   }, []);
 
   const handleSearch = useCallback(
@@ -71,12 +81,6 @@ const Listing = () => {
   const changePopupVisible = useCallback(e => {
     setVisible(pre => !pre);
     e?.stopPropagation();
-  }, []);
-
-  const handleClean = useCallback(() => {
-    setSelectedOption(null);
-    filterRef.current?.handleClean();
-    filterH5Ref.current?.handleClean();
   }, []);
 
   const initList = useCallback(async () => {

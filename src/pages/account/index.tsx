@@ -99,13 +99,18 @@ const Account = () => {
       case TabType.password:
         return (
           <View className='card'>
-            <PasswordForm needPhone={true} type={CodeType.PASSWORD} />
+            <PasswordForm
+              key='password'
+              needPhone={true}
+              type={CodeType.PASSWORD}
+            />
           </View>
         );
       case TabType.account:
         return (
           <View className='card'>
             <Form
+              key='account'
               labelPosition='left'
               divider
               initialValues={userInfo}

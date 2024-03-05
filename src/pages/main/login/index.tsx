@@ -49,7 +49,7 @@ export default function Login() {
     } catch (error) {
       Taro.showToast({title: '刷新失败'});
     } finally {
-      Taro.hideKeyboard();
+      Taro.hideLoading();
     }
   }, []);
 

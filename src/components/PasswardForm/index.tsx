@@ -11,7 +11,7 @@ import {useStore} from '@/store';
 import Navigator from '@/common/utils/navigator';
 
 const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
-  const {needPhone = true, type} = props;
+  const {needPhone = true, type, ...rest} = props;
   const [form] = Form.useForm();
   const {Phone, VerificationGroup} = useVerification({form, type});
   const {
@@ -47,6 +47,7 @@ const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
 
   return (
     <Form
+      {...rest}
       labelPosition='left'
       divider
       onFinish={handleChangePassword}
