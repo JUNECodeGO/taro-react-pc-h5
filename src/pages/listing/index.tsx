@@ -36,7 +36,7 @@ const Listing = () => {
       },
     ];
 
-    if (userInfo) {
+    if (userInfo && role == UserRole.TOP) {
       tabs.push({
         key: TableTabType.MINE,
         title: '我的',

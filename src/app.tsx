@@ -1,6 +1,6 @@
 /** @format */
 import {Provider} from 'mobx-react';
-import {useDidShow, useDidHide} from '@tarojs/taro';
+import {useDidShow} from '@tarojs/taro';
 import {storesContext, useStore} from './store';
 import Navigator from '@/common/utils/navigator';
 import {useCallback} from 'react';
@@ -28,18 +28,14 @@ function App(props) {
     }
   }, [userInfo]);
 
-  useDidShow(() => {
-    console.log('!!!!!');
-    initUser();
-  });
-
   // 有token去login
   if (whiteList.some(path => handleUrl === path) && !userInfo) {
     Navigator.redirectTo('main/signIn');
   }
 
-  // 对应 onHide
-  useDidHide(() => {});
+  useDidShow(() => {
+    initUser();
+  });
 
   return <Provider store={storesContext}>{props.children}</Provider>;
 }

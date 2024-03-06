@@ -4,7 +4,7 @@ import {getUserAPI, updateUserInfoAPI} from '@/api/user';
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Image, Input} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import Navigator from '@/common/utils/navigator';
 import {observer, useStore} from '@/store';
 import PasswordForm from '@/components/PasswardForm';
@@ -12,6 +12,8 @@ import {CodeType} from '@/api/user/dto';
 import SideLayout from '@/components/SideLayout';
 import './index.scss';
 import ShareList from './components/ShareList';
+import {searchShareList} from '@/api/search';
+import {isH5} from '@/common/utils';
 
 enum TabType {
   account = 'account',
@@ -46,8 +48,9 @@ const Account = () => {
   const [tab, setTab] = useState(TabType.account);
 
   const handleJumpLogin = useCallback(() => {
-    if (userInfo) return;
-    Navigator.navigateTo('main/login');
+    if (!userInfo) {
+      Navigator.navigateTo(isH5 ? 'main/signin' : 'main/login');
+    }
   }, [userInfo]);
 
   const handleChangeTab = useCallback(tab => {
@@ -62,6 +65,13 @@ const Account = () => {
       }
     } catch (error) {}
   }, []);
+
+  const [data, setData] = useState([]);
+  const [pageParams, setPageParams] = useState({
+    current: 1,
+    pageSize: 5,
+    total: 0,
+  });
 
   const handleChangeUserInfo = useCallback(async values => {
     const {email, nickname} = values || {};
@@ -93,72 +103,93 @@ const Account = () => {
     Taro.showToast({title: JSON.stringify(error), icon: 'error'});
   }, []);
 
+  const fetchShareList = useCallback(async (params?: any) => {
+    try {
+      Taro.showLoading();
+      const {current = 1} = params || {};
+      const {data = {}} = (await searchShareList({page_num: current})) || {};
+      const {lists = [], counts} = data;
+      setData(lists);
+      setPageParams(pre => ({...pre, current, total: +counts}));
+    } catch (error) {
+    } finally {
+      Taro.hideLoading();
+    }
+  }, []);
+
   const renderAccountContent = useMemo(() => {
     if (!userInfo) return null;
+    const copy = {...userInfo};
     switch (tab) {
       case TabType.password:
         return (
-          <View className='card'>
-            <PasswordForm
-              key='password'
-              needPhone={true}
-              type={CodeType.PASSWORD}
-            />
-          </View>
+          <PasswordForm
+            key='password'
+            needPhone={true}
+            type={CodeType.PASSWORD}
+          />
         );
       case TabType.account:
         return (
-          <View className='card'>
-            <Form
-              key='account'
-              labelPosition='left'
-              divider
-              initialValues={userInfo}
-              onFinish={handleChangeUserInfo}
-              onFinishFailed={(values, errors) => submitFailed(errors)}
-              footer={
-                <>
-                  <Button
-                    block
-                    type='primary'
-                    className='login-button'
-                    formType='submit'>
-                    确认修改
-                  </Button>
-                </>
-              }>
-              <Form.Item label='显示昵称' name='nickname'>
-                <Input
-                  className='nut-input-text'
-                  placeholder='请输入昵称'
-                  type='text'
-                />
-              </Form.Item>
+          <Form
+            key='account'
+            labelPosition='left'
+            divider
+            initialValues={copy}
+            onFinish={handleChangeUserInfo}
+            onFinishFailed={(values, errors) => submitFailed(errors)}
+            footer={
+              <>
+                <Button
+                  block
+                  type='primary'
+                  className='login-button'
+                  formType='submit'>
+                  确认修改
+                </Button>
+              </>
+            }>
+            <Form.Item label='显示昵称' name='nickname'>
+              <Input
+                className='nut-input-text'
+                placeholder='请输入昵称'
+                type='text'
+              />
+            </Form.Item>
 
-              <Form.Item
-                label='绑定邮箱'
-                name='email'
-                rules={[
-                  {
-                    validator: (rule, value: string) => {
-                      return /^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/.test(
-                        value
-                      );
-                    },
-                    message: '请输入正确邮箱',
+            <Form.Item
+              label='绑定邮箱'
+              name='email'
+              rules={[
+                {
+                  validator: (rule, value: string) => {
+                    return /^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/.test(value);
                   },
-                ]}>
-                <Input className='nut-input-text' placeholder='请输入邮箱' />
-              </Form.Item>
-            </Form>
-          </View>
+                  message: '请输入正确邮箱',
+                },
+              ]}>
+              <Input className='nut-input-text' placeholder='请输入邮箱' />
+            </Form.Item>
+          </Form>
         );
       case TabType.share:
-        return <ShareList />;
+        return (
+          <ShareList
+            fetchShareList={fetchShareList}
+            pageParams={pageParams}
+            data={data}
+          />
+        );
       default:
         break;
     }
-  }, [userInfo, tab]);
+  }, [userInfo, tab, data, pageParams, fetchShareList]);
+
+  useEffect(() => {
+    if (userInfo) {
+      fetchShareList();
+    }
+  }, [userInfo]);
 
   return (
     <BasicLayout
@@ -193,7 +224,7 @@ const Account = () => {
           ))}
         </View>
       </View>
-      {renderAccountContent}
+      {userInfo && <View className='card'>{renderAccountContent}</View>}
     </BasicLayout>
   );
 };

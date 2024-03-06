@@ -27,7 +27,7 @@ export default function Login() {
     } catch (error) {
       Taro.showToast({title: '刷新失败', duration: 2000, icon: 'error'});
     } finally {
-      Taro.hideKeyboard();
+      Taro.hideLoading();
     }
   }, []);
 

@@ -1,8 +1,6 @@
 /** @format */
-import {searchShareList} from '@/api/search';
 import CTable from '@/components/CTable';
-import Taro from '@tarojs/taro';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback} from 'react';
 
 const columnsStickRight = [
   {
@@ -62,28 +60,7 @@ const columnsStickRight = [
   },
 ];
 
-export default () => {
-  const [data, setData] = useState([]);
-  const [pageParams, setPageParams] = useState({
-    current: 1,
-    pageSize: 5,
-    total: 0,
-  });
-
-  const fetchShareList = useCallback(async (params?: any) => {
-    try {
-      Taro.showLoading();
-      const {current = 1} = params || {};
-      const {data = {}} = (await searchShareList({page_num: current})) || {};
-      const {lists = [], counts} = data;
-      setData(lists);
-      setPageParams(pre => ({...pre, current, total: +counts}));
-    } catch (error) {
-    } finally {
-      Taro.hideLoading();
-    }
-  }, []);
-
+export default ({fetchShareList, pageParams, data}) => {
   const handleTableChange = useCallback(
     type => {
       try {
@@ -101,14 +78,9 @@ export default () => {
     [pageParams]
   );
 
-  useEffect(() => {
-    fetchShareList();
-  }, []);
-
   return (
     <CTable
       columns={columnsStickRight}
-      className='share-table'
       data={data}
       style={{minHeight: 200}}
       handleTableChange={handleTableChange}
