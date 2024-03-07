@@ -24,7 +24,7 @@ const Header = () => {
   }, []);
 
   const handleJumpLogin = useCallback(() => {
-    Navigator.navigateTo('main/login');
+    Navigator.navigateTo('main/signIn');
   }, []);
 
   const accountButton = useMemo(() => {

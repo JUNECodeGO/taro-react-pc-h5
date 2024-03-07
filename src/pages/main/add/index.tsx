@@ -259,7 +259,7 @@ const AddPage = () => {
                 label='种质名称'
                 className='add-form-item'
                 name='germ_name'
-                rules={[{required: true, message: 'Please enter Field A'}]}>
+                rules={[{required: true, message: '请输入种质名称'}]}>
                 <Input
                   className='nut-input-text'
                   placeholder='请输入种质名称'
@@ -387,7 +387,7 @@ const AddPage = () => {
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集地经度'
-                  type='number'
+                  type='text'
                 />
               </Form.Item>
               <Form.Item
@@ -397,7 +397,7 @@ const AddPage = () => {
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集地纬度'
-                  type='number'
+                  type='text'
                 />
               </Form.Item>
               <Form.Item
@@ -462,7 +462,7 @@ const AddPage = () => {
                 <Input
                   className='nut-input-text'
                   placeholder='请输入收集时间'
-                  type='text'
+                  type='number'
                 />
               </Form.Item>
               <Form.Item

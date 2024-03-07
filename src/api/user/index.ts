@@ -5,6 +5,9 @@ import {CodeType, UserInfo} from './dto';
 // 登录
 export const loginAPI = data =>
   http<{token: string}>('POST', '/wx_signin', data);
+// 获取sessionkey
+export const sessionAPI = data =>
+  http<{token: string; sessionKey: string}>('POST', '/wx_login', data);
 
 // 登录
 export const loginPCAPI = data =>

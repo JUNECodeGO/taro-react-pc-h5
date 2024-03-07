@@ -7,6 +7,7 @@ interface Props {
   type: 'nursery' | 'overview';
   data: any;
 }
+
 const MyChart = (props: Props) => {
   const {type, data = []} = props;
   const [option, setOption] = useState({});
@@ -140,7 +141,15 @@ const MyChart = (props: Props) => {
     }
   }, [data]);
 
-  return <Echarts echarts={echarts} option={option} ref={echartsRef} />;
+  return (
+    <Echarts
+      echarts={echarts}
+      option={option}
+      ref={echartsRef}
+      lazyUpdate
+      isPage={false}
+    />
+  );
 };
 
 export default MyChart;

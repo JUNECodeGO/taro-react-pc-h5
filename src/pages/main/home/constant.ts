@@ -3,7 +3,7 @@
 export const homeMenus = [
   {label: '首页', path: ''},
   {label: '资源检索', path: 'listing'},
-  {label: '专题资源', path: 'main/search'},
+  {label: '专题资源', path: 'listing'},
   {label: '数字中心', path: 'datacenter'},
   {label: '服务案例', path: ''},
   {label: '图库介绍', path: ''},

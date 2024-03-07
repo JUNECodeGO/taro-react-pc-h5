@@ -4,7 +4,7 @@ import {View, Text} from '@tarojs/components';
 import {Radio, Button} from '@nutui/nutui-react-taro';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Taro from '@tarojs/taro';
-import {getUserAPI, loginAPI} from '@/api/user';
+import {getUserAPI, loginAPI, sessionAPI} from '@/api/user';
 import {useStore} from '@/store';
 import Navigator from '@/common/utils/navigator';
 
@@ -16,16 +16,31 @@ export default function Login() {
   } = useStore();
   const [checked, setChecked] = useState(true);
 
-  const handleLogin = useCallback(async () => {
+  const handleLogin = useCallback(async profile => {
     try {
+      let key;
       const loginInfo = await Taro.login();
-      const profile = (await Taro.getUserInfo()) || {};
-
+      const result =
+        (await sessionAPI({
+          code: loginInfo?.code,
+        })) || {};
+      if (result && result?.code === 0) {
+        const {token, sessionKey} = result?.data || {};
+        if (token) {
+          setToken(token);
+          return true;
+        } else {
+          key = sessionKey;
+        }
+      } else {
+        return null;
+      }
       const res =
         (await loginAPI({
-          code: loginInfo?.code,
-          encrypted_data: profile.encryptedData,
-          iv: profile.iv,
+          sessionKey: key,
+          code: profile?.code,
+          encrypted_data: profile?.encryptedData,
+          iv: profile?.iv,
         })) || {};
       if (res && res?.code === 0) {
         const {data} = res || {};
@@ -35,6 +50,7 @@ export default function Login() {
         return null;
       }
     } catch (error) {
+      console.log(error, '+++');
       return null;
     }
   }, []);
@@ -53,7 +69,7 @@ export default function Login() {
     }
   }, []);
 
-  const handleGetUserInfo = useCallback(async () => {
+  const handleGetUserInfo = useCallback(async e => {
     if (!checked) {
       Taro.showToast({
         title: '您未同意并阅读用户协议和隐私政策',
@@ -63,7 +79,8 @@ export default function Login() {
       return false;
     }
     Taro.showLoading({title: '授权中'});
-    const result = await handleLogin();
+
+    const result = await handleLogin(e.detail);
     Taro.hideLoading();
     if (result) {
       Taro.showToast({
@@ -95,8 +112,8 @@ export default function Login() {
         <Button
           className='wx-button'
           type='primary'
-          openType='getUserInfo'
-          onClick={handleGetUserInfo}>
+          openType='getPhoneNumber'
+          onGetPhoneNumber={handleGetUserInfo}>
           微信一键登录
         </Button>
         <View className='forget '>

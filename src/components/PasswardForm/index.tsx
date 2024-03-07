@@ -30,7 +30,7 @@ const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
         });
         removeLocalToken('');
         removeUserInfo();
-        Navigator.navigateTo('main/login');
+        Navigator.navigateTo('main/signIn');
       } else {
         throw Error();
       }
