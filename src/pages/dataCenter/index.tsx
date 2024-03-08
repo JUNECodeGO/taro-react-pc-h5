@@ -4,6 +4,7 @@ import {View, Text} from '@tarojs/components';
 import {Image, Tabs} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import Chart from '@/components/Charts';
+import echarts from '@/assets/js/echarts.js';
 import {
   getNurseryLists,
   getOverviewByGermType,
@@ -21,8 +22,7 @@ const DataCenterPage = () => {
   const [tab1value, setTab1value] = useState(0);
   const [data, setData] = useState<any>();
   const topList = useMemo(() => {
-    const {total_items, total_family, total_genus, total_species} =
-      data?.[0] || {};
+    const {total_items, total_family, total_genus, total_species} = data || {};
     return [
       {
         title: '收集信息',
@@ -50,19 +50,8 @@ const DataCenterPage = () => {
   const initList = useCallback(async () => {
     try {
       Taro.showLoading();
-      const result = Array.from({length: 3});
-      const res = await Promise.allSettled([
-        getSummarize(),
-        getNurseryLists(),
-        getOverviewByGermType(),
-      ]).then(target =>
-        target.forEach((item, index) => {
-          if (item.status === 'fulfilled') {
-            result[index] = item.value?.data;
-          }
-        })
-      );
-      setData(result);
+      const {data} = (await getSummarize()) || {};
+      setData(data);
     } catch (error) {
     } finally {
       Taro.hideLoading();
@@ -96,7 +85,7 @@ const DataCenterPage = () => {
           }}>
           {tabList.map((item, index) => (
             <Tabs.TabPane title={item.text} key={String(index)}>
-              <Chart type={item.type} data={data?.[index + 1]} />
+              <Chart type={item.type} echarts={echarts} />
             </Tabs.TabPane>
           ))}
         </Tabs>

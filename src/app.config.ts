@@ -8,5 +8,6 @@ export default defineAppConfig({
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#0B4F4A',
     navigationBarTextStyle: 'white',
+    backgroundColor: '#637381',
   },
 });

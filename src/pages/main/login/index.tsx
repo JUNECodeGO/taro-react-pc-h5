@@ -18,29 +18,15 @@ export default function Login() {
 
   const handleLogin = useCallback(async profile => {
     try {
-      let key;
       const loginInfo = await Taro.login();
-      const result =
-        (await sessionAPI({
-          code: loginInfo?.code,
-        })) || {};
-      if (result && result?.code === 0) {
-        const {token, sessionKey} = result?.data || {};
-        if (token) {
-          setToken(token);
-          return true;
-        } else {
-          key = sessionKey;
-        }
-      } else {
-        return null;
-      }
+      const user = await Taro.getUserInfo();
       const res =
         (await loginAPI({
-          sessionKey: key,
-          code: profile?.code,
-          encrypted_data: profile?.encryptedData,
-          iv: profile?.iv,
+          code: loginInfo?.code,
+          encrypted_user_phone: profile?.encryptedData,
+          iv_user_phone: profile?.iv,
+          encrypted_user_info: user.encryptedData,
+          iv_user_info: user.iv,
         })) || {};
       if (res && res?.code === 0) {
         const {data} = res || {};

@@ -1,18 +1,18 @@
 /** @format */
 import {useCallback, useEffect, useRef, useState} from 'react';
 import Echarts, {EchartsHandle} from 'taro-react-echarts';
-import echarts from '@/assets/js/echarts.js';
+import {getNurseryLists, getOverviewByGermType} from '@/api/search';
 
 interface Props {
   type: 'nursery' | 'overview';
-  data: any;
+  echarts: any;
 }
 
 const MyChart = (props: Props) => {
-  const {type, data = []} = props;
+  const {type, echarts} = props;
   const [option, setOption] = useState({});
   const echartsRef = useRef<EchartsHandle>(null);
-
+  const [loading, setLoading] = useState(false);
   const format = useCallback(val => {
     const len = val.length;
     const count = Math.ceil(len / 5);
@@ -127,27 +127,40 @@ const MyChart = (props: Props) => {
             ],
           };
         }
-        setOption(option);
+        return option;
       } catch (error) {
-        console.log(error, '____');
+        return {};
       }
     },
     [type]
   );
 
-  useEffect(() => {
-    if (data.length) {
-      formatData(data);
-    }
-  }, [data]);
+  const initList = useCallback(async () => {
+    const isLine = type === 'nursery';
+    try {
+      setLoading(true);
+      const fn = isLine ? getNurseryLists : getOverviewByGermType;
+      const {data} = (await fn()) || {};
 
+      setOption(formatData(data));
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  }, [type]);
+
+  useEffect(() => {
+    initList();
+  }, []);
+  console.log(option);
   return (
     <Echarts
       echarts={echarts}
       option={option}
       ref={echartsRef}
-      lazyUpdate
+      lazyUpdate={true}
       isPage={false}
+      showLoading={loading}
     />
   );
 };

@@ -8,6 +8,7 @@ import './index.scss';
 const Breadcrumb = props => {
   const {items = []} = props;
   const len = useMemo(() => items.length, [items]);
+
   const handleClick = useCallback(path => {
     Navigator.redirectTo(path);
   }, []);
