@@ -5,33 +5,47 @@ import {
   useState,
   useImperativeHandle,
   useEffect,
-} from 'react';
-import {View} from '@tarojs/components';
-import {Collapse, Radio} from '@nutui/nutui-react-taro';
-import {ArrowDown2} from '@nutui/icons-react-taro';
-import {GroupType} from './constants';
-import {TableTabType} from '@/common/type';
+  useMemo,
+} from "react";
+import { View } from "@tarojs/components";
+import { Collapse, Radio } from "@nutui/nutui-react-taro";
+import { ArrowDown2 } from "@nutui/icons-react-taro";
+import { GroupType } from "./constants";
+import { TableTabType } from "@/common/type";
 
-import './index.scss';
+import "./index.scss";
 
 interface SideFilterProps {
   className?: string;
-  handleSearch?: (val: string) => void;
+  handleSearch?: (val: any) => void;
   tab: TableTabType;
   groupItems: any;
   selectedOption?: string;
 }
 
 const SideFilter = forwardRef((props: SideFilterProps, ref) => {
-  const {className = '', handleSearch, groupItems = {}, selectedOption} = props;
+  const {
+    className = "",
+    handleSearch,
+    groupItems = {},
+    selectedOption,
+  } = props;
   const [selected, setSelected] = useState<string | null | undefined>();
   const [activeName, setActiveName] = useState();
-  const handleChange = useCallback(val => {
-    setSelected(val);
-    handleSearch?.(val);
-  }, []);
 
-  const handleCollapseChange = useCallback(val => {
+  const groupItemskeys = useMemo(() => {
+    return Object.keys(groupItems || {});
+  }, [groupItems]);
+
+  const handleChange = useCallback(
+    (val) => {
+      setSelected(val);
+      handleSearch?.({ groupItemskeys, selected: val });
+    },
+    [groupItemskeys]
+  );
+
+  const handleCollapseChange = useCallback((val) => {
     setActiveName(val);
   }, []);
 
@@ -40,7 +54,7 @@ const SideFilter = forwardRef((props: SideFilterProps, ref) => {
       handleClean: () => {
         setSelected(null);
       },
-      handleSave: () => selected,
+      handleSave: () => ({ groupItemskeys, selected }),
     };
   });
 
@@ -61,13 +75,15 @@ const SideFilter = forwardRef((props: SideFilterProps, ref) => {
             key={key}
             title={GroupType[key]}
             name={key}
-            expandIcon={<ArrowDown2 size='16' />}>
+            expandIcon={<ArrowDown2 size="16" />}
+          >
             <Radio.Group
-              className='radio-wrapper'
+              className="radio-wrapper"
               value={selected}
               defaultValue={selectedOption}
-              onChange={handleChange}>
-              {(lists || []).map(item => (
+              onChange={handleChange}
+            >
+              {(lists || []).map((item) => (
                 <Radio value={`${key}--${item.group}`} key={item.group}>
                   {`${item.group}(${item.count})`}
                 </Radio>

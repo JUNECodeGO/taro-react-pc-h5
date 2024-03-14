@@ -1,12 +1,15 @@
  .special_selection {
    display: 'flex';
-   flex: 1
+   flex: 1;
+   &.ant-select{
+    width: 100%;
+   }
  }
 
  @media (min-width: 756px) {
 
    .special_selection {
-     flex-basis: 30%;
+     flex-basis: 50%;
    }
 
 
