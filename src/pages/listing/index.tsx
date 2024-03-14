@@ -1,26 +1,21 @@
 /** @format */
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { Tabs } from "@nutui/nutui-react-taro";
-import BasicLayout from "@/components/BasicLayout";
-import SideFilter from "@/components/SideFilter";
-import { observer, useStore } from "@/store";
-import { TableTabType } from "@/common/type";
-import FilterPopup from "@/components/FilterPopup";
-import TabPane from "./components/tabpane";
-import { getGroupByItems } from "@/api/search";
-import { UserRole } from "@/api/user/dto";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Tabs} from '@nutui/nutui-react-taro';
+import BasicLayout from '@/components/BasicLayout';
+import SideFilter from '@/components/SideFilter';
+import {observer, useStore} from '@/store';
+import {TableTabType} from '@/common/type';
+import FilterPopup from '@/components/FilterPopup';
+import TabPane from './components/tabpane';
+import {getGroupByItems} from '@/api/search';
+import {UserRole} from '@/api/user/dto';
 
-import "./index.scss";
+import './index.scss';
+import SideLayout from '@/components/SideLayout';
 
 const Listing = () => {
   const {
-    useUserStore: { userInfo, role },
+    useUserStore: {userInfo, role},
   } = useStore();
 
   // pane
@@ -38,14 +33,14 @@ const Listing = () => {
     const tabs = [
       {
         key: TableTabType.ALL,
-        title: "所有",
+        title: '所有',
       },
     ];
 
     if (userInfo && role == UserRole.TOP) {
       tabs.push({
         key: TableTabType.MINE,
-        title: "我的",
+        title: '我的',
       });
     }
     return tabs;
@@ -57,7 +52,7 @@ const Listing = () => {
     filterH5Ref.current?.handleClean();
   }, []);
 
-  const handleChangeTab = useCallback((val) => {
+  const handleChangeTab = useCallback(val => {
     setCurrentTab(val);
     const tab = tabPaneRefs.current?.[val];
     if (tab.current) {
@@ -66,7 +61,7 @@ const Listing = () => {
   }, []);
 
   const handleSearch = useCallback(
-    ({ groupItemskeys, selected }) => {
+    ({groupItemskeys, selected}) => {
       let kv;
 
       if (!selected) {
@@ -74,7 +69,7 @@ const Listing = () => {
       } else {
         setSelectedOption(selected);
         kv = groupItemskeys.reduce((cur, pre) => {
-          const [a, b] = selected.split("--");
+          const [a, b] = selected.split('--');
           if (pre === a) {
             cur[a] = b;
           } else {
@@ -87,21 +82,36 @@ const Listing = () => {
       const tab = tabPaneRefs.current?.[currentTab];
       if (tab.current) {
         tab.current?.handleSearch({
-          ...(kv ? { ...kv } : { cleanSelect: true }),
+          ...(kv ? {...kv} : {cleanSelect: true}),
         });
       }
     },
     [currentTab]
   );
 
-  const changePopupVisible = useCallback((e) => {
-    setVisible((pre) => !pre);
+  const changePopupVisible = useCallback(e => {
+    setVisible(pre => !pre);
     e?.stopPropagation();
   }, []);
 
+  const renderLayout = useMemo(() => {
+    if (process.env.TARO_ENV !== 'h5') return null;
+    if (currentTab === TableTabType.ALL)
+      return (
+        <SideFilter
+          ref={filterH5Ref}
+          handleSearch={handleSearch}
+          tab={currentTab}
+          groupItems={groupItems}
+          selectedOption={selectedOption}
+        />
+      );
+    return <SideLayout />;
+  }, [currentTab, groupItems, handleSearch, selectedOption]);
+
   const initList = useCallback(async () => {
     try {
-      const { data } = await getGroupByItems();
+      const {data} = await getGroupByItems();
       setGroupItems(data);
     } catch (error) {
       console.log(error);
@@ -114,27 +124,15 @@ const Listing = () => {
 
   return (
     <BasicLayout
-      title="资源列表"
-      className="listing-container"
-      leftSlot={
-        process.env.TARO_ENV === "h5" ? (
-          <SideFilter
-            ref={filterH5Ref}
-            handleSearch={handleSearch}
-            tab={currentTab}
-            groupItems={groupItems}
-            selectedOption={selectedOption}
-          />
-        ) : null
-      }
-    >
+      title='资源列表'
+      className='listing-container'
+      leftSlot={renderLayout}>
       <Tabs
         onChange={handleChangeTab}
         value={currentTab}
-        align="left"
-        className="table"
-      >
-        {tabList.map((item) => (
+        align='left'
+        className='table'>
+        {tabList.map(item => (
           <Tabs.TabPane title={item.title} key={item.key}>
             <TabPane
               tab={item.key}

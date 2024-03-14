@@ -14,7 +14,6 @@ const CheckItem = ({label, value}) => {
   return (
     <View key={value} className='check-item'>
       <Text className='check-item-text'>{`${GroupType[label]}: ${value}`}</Text>
-      {/* <MaskClose color='#6f7473' /> */}
     </View>
   );
 };
@@ -42,32 +41,37 @@ export const FilterForm = React.memo((props: FilterFormProps) => {
           type='text'
         />
       </Form.Item>
-      <Form.Item label='特性' name='feature'>
-        <Input
-          className='nut-input-text'
-          placeholder='请输入特性'
-          type='text'
-        />
-      </Form.Item>
-      <Form.Item label='用途' name='usage'>
-        <Input
-          className='nut-input-text'
-          placeholder='请输入用途'
-          type='text'
-        />
-      </Form.Item>
-      <View className='last-form'>
-        <Form.Item label='描述' name='keywords'>
-          <Input
-            className='nut-input-text'
-            placeholder='请输入描述'
-            type='text'
-          />
-        </Form.Item>
-        {tab !== TableTabType.SUB && (
-          <More size={22} className='more' onClick={changePopupVisible} />
-        )}
-      </View>
+      {tab !== TableTabType.ALL ? (
+        <></>
+      ) : (
+        <>
+          <Form.Item label='特性' name='feature'>
+            <Input
+              className='nut-input-text'
+              placeholder='请输入特性'
+              type='text'
+            />
+          </Form.Item>
+          <Form.Item label='用途' name='usage'>
+            <Input
+              className='nut-input-text'
+              placeholder='请输入用途'
+              type='text'
+            />
+          </Form.Item>
+          <View className='last-form'>
+            <Form.Item label='描述' name='keywords'>
+              <Input
+                className='nut-input-text'
+                placeholder='请输入描述'
+                type='text'
+              />
+            </Form.Item>
+
+            <More size={22} className='more' onClick={changePopupVisible} />
+          </View>
+        </>
+      )}
     </Form>
   );
 });
