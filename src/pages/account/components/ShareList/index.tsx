@@ -15,67 +15,67 @@ const columnsStickRight = [
   {
     title: '圃编号',
     key: 'id',
-    width: '10%',
+    width: '20%',
   },
   {
     title: '作物名称',
     key: 'zuowuname',
-    width: '20%',
+    width: '30%',
   },
   {
     title: '所属单位',
     key: 'ownercompany',
-    width: '20%',
+    width: '30%',
   },
   {
     title: '提供时间',
     key: 'tgtime',
-    width: '10%',
+    width: '30%',
   },
   {
     title: '提供数量',
     key: 'tgnum',
-    width: '10%',
+    width: '30%',
   },
   {
     title: '提供形态',
     key: 'tgwzxt',
-    width: '10%',
+    width: '30%',
   },
   {
     title: '利用单位',
     key: 'usecompany',
-    width: '10%',
+    width: '30%',
   },
   {
     title: '联系电话',
     key: 'mobile',
-    width: '10%',
+    width: '30%',
   },
   {
     title: '邮箱',
     key: 'email',
-    width: '10%',
+    width: '20%',
   },
   {
     title: '地址',
     key: 'address',
-    width: '10%',
+    width: '20%',
   },
   {
     title: '利用目的',
     key: 'usepurpose',
-    width: '10%',
+    width: '30%',
   },
   {
     title: '利用材料',
     key: 'usematerial',
-    width: '10%',
+    width: '30%',
   },
   {
     title: '审核状态',
     key: 'status',
-    width: '10%',
+    width: '30%',
     render: data => {
       return <Text>{statusTextMap[data.status] || '-'}</Text>;
     },
