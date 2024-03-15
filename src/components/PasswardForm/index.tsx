@@ -22,6 +22,7 @@ const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
     try {
       Taro.showLoading();
       const data = await updatePwdAPI(values);
+      Taro.hideLoading();
       if (data && data.code === 0) {
         Taro.showToast({
           title: '修改成功',
@@ -41,7 +42,6 @@ const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
         icon: 'error',
       });
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 

@@ -53,13 +53,13 @@ const DetailPage = () => {
     try {
       Taro.showLoading();
       const res = await getCateDetail({id});
+      Taro.hideLoading();
       if (res && !res.code) {
         const {data} = res;
         setData(data);
       }
     } catch (error) {
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 

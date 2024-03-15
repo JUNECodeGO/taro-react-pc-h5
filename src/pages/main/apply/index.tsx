@@ -30,13 +30,27 @@ const ApplyPage = () => {
     try {
       Taro.showLoading();
       const data = await applyShare({id, ...values});
+      Taro.hideLoading();
       if (data && data.code === 0) {
         Taro.showToast({
           title: '申请成功，请等待联系',
           duration: 2000,
           icon: 'success',
           success: () => {
-            Navigator.navigateBack();
+            setTimeout(() => {
+              Navigator.navigateBack();
+            }, 2000);
+          },
+        });
+      } else if (data && data.code === 4001) {
+        Taro.showToast({
+          title: `申请共享失败, 已存在相同申请【id:${data.data}】。`,
+          duration: 2000,
+          icon: 'error',
+          success: () => {
+            setTimeout(() => {
+              Navigator.navigateBack();
+            }, 2000);
           },
         });
       } else {
@@ -45,11 +59,10 @@ const ApplyPage = () => {
     } catch (error) {
       Taro.showToast({
         title: '申请失败，请稍后再试',
-        duration: 2000,
+        duration: 200,
         icon: 'error',
       });
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 
@@ -158,7 +171,7 @@ const ApplyPage = () => {
             <Input
               className='nut-input-text'
               placeholder='请输入提供数量'
-              type='text'
+              type='number'
             />
           </Form.Item>
           <Form.Item

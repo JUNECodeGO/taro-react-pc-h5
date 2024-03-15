@@ -1,20 +1,20 @@
 /** @format */
-import React, { useCallback, useMemo } from "react";
-import { View } from "@tarojs/components";
-import { Pagination } from "@nutui/nutui-react-taro";
-import "./index.scss";
+import React, {useCallback, useMemo} from 'react';
+import {View} from '@tarojs/components';
+import {Pagination} from '@nutui/nutui-react-taro';
+import './index.scss';
 
-const CTable = (props) => {
-  const { columns, data, style, className, pageParams, handleTableChange } =
+const CTable = props => {
+  const {columns, data, style, className, pageParams, handleTableChange} =
     props;
 
   const disabledNext = useMemo(() => {
-    const { current, pageSize, total } = pageParams;
+    const {current, pageSize, total} = pageParams;
     return current * pageSize >= total;
   }, [pageParams]);
 
   const handleChange = useCallback(
-    (props) => {
+    props => {
       handleTableChange(props);
     },
     [pageParams, disabledNext, handleTableChange]
@@ -22,26 +22,24 @@ const CTable = (props) => {
   return (
     <>
       <View className={`${className} ctable`} style={style}>
-        <View className="ctable-content">
-          <View className="ctable-row head">
-            {columns.map((item) => (
+        <View className='ctable-content'>
+          <View className='ctable-row head'>
+            {columns.map(item => (
               <View
                 key={item.key}
-                className="ctable-col"
-                style={{ width: item.width }}
-              >
+                className='ctable-col'
+                style={{width: item.width}}>
                 {item.title}
               </View>
             ))}
           </View>
-          {data.map((target) => (
-            <View className="ctable-row">
-              {columns.map((item) => (
+          {data.map(target => (
+            <View className='ctable-row'>
+              {columns.map(item => (
                 <View
                   key={item.key}
-                  style={{ width: item.width }}
-                  className="ctable-col"
-                >
+                  style={{width: item.width}}
+                  className='ctable-col'>
                   {item.render ? item.render(target) : target[item.key]}
                 </View>
               ))}
@@ -54,7 +52,7 @@ const CTable = (props) => {
           value={pageParams.current}
           total={pageParams.total}
           pageSize={pageParams.pageSize}
-          mode="simple"
+          mode='simple'
           onChange={handleChange}
         />
       ) : null}

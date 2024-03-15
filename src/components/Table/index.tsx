@@ -44,7 +44,7 @@ const Table = props => {
         key: 'enumber',
         align: 'center',
         width: '30%',
-        renter: data => {
+        render: data => {
           return <Text>{data.enumber ? data.enumber : '未入圃（库)'}</Text>;
         },
       },

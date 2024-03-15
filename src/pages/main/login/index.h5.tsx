@@ -21,13 +21,13 @@ export default function Login() {
     try {
       Taro.showLoading;
       const res = await getUserAPI();
+      Taro.hideLoading();
       if (res?.data) {
         setUserInfo(res.data);
       }
     } catch (error) {
       Taro.showToast({title: '刷新失败', duration: 2000, icon: 'error'});
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 
@@ -39,6 +39,7 @@ export default function Login() {
     try {
       Taro.showLoading();
       const res = await loginPCAPI(values);
+      Taro.hideLoading();
       if (res && res.code === 0) {
         const {data = {}} = res || {};
         setToken(data.token);
@@ -61,7 +62,6 @@ export default function Login() {
         icon: 'error',
       });
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 

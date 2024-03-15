@@ -5,16 +5,16 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
-} from "react";
-import { searchListAll, searchListMine } from "@/api/search";
-import Taro from "@tarojs/taro";
-import Table from "@/components/Table";
-import Filter, { FilterForm } from "@/components/Filter";
-import { Form } from "@nutui/nutui-react-taro";
-import { TableTabType } from "@/common/type";
-import { useRouter } from "@tarojs/taro";
-import Navigator from "@/common/utils/navigator";
-import { createEventHook } from "@/common/event";
+} from 'react';
+import {searchListAll, searchListMine} from '@/api/search';
+import Taro from '@tarojs/taro';
+import Table from '@/components/Table';
+import Filter, {FilterForm} from '@/components/Filter';
+import {Form} from '@nutui/nutui-react-taro';
+import {TableTabType} from '@/common/type';
+import {useRouter} from '@tarojs/taro';
+import Navigator from '@/common/utils/navigator';
+import {createEventHook} from '@/common/event';
 
 interface TabPaneProps {
   tab: TableTabType;
@@ -24,7 +24,7 @@ interface TabPaneProps {
 }
 const TabPane = React.memo(
   React.forwardRef((props: TabPaneProps, ref) => {
-    const { tab, changePopupVisible, selectedOption, handleClean } = props;
+    const {tab, changePopupVisible, selectedOption, handleClean} = props;
     const [data, setData] = useState<any>([]);
     const [form] = Form.useForm();
     const currentFilterParams = useRef({});
@@ -41,13 +41,13 @@ const TabPane = React.memo(
       async (params?: any) => {
         try {
           Taro.showLoading();
-          const { current = 1, cleanSelect, ...rest } = params || {};
-          const { pageSize } = pageParams;
+          const {current = 1, cleanSelect, ...rest} = params || {};
+          const {pageSize} = pageParams;
           const fn = tab === TableTabType.ALL ? searchListAll : searchListMine;
           const values = {
             ...rest,
             ...(cleanSelect
-              ? { type: undefined, states: undefined, holders: undefined }
+              ? {type: undefined, states: undefined, holders: undefined}
               : {}),
           };
           const res = await fn({
@@ -56,11 +56,12 @@ const TabPane = React.memo(
             ...values,
           });
 
+          Taro.hideLoading();
           if (res && !res.code) {
             currentFilterParams.current = values;
-            const { lists = [], counts = "0" } = res.data || {};
+            const {lists = [], counts = '0'} = res.data || {};
             setData(lists);
-            setPageParams((pre) => ({
+            setPageParams(pre => ({
               ...pre,
               ...params,
               current,
@@ -69,15 +70,14 @@ const TabPane = React.memo(
           }
         } catch (error) {
         } finally {
-          Taro.hideLoading();
         }
       },
       [tab, pageParams]
     );
 
     const handleSearch = useCallback(
-      (values) => {
-        const allValues = { ...currentFilterParams.current, ...values };
+      values => {
+        const allValues = {...currentFilterParams.current, ...values};
         fetchList(allValues);
       },
       [fetchList]
@@ -85,13 +85,13 @@ const TabPane = React.memo(
 
     const handleRemoveSelection = useCallback(() => {
       handleClean?.();
-      fetchList({ cleanSelect: true, ...currentFilterParams.current });
+      fetchList({cleanSelect: true, ...currentFilterParams.current});
     }, [handleClean, fetchList]);
 
     const handleTableChange = useCallback(
-      (current) => {
+      current => {
         try {
-          fetchList({ current, ...currentFilterParams.current });
+          fetchList({current, ...currentFilterParams.current});
         } catch (error) {}
       },
       [pageParams, fetchList]
@@ -117,7 +117,7 @@ const TabPane = React.memo(
       handleReset: handleReset,
     }));
 
-    createEventHook("MY_REFRESH")(fetchList);
+    createEventHook('MY_REFRESH')(fetchList);
 
     return (
       <>

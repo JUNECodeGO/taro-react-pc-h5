@@ -27,7 +27,7 @@
         white-space: nowrap;
         word-break: normal;
         align-items: center;
-        justify-content: center;
+        padding-right: 1rem;
       }
 
       border: none;
@@ -47,17 +47,20 @@
     font-size: small;
   }
 
- 
+
 }
-.nut-pagination{
+
+.nut-pagination {
   .nut-pagination-contain {
     flex: 1;
     justify-content: center;
   }
+
   .nut-pagination-prev {
     border: none;
     border-right: 1px solid #63738110;
   }
+
   .nut-pagination-next {
     border: none;
     border-left: 1px solid #63738110;
@@ -76,15 +79,8 @@
     }
   }
 
-  .pagination {
-    justify-content: flex-end;
+  .nut-pagination {
+    border-top: 1px solid rgba(145, 158, 171, 0.08);
 
-    .line {
-      display: none;
-    }
-
-    .pre {
-      margin-right: 20px;
-    }
   }
 }

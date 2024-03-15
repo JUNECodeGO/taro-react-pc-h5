@@ -78,6 +78,7 @@ const Account = () => {
     try {
       Taro.showLoading();
       const data = await updateUserInfoAPI({email, nickname});
+      Taro.hideLoading();
       if (data && data.code === 0) {
         handleRefresh();
         Taro.showToast({
@@ -95,7 +96,6 @@ const Account = () => {
         icon: 'error',
       });
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 
@@ -107,13 +107,14 @@ const Account = () => {
     try {
       Taro.showLoading();
       const {current = 1} = params || {};
+
       const {data = {}} = (await searchShareList({page_num: current})) || {};
+      Taro.hideLoading();
       const {lists = [], counts} = data;
       setData(lists);
       setPageParams(pre => ({...pre, current, total: +counts}));
     } catch (error) {
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 

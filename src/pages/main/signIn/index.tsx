@@ -23,13 +23,13 @@ export default function SignIn() {
     try {
       Taro.showLoading;
       const res = await getUserAPI();
+      Taro.hideLoading();
       if (res?.data) {
         setUserInfo(res.data);
       }
     } catch (error) {
       Taro.showToast({title: '刷新失败'});
     } finally {
-      Taro.hideLoading();
     }
   }, []);
   const handleJump = useCallback(() => {
@@ -40,6 +40,7 @@ export default function SignIn() {
     try {
       Taro.showLoading();
       const res = await quickLoginAPI(values);
+      Taro.hideLoading();
       if (res && res.code === 0) {
         const {data = {}} = res || {};
         setToken(data.token);
@@ -62,7 +63,6 @@ export default function SignIn() {
         title: '登录失败，请稍后再试',
       });
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 

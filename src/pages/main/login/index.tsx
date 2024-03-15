@@ -57,13 +57,13 @@ export default function Login() {
     try {
       Taro.showLoading;
       const res = await getUserAPI();
+      Taro.hideLoading();
       if (res?.data) {
         setUserInfo(res.data);
       }
     } catch (error) {
       Taro.showToast({title: '刷新失败'});
     } finally {
-      Taro.hideLoading();
     }
   }, []);
 

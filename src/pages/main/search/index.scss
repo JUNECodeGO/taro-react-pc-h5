@@ -68,7 +68,8 @@
       flex-direction: row;
       flex-wrap: nowrap;
       flex: 1;
-      padding: 0.5rem 1rem;
+      padding: 1rem 1rem 0.5rem 1rem;
+
       justify-content: space-between;
 
     }
@@ -76,18 +77,33 @@
     .card {
       display: flex;
       flex-direction: column;
-      flex: 1;
+      width: 25vw;
       justify-content: center;
       text-align: center;
+      margin-right: 1.5rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border-radius: 1rem;
+      box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+        0px 0px 2px 0px rgba(145, 158, 171, 0.2);
 
       &-pic {
-        height: 5rem;
+        height: 15rem;
         background-image: url("@/assets/images/home_background.jpeg");
-        margin-right: 1rem;
-        margin-bottom: 0.5rem;
+
       }
 
-      &-text {}
+      &-text {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8rem 1rem;
+
+        &-name {
+          color: #637381;
+          font-size: larger;
+          font-weight: 500;
+        }
+      }
 
       &:nth-child(1) {
         .card-pic {
@@ -108,27 +124,59 @@
           background-position: right;
         }
       }
+
+      &:nth-child(4) {
+        .card-pic {
+          background-position: top;
+        }
+      }
     }
   }
 
-  .temp {
-    &-content {
-      height: 25rem;
+
+}
+
+.wrapper-swiper {
+  width: 100%;
+  height: 15rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+
+  &-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    overflow-x: scroll;
+    gap: 1rem;
+    padding: 0.8rem 0;
+
+    .content {
+      flex-shrink: 0;
+      width: 30vw;
+      height: 100%;
       background-image: url("@/assets/images/home_background.jpeg");
       border-radius: 1rem;
       margin-right: 1rem;
 
-      &:nth-child(1) {
+      &:nth-child(n) {
         background-position: top;
       }
 
-      &:nth-child(2) {
-        background-position: left;
-
+      &:nth-child(n+1) {
+        background-position: bottom;
       }
 
-      &:nth-child(3) {
+      &:nth-child(n+2) {
         background-position: right;
+      }
+
+      &:nth-child(n+3) {
+        background-position: left;
       }
     }
   }

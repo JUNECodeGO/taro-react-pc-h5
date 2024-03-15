@@ -1,20 +1,54 @@
 /** @format */
-
+import {useCallback, useEffect, useState} from 'react';
 import BasicLayout from '@/components/BasicLayout';
-import {Swiper} from '@nutui/nutui-react-taro';
 import {View, Text} from '@tarojs/components';
 import {Form, Button, Input} from '@nutui/nutui-react-taro';
 
-import {useCallback} from 'react';
-
+import Navigator from '@/common/utils/navigator';
+import {getCateInfo} from '@/api/search';
+import Taro from '@tarojs/taro';
 import './index.scss';
 
+const whiteList = ['11112710000', '11112702000'];
 const Search = () => {
   const [form] = Form.useForm();
-  const list = Array.from({length: 4});
+  const [data, setData] = useState<any>([]);
+  const [list, setList] = useState<any>([]);
 
-  const handleSearch = useCallback(() => {}, []);
+  const handleSearch = useCallback(values => {
+    Navigator.navigateTo('listing', values);
+  }, []);
 
+  const getSelectInfos = useCallback(async () => {
+    try {
+      Taro.showLoading();
+      const {cate = []} = (await getCateInfo()) || {};
+      Taro.hideLoading();
+      const target: any = [];
+      cate.forEach(element => {
+        const {cate_id, cate_name_cn, sub_cate} = element || {};
+        if (whiteList.includes(cate_id)) {
+          target.push({
+            cate_id,
+            cate_name_cn,
+            sub_cate,
+          });
+        }
+      });
+      setList(cate);
+      setData(target);
+    } catch (error) {
+    } finally {
+    }
+  }, []);
+
+  const handleJump = useCallback(val => {
+    Navigator.navigateTo('listing', {name: val});
+  }, []);
+
+  useEffect(() => {
+    getSelectInfos();
+  }, []);
   return (
     <BasicLayout className='search-container'>
       <View className='filter'>
@@ -64,51 +98,39 @@ const Search = () => {
           </Form.Item>
         </Form>
       </View>
-      <View className='wrapper'>
-        <Swiper
-          // height={220}
-          direction='horizontal'
-          loop={false}
-          indicator={true}
-          display-multiple-items={list.length}>
-          {list.map((_, index) => {
-            return <Swiper.Item key={index} className='temp-content' />;
-          })}
-        </Swiper>
-      </View>
-      <View className='wrapper shadow'>
-        <View className='wrapper-item'>
-          <Text>粮食作物</Text>
-        </View>
-        <View className='wrapper-list'>
-          {list.map((_, index) => {
-            return (
-              <View key={index} className='card'>
-                <View className='card-pic' />
-                <Text>番薯</Text>
-              </View>
-            );
+      <View className='wrapper-swiper'>
+        <View className='wrapper-swiper-inner'>
+          {list.map(target => {
+            return <View key={target.cate_id} className='content' />;
           })}
         </View>
       </View>
-      <View className='wrapper shadow'>
-        <View className='wrapper-item'>
-          <Text>果树</Text>
-        </View>
-        <View className='wrapper-list'>
-          {list.map((_, index) => {
-            return (
-              <View key={index} className='card'>
-                <View className='card-pic' />
-                <View className='card-text'>
-                  <Text>番薯</Text>
-                  <Text>详情</Text>
+      {data.map(item => (
+        <View className='wrapper shadow' key={item.cate_id}>
+          <View className='wrapper-item'>
+            <Text>{item.cate_name_cn}</Text>
+          </View>
+          <View className='wrapper-list'>
+            {item.sub_cate.slice(0, 5).map(sub_cate => {
+              return (
+                <View key={sub_cate.cate_id} className='card'>
+                  <View className='card-pic' />
+                  <View className='card-text'>
+                    <Text className='card-text-name'>
+                      {sub_cate.cate_name_cn}
+                    </Text>
+                    <Text
+                      onClick={() => handleJump(sub_cate.cate_name_cn)}
+                      style={{cursor: 'pointer'}}>
+                      详情
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })}
+          </View>
         </View>
-      </View>
+      ))}
     </BasicLayout>
   );
 };
