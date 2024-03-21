@@ -1,7 +1,7 @@
 /** @format */
-import CTable from '@/components/CTable';
 import {useCallback} from 'react';
 import {Text} from '@tarojs/components';
+import CTable from '@/components/CTable';
 import {ShareStatus} from '@/api/search/dto';
 
 const statusTextMap = {

@@ -1,5 +1,5 @@
 /** @format */
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {View} from '@tarojs/components';
 import {Pagination} from '@nutui/nutui-react-taro';
 import './index.scss';
@@ -8,16 +8,11 @@ const CTable = props => {
   const {columns, data, style, className, pageParams, handleTableChange} =
     props;
 
-  const disabledNext = useMemo(() => {
-    const {current, pageSize, total} = pageParams;
-    return current * pageSize >= total;
-  }, [pageParams]);
-
   const handleChange = useCallback(
     props => {
       handleTableChange(props);
     },
-    [pageParams, disabledNext, handleTableChange]
+    [handleTableChange]
   );
   return (
     <>

@@ -1,17 +1,17 @@
 /** @format */
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import Taro from '@tarojs/taro';
 import {View, Text} from '@tarojs/components';
 import {Image, Tabs} from '@nutui/nutui-react-taro';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import BasicLayout from '@/components/BasicLayout';
 import Chart from '@/components/Charts';
-
 import {
   getNurseryLists,
   getOverviewByGermType,
   getSummarize,
 } from '@/api/search';
+
 import './index.scss';
-import Taro from '@tarojs/taro';
 
 const tabList = [
   {text: '种质圃TOP10', type: 'nursery'},

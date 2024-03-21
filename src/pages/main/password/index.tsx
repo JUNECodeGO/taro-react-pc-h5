@@ -1,18 +1,12 @@
 /** @format */
 
-import {useCallback} from 'react';
 import {View, Text} from '@tarojs/components';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
-import Navigator from '@/common/utils/navigator';
-import PasswordForm from '@/components/PasswardForm';
-import './index.scss';
+import PasswordForm from '@/components/PasswordForm';
 import {CodeType} from '@/api/user/dto';
+import './index.scss';
 
-export default function Login() {
-  const handleJumpSign = useCallback(() => {
-    Navigator.navigateTo('main/signin');
-  }, []);
-
+export default function password() {
   return (
     <LoginSignInWrapper>
       <View className='password-component'>

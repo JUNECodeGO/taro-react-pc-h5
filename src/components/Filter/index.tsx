@@ -3,9 +3,10 @@ import React, {useCallback, useMemo} from 'react';
 import {Text, View} from '@tarojs/components';
 import {Form, Button, Input} from '@nutui/nutui-react-taro';
 import {Search, Brush, Del, More, Add} from '@nutui/icons-react-taro';
+import {FormInstance} from '@nutui/nutui-react-taro/dist/types/packages/form/types';
 import Navigator from '@/common/utils/navigator';
 import {TableTabType} from '@/common/type';
-import {FormInstance} from '@nutui/nutui-react-taro/dist/types/packages/form/types';
+
 import {GroupType} from '../SideFilter/constants';
 
 import './index.scss';
@@ -67,7 +68,6 @@ export const FilterForm = React.memo((props: FilterFormProps) => {
                 type='text'
               />
             </Form.Item>
-
             <More size={22} className='more' onClick={changePopupVisible} />
           </View>
         </>

@@ -7,6 +7,7 @@ import './index.scss';
 
 const BasicLayout = props => {
   const {title, className = '', leftSlot} = props;
+
   return (
     <View className={`layout-wrapper ${className}`}>
       <Header />

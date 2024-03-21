@@ -1,5 +1,5 @@
 /** @format */
-import Taro, {useDidShow} from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import {getUserAPI, updateUserInfoAPI} from '@/api/user';
 import {View, Text} from '@tarojs/components';
 import {Button, Form, Image, Input} from '@nutui/nutui-react-taro';
@@ -7,13 +7,13 @@ import BasicLayout from '@/components/BasicLayout';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import Navigator from '@/common/utils/navigator';
 import {observer, useStore} from '@/store';
-import PasswordForm from '@/components/PasswardForm';
+import PasswordForm from '@/components/PasswordForm';
 import {CodeType} from '@/api/user/dto';
 import SideLayout from '@/components/SideLayout';
-import './index.scss';
 import ShareList from './components/ShareList';
 import {searchShareList} from '@/api/search';
 import {isH5} from '@/common/utils';
+import './index.scss';
 
 enum TabType {
   account = 'account',

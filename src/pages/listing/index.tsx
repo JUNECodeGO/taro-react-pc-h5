@@ -3,6 +3,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Tabs} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import SideFilter from '@/components/SideFilter';
+import SideLayout from '@/components/SideLayout';
 import {observer, useStore} from '@/store';
 import {TableTabType} from '@/common/type';
 import FilterPopup from '@/components/FilterPopup';
@@ -11,7 +12,6 @@ import {getGroupByItems} from '@/api/search';
 import {UserRole} from '@/api/user/dto';
 
 import './index.scss';
-import SideLayout from '@/components/SideLayout';
 
 const Listing = () => {
   const {

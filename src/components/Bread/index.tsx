@@ -12,6 +12,7 @@ const Breadcrumb = props => {
   const handleClick = useCallback(path => {
     Navigator.redirectTo(path);
   }, []);
+
   return (
     <View className='bread'>
       {items.map((item, index) => {

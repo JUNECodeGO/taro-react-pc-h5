@@ -10,13 +10,10 @@ class RootStore {
 
   // eslint-disable-next-line no-restricted-syntax
   constructor() {
-    // 对引入进行来的子模块进行实例化操作，并挂载到RootStore上
     this.useUserStore = new UseUserStore();
     makeAutoObservable(this, {}, {autoBind: true});
   }
 }
-
-// 实例化操作
 
 const useStore = () => React.useContext(storesContext);
 export const rootStore = new RootStore();

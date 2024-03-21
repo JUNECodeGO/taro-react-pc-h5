@@ -1,14 +1,14 @@
 /** @format */
-
+import {useCallback} from 'react';
+import Taro from '@tarojs/taro';
+import {Button, Form, Input} from '@nutui/nutui-react-taro';
+import useVerification from '@/common/hook/useVerification';
 import {updatePwdAPI} from '@/api/user';
 import {CodeType} from '@/api/user/dto';
-import useVerification from '@/common/hook/useVerification';
-import {Button, Form, Input} from '@nutui/nutui-react-taro';
-import Taro from '@tarojs/taro';
-import {useCallback} from 'react';
-import './index.scss';
 import {useStore} from '@/store';
 import Navigator from '@/common/utils/navigator';
+
+import './index.scss';
 
 const PasswordForm = (props: {needPhone?: boolean; type: CodeType}) => {
   const {needPhone = true, type, ...rest} = props;

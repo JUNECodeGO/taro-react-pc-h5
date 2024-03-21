@@ -11,12 +11,11 @@ import {
   Select,
   Input,
 } from 'antd';
-import {homeMenus, dataList} from './constant';
 import Navigator from '@/common/utils/navigator';
 import Footer from '@/components/Footer';
 import {observer, useStore} from '@/store';
 import {getSummarize} from '@/api/search';
-
+import {homeMenus, dataList} from './constant';
 import './index.scss';
 
 const options = [

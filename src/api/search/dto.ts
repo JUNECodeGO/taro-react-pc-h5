@@ -36,7 +36,7 @@ export interface CommonOption {
 }
 
 export enum ShareStatus {
-  notYet = 0, // 0未审核
+  notYet = 0, // 未审核
   approved = 1, // 通过
   rejected = 2, // 未通过
   send = 3, //已邮寄

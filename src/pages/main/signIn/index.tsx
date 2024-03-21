@@ -1,15 +1,16 @@
 /** @format */
+import Taro from '@tarojs/taro';
 import {useCallback} from 'react';
 import {View, Text} from '@tarojs/components';
 import {Button, Form} from '@nutui/nutui-react-taro';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Navigator from '@/common/utils/navigator';
 import useVerification from '@/common/hook/useVerification';
-import './index.scss';
-import Taro from '@tarojs/taro';
 import {getUserAPI, quickLoginAPI} from '@/api/user';
 import {CodeType} from '@/api/user/dto';
 import {useStore} from '@/store';
+
+import './index.scss';
 export default function SignIn() {
   const [form] = Form.useForm();
   const {

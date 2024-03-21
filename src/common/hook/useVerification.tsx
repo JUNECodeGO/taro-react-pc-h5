@@ -1,10 +1,9 @@
 /** @format */
-
-import {getVerification} from '@/api/user';
-import {Form, Input} from '@nutui/nutui-react-taro';
-import {View, Text} from '@tarojs/components';
-import Taro from '@tarojs/taro';
 import {useCallback, useMemo, useRef, useState} from 'react';
+import Taro from '@tarojs/taro';
+import {View, Text} from '@tarojs/components';
+import {Form, Input} from '@nutui/nutui-react-taro';
+import {getVerification} from '@/api/user';
 
 const useVerification = props => {
   const {form, type} = props;
@@ -26,10 +25,12 @@ const useVerification = props => {
           icon: 'error',
         });
       }
-      const res = await getVerification({
+      await getVerification({
         type,
         phone,
       });
+
+      // 60 秒倒计时
       timer.current = setInterval(() => {
         setCountDownInfo(pre => {
           const target = {...pre};
@@ -103,6 +104,7 @@ const useVerification = props => {
       </View>
     );
   }, [countDownInfo, handleGetMsg]);
+
   return {
     Phone,
     VerificationGroup,

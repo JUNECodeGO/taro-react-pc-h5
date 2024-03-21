@@ -45,16 +45,10 @@ const httpMessageHandle = (
   data: {code: any; message: any},
   isError = false
 ) => {
-  // userStore
   const {
     useUserStore: {removeLocalToken, logout, changeLogout, removeUserInfo},
   } = rootStore;
-  /** 错误集中提示
-   * 400 => 表示前端传参可能出现错误
-   * 401 => 权限过期
-   * 403 => 无访问权限
-   * 500 => 服务器拒绝请求
-   */
+
   const handleSuccess = res => {
     if (res.confirm) {
       changeLogout(true);
@@ -141,7 +135,6 @@ export const http = function <T>(
   return instance.request<T, ResponseData<T>>({
     url,
     method,
-    // 自动设置合适的 params/data 键名称，如果 method 为 get 用 params 传请求参数，否则用 data
     [method.toUpperCase() === 'GET' ? 'params' : 'data']: submitData,
   });
 };

@@ -17,6 +17,7 @@ export const getCategories = () =>
   }>('GET', '/get_categories');
 
 export const getSummarize = () => http('GET', '/get_summarize');
+
 export const getGroupByItems = () => http('GET', '/group_by_items');
 
 export const searchListMine = data =>

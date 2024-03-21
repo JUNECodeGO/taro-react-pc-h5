@@ -12,6 +12,7 @@ interface Props {
   required?: boolean;
   rules?: any;
 }
+
 export default (props: Props) => {
   const {options, onChange, label, name, placeholder, ...rest} = props;
 

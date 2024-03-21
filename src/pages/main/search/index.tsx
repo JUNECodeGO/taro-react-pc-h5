@@ -1,15 +1,16 @@
 /** @format */
+import Taro from '@tarojs/taro';
 import {useCallback, useEffect, useState} from 'react';
 import BasicLayout from '@/components/BasicLayout';
 import {View, Text} from '@tarojs/components';
 import {Form, Button, Input} from '@nutui/nutui-react-taro';
-
 import Navigator from '@/common/utils/navigator';
 import {getCateInfo} from '@/api/search';
-import Taro from '@tarojs/taro';
+
 import './index.scss';
 
 const whiteList = ['11112710000', '11112702000'];
+
 const Search = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState<any>([]);

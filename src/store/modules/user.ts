@@ -11,9 +11,9 @@ export default class UseUserInfoStore {
 
   token = '' as string;
 
-  isLoading = false; // 控制全局loading效果
+  isLoading = false;
 
-  logout = true; // 退出弹窗控制
+  logout = true;
 
   // eslint-disable-next-line no-restricted-syntax
   constructor() {

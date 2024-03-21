@@ -16,12 +16,14 @@ function switchTab(url: string) {
     url: newUrl,
   });
 }
+
 function reLaunch(url: string, param?: {}) {
   const newUrl = createUrl(url, param);
   return _reLaunch({
     url: newUrl,
   });
 }
+
 function createUrl(url: string, param?: {}): string {
   if (url === '/') {
     if (process.env.TARO_ENV === 'h5') return '/pages/main/home/index';

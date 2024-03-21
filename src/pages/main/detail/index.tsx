@@ -4,11 +4,11 @@ import {View, Text} from '@tarojs/components';
 import {Button} from '@nutui/nutui-react-taro';
 import BasicLayout from '@/components/BasicLayout';
 import Breadcrumb from '@/components/Bread';
-
-import './index.scss';
 import Taro, {useRouter} from '@tarojs/taro';
 import Navigator from '@/common/utils/navigator';
 import {getCateDetail} from '@/api/search';
+
+import './index.scss';
 
 const InfoList = [
   {name: '种质编号', value: 'enumber'},
@@ -23,6 +23,7 @@ const InfoList = [
   {name: '资源描述', value: 'note'},
   {name: '种质图片', value: ''},
 ];
+
 const Info = ({label, value}) => {
   return (
     <View className='card-info'>

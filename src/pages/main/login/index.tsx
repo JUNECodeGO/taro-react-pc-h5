@@ -4,24 +4,12 @@ import {View, Text} from '@tarojs/components';
 import {Radio, Button} from '@nutui/nutui-react-taro';
 import LoginSignInWrapper from '@/components/LoginSignInWrapper';
 import Taro from '@tarojs/taro';
-import {getUserAPI, loginAPI, sessionAPI} from '@/api/user';
+import {getUserAPI, loginAPI} from '@/api/user';
 import {useStore} from '@/store';
 import Navigator from '@/common/utils/navigator';
 
 import './index.scss';
-var lowestCommonAncestor = function (root, p, q) {
-  if (!root) return root;
-  if (root.val === p.val || root.val === q.val) return root;
-  let targetA = lowestCommonAncestor(root.left, p, q);
-  let targetB = lowestCommonAncestor(root.right, p, q);
 
-  // 在left
-  if (targetA && !targetB) return targetA;
-  // 在left
-  if (!targetA && targetB) return targetB;
-  if (!targetA && !targetB) return null;
-  return root;
-};
 export default function Login() {
   const {
     useUserStore: {setToken, setUserInfo},
